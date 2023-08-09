@@ -1,0 +1,62 @@
+name: Build and Release Action
+on:
+  push:
+    branches:
+      - 'release/**'
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - target: chrome
+            build_dir: build/prod/chrome/extension.zip
+          - target: firefox
+            build_dir: build/prod/firefox/vf-wpp-mod.zip
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm i
+      - name: Build for ${{ matrix.target }}
+        run: npm run build ${{ matrix.target }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: vf-wpp-mod.${{ matrix.target }}.zip
+          path: ${{ matrix.build_dir }}
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Download artifacts
+        uses: actions/download-artifact@master
+        with:
+          path: artifacts
+      - name: Prepare artifacts # Rename all artifacts to their parent directory name
+        run: |
+          find artifacts -type f -name "*.zip" -printf "/%P\n" | while read FILE; do \
+            DIR=$(dirname "$FILE" )
+            mv ./artifacts"$FILE" ./artifacts"$DIR""$DIR"
+          done
+      - name: Get version number
+        id: vars
+        run: echo ::set-output name=version::${GITHUB_REF_NAME##*/}
+      - name: Build RELEASE_final.md
+        run: envsubst < RELEASE.md > RELEASE_final.md
+        env:
+          VERSION: ${{ steps.vars.outputs.version }}
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "artifacts/**/*.zip"
+          tag: v${{ steps.vars.outputs.version }}
+          name: Release ${{ steps.vars.outputs.version }}
+          bodyFile: RELEASE_final.md
+          token: ${{ secrets.GITHUB_TOKEN }}
