@@ -1,8 +1,8 @@
 name: Build and Release Action
 on:
   push:
-    branches:
-      - 'release/**'
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 jobs:
   build:
     strategy:
@@ -16,6 +16,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - uses: olegtarasov/get-tag@v2.1.2
+        id: tagName
+        with:
+          tagRegex: "v(.*)"
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -35,6 +39,10 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - uses: olegtarasov/get-tag@v2.1.2
+        id: tagName
+        with:
+          tagRegex: "v(.*)"
       - name: Download artifacts
         uses: actions/download-artifact@master
         with:
@@ -45,18 +53,15 @@ jobs:
             DIR=$(dirname "$FILE" )
             mv ./artifacts"$FILE" ./artifacts"$DIR""$DIR"
           done
-      - name: Get version number
-        id: vars
-        run: echo ::set-output name=version::${GITHUB_REF_NAME##*/}
       - name: Build RELEASE_final.md
         run: envsubst < RELEASE.md > RELEASE_final.md
         env:
-          VERSION: ${{ steps.vars.outputs.version }}
+          VERSION: ${{ steps.tagName.outputs.tag }}
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "artifacts/**/*.zip"
-          tag: v${{ steps.vars.outputs.version }}
-          name: Release ${{ steps.vars.outputs.version }}
+          tag: v${{ steps.tagName.outputs.tag }}
+          name: Release ${{ steps.tagName.outputs.tag }}
           bodyFile: RELEASE_final.md
           token: ${{ secrets.GITHUB_TOKEN }}
