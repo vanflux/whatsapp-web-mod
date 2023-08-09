@@ -1,0 +1,40 @@
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slider {
+  width: 100%;
+  height: 6px;
+  border-radius: 5px;
+  background: #ffffff88;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ffffffff;
+  cursor: pointer;
+  border: none;
+}
+
+.slider::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #ffffffff;
+  cursor: pointer;
+  border: none;
+}

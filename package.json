@@ -1,0 +1,22 @@
+{
+	"name": "whatsapp-web-mod",
+	"version": "1.0.0",
+	"description": "Project generated with VFE.",
+	"scripts": {
+		"start": "vfe start",
+		"build": "vfe build"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@types/react": "^18.2.19",
+		"@types/react-color": "^3.0.6",
+		"@types/react-dom": "^18.2.7",
+		"@types/react-modal": "^3.16.0",
+		"react-color": "^2.19.3",
+		"react-draggable": "^4.4.5",
+		"react-modal": "^3.16.1",
+		"vf-ext-framework": "github:vanflux/vf-ext-framework"
+	}
+}

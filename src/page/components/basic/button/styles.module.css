@@ -1,0 +1,16 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  background-color: rgba(0, 0, 0, 40%);
+  color: #DDD;
+  border-radius: 4px;
+  transition: background-color 100ms;
+}
+
+.container:hover {
+  background-color: rgba(100, 100, 100, 40%);
+}

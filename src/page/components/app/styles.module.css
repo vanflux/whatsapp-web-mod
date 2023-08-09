@@ -1,0 +1,9 @@
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  inset: 0px;
+  pointer-events: none;
+  z-index: 999999999;
+}
