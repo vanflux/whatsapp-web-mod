@@ -11,7 +11,7 @@ jobs:
           - target: chrome
             build_dir: build/prod/chrome/extension.zip
           - target: firefox
-            build_dir: build/prod/firefox/vf-wpp-mod.zip
+            build_dir: build/prod/firefox/whatsapp-web-mod.zip
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
