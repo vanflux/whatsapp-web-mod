@@ -25,7 +25,9 @@ export const Window = ({ name, icon, title, children }: Props) => {
         </strong>
         {children}
         <div className={styles.footer}>
-          <a target="_blank" href='https://github.com/vanflux/whatsapp-web-mod'>MOD BY VANFLUX ({VERSION})</a>
+          <a target="_blank" href="https://github.com/vanflux/whatsapp-web-mod">
+            MOD BY VANFLUX ({VERSION})
+          </a>
         </div>
       </div>
     </Draggable>
