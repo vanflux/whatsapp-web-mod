@@ -11,10 +11,7 @@ interface Props {
   onRequestClose?: () => void;
 }
 
-export const ImportModal = ({
-  open,
-  onRequestClose,
-}: Props) => {
+export const ImportModal = ({ open, onRequestClose }: Props) => {
   const [value, setValue] = useState<string>();
   const { setConfig } = useThemer();
 
@@ -29,15 +26,22 @@ export const ImportModal = ({
       setConfig(config);
       onRequestClose?.();
     } catch {
-      alert('Invalid data!');
+      alert("Invalid data!");
     }
   };
 
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
-      <Flex direction='column' gap={8}>
-        <TextInput placeholder="Data here..." value={value} fullWidth onChange={setValue} />
-        <Button onClick={handleImport} fullWidth>Import</Button>
+      <Flex direction="column" gap={8}>
+        <TextInput
+          placeholder="Data here..."
+          value={value}
+          fullWidth
+          onChange={setValue}
+        />
+        <Button onClick={handleImport} fullWidth>
+          Import
+        </Button>
       </Flex>
     </Modal>
   );

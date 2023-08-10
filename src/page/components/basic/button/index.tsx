@@ -7,14 +7,14 @@ interface Props {
   fullWidth?: boolean;
 }
 
-export const Button = ({
-  children,
-  onClick,
-  fullWidth,
-}: Props) => {
+export const Button = ({ children, onClick, fullWidth }: Props) => {
   return (
-    <button style={{ width: fullWidth ? '100%' : undefined }} onClick={onClick} className={styles.container}>
+    <button
+      style={{ width: fullWidth ? "100%" : undefined }}
+      onClick={onClick}
+      className={styles.container}
+    >
       {children}
     </button>
-  )
+  );
 };

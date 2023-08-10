@@ -9,9 +9,11 @@ export const Windows = () => {
 
   return (
     <>
-      {open && <Window name='configs' icon={<ConfigIcon size={16} />} title='Configs'>
-        <ConfigsMenu />
-      </Window>}
+      {open && (
+        <Window name="configs" icon={<ConfigIcon size={16} />} title="Configs">
+          <ConfigsMenu />
+        </Window>
+      )}
     </>
   );
 };

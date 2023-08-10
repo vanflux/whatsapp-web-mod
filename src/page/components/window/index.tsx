@@ -1,7 +1,7 @@
-import React, { ReactNode, useEffect } from 'react'
-import Draggable from "react-draggable"
-import { useStateStorage } from '../../hooks/use-state-storage';
-import styles from './styles.module.css'
+import React, { ReactNode, useEffect } from "react";
+import Draggable from "react-draggable";
+import { useStateStorage } from "../../hooks/use-state-storage";
+import styles from "./styles.module.css";
 
 interface Props {
   name: string;
@@ -11,7 +11,10 @@ interface Props {
 }
 
 export const Window = ({ name, icon, title, children }: Props) => {
-  const [position, setPosition] = useStateStorage(`window-${name}-position`, { x: 32, y: 32 });
+  const [position, setPosition] = useStateStorage(`window-${name}-position`, {
+    x: 32,
+    y: 32,
+  });
 
   return (
     <Draggable
@@ -22,9 +25,7 @@ export const Window = ({ name, icon, title, children }: Props) => {
       <div className={styles.container}>
         <strong className={styles.header}>
           {icon}
-          <div>
-            {title}
-          </div>
+          <div>{title}</div>
         </strong>
         {children}
         <div className={styles.footer}>
@@ -32,5 +33,5 @@ export const Window = ({ name, icon, title, children }: Props) => {
         </div>
       </div>
     </Draggable>
-  )
-}
+  );
+};

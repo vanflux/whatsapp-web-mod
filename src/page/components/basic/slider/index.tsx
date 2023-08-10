@@ -18,14 +18,11 @@ export const Slider = ({
   max,
   step,
   valueFormatter = String,
-  valueMinWidth = 0
+  valueMinWidth = 0,
 }: SliderProps) => {
   return (
     <div className={styles.container}>
-      <div
-        className={styles.value}
-        style={{ minWidth: valueMinWidth }}
-      >
+      <div className={styles.value} style={{ minWidth: valueMinWidth }}>
         {valueFormatter(value)}
       </div>
       <input
@@ -35,8 +32,8 @@ export const Slider = ({
         max={max ?? 1}
         step={step ?? 0.1}
         value={value ?? 0}
-        onChange={e => onChange?.(Number(e.target.value))}
+        onChange={(e) => onChange?.(Number(e.target.value))}
       />
     </div>
-  )
+  );
 };

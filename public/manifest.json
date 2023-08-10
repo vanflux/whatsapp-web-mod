@@ -1,18 +1,14 @@
 {
-	"name": "Whatsapp Web Mod",
-	"description": "A Whatsapp Web Mod",
-	"icons": {
-		"128": "logo.png"
-	},
-	"content_scripts": [
-		{
-			"matches": [
-				"*://web.whatsapp.com/*"
-			],
-			"js": [
-				"content.js"
-			],
-			"run_at": "document_start"
-		}
-	]
+  "name": "Whatsapp Web Mod",
+  "description": "A Whatsapp Web Mod",
+  "icons": {
+    "128": "logo.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://web.whatsapp.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ]
 }

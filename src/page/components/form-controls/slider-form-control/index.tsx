@@ -7,14 +7,11 @@ interface Props extends SliderProps {
   label: string;
 }
 
-export const SliderFormControl = ({
-  label,
-  ...sliderProps
-}: Props) => {
+export const SliderFormControl = ({ label, ...sliderProps }: Props) => {
   return (
-    <Flex direction='column' gap={4}>
+    <Flex direction="column" gap={4}>
       <FormLabel>{label}</FormLabel>
       <Slider {...sliderProps} />
     </Flex>
-  )
+  );
 };

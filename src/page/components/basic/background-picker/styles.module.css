@@ -1,4 +1,3 @@
-
 .container {
   display: flex;
   flex-direction: column;
@@ -41,14 +40,15 @@
     left: -80px;
     width: 80px;
   }
-  15%, 100% {
+  15%,
+  100% {
     left: calc(100% + 50px);
     width: 5px;
   }
 }
 
 .item::after {
-  content: '';
+  content: "";
   background-color: white;
   opacity: 15%;
   pointer-events: none;
@@ -65,7 +65,12 @@
 .item > div {
   margin-left: 8px;
   color: white;
-  text-shadow: 1px 0px 2px black, 0px 0px 2px black, 0px 0px 2px black,1px 0px 2px black, 0px 0px 2px;
+  text-shadow:
+    1px 0px 2px black,
+    0px 0px 2px black,
+    0px 0px 2px black,
+    1px 0px 2px black,
+    0px 0px 2px;
 }
 
 .selected {

@@ -12,9 +12,9 @@ export const ColorPickerFormControl = ({
   ...colorPickerProps
 }: Props) => {
   return (
-    <Flex direction='column' gap={4}>
+    <Flex direction="column" gap={4}>
       <FormLabel>{label}</FormLabel>
       <ColorPicker {...colorPickerProps} />
     </Flex>
-  )
+  );
 };

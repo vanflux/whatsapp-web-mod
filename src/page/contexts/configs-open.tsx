@@ -14,7 +14,7 @@ const ConfigsOpenContext = createContext<Props>({
 let globalToggle: () => void;
 
 export const ConfigsOpenContextProvider = ({ children }: PropsWithChildren) => {
-  const [open, setOpen] = useStateStorage('configs-open', true);
+  const [open, setOpen] = useStateStorage("configs-open", true);
 
   globalToggle = () => setOpen(!open);
   return (
@@ -26,6 +26,6 @@ export const ConfigsOpenContextProvider = ({ children }: PropsWithChildren) => {
 
 export const useConfigsOpen = () => {
   return useContext(ConfigsOpenContext);
-}
+};
 
-export const toggleConfigs = () => globalToggle()
+export const toggleConfigs = () => globalToggle();

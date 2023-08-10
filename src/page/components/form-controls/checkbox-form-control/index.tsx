@@ -7,14 +7,11 @@ interface Props extends CheckboxProps {
   label?: string;
 }
 
-export const CheckboxFormControl = ({
-  label,
-  ...checkboxProps
-}: Props) => {
+export const CheckboxFormControl = ({ label, ...checkboxProps }: Props) => {
   return (
-    <Flex align='center' gap={4}>
+    <Flex align="center" gap={4}>
       <Checkbox {...checkboxProps} />
       <FormLabel>{label}</FormLabel>
     </Flex>
-  )
+  );
 };

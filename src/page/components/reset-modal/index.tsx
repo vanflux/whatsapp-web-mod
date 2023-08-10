@@ -10,10 +10,7 @@ interface Props {
   onRequestClose?: () => void;
 }
 
-export const ResetModal = ({
-  open,
-  onRequestClose,
-}: Props) => {
+export const ResetModal = ({ open, onRequestClose }: Props) => {
   const { setConfig } = useThemer();
 
   const handleReset = () => {
@@ -23,9 +20,11 @@ export const ResetModal = ({
 
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
-      <Flex direction='column' gap={8}>
+      <Flex direction="column" gap={8}>
         Are you sure?
-        <Button onClick={handleReset} fullWidth>Reset</Button>
+        <Button onClick={handleReset} fullWidth>
+          Reset
+        </Button>
       </Flex>
     </Modal>
   );

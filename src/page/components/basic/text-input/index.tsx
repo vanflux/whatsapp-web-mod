@@ -16,12 +16,12 @@ export const TextInput = ({
 }: Props) => {
   return (
     <input
-      type='text'
-      style={{ width: fullWidth ? '100%' : undefined }}
-      value={value ?? ''}
+      type="text"
+      style={{ width: fullWidth ? "100%" : undefined }}
+      value={value ?? ""}
       placeholder={placeholder}
-      onChange={e => onChange?.(e.target.value)}
+      onChange={(e) => onChange?.(e.target.value)}
       className={styles.container}
     />
-  )
+  );
 };

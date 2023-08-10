@@ -1,4 +1,3 @@
-
 declare module "*.css";
 
 declare interface Window {

@@ -6,14 +6,13 @@ export interface CheckboxProps {
   onChange?: (value: boolean) => void;
 }
 
-export const Checkbox = ({
-  value,
-  onChange
-}: CheckboxProps) => {
+export const Checkbox = ({ value, onChange }: CheckboxProps) => {
   return (
     <input
       className={styles.container}
-      type='checkbox'
-      checked={value} onChange={e => onChange?.(e.target.checked)} />
-  )
+      type="checkbox"
+      checked={value}
+      onChange={(e) => onChange?.(e.target.checked)}
+    />
+  );
 };

@@ -7,12 +7,14 @@ export class ConfigsMod {
   private static timer?: NodeJS.Timer;
 
   public static apply() {
-    const container = document.createElement('div');
+    const container = document.createElement("div");
     document.body.appendChild(container);
     this.root = createRoot(container);
     this.root.render(<ConfigsButton />);
     this.timer = setInterval(() => {
-      const menuBarCommunityTab = document.querySelector('[data-testid="menu-bar-community-tab"]');
+      const menuBarCommunityTab = document.querySelector(
+        '[data-testid="menu-bar-community-tab"]',
+      );
       if (menuBarCommunityTab) {
         const parent = menuBarCommunityTab.parentElement;
         if (!parent?.contains(container)) {

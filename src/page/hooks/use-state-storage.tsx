@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export function useStateStorage<T>(key: string, initialValue: T, onChange?: (value: T) => void): [T, (value: T) => void] {
+export function useStateStorage<T>(
+  key: string,
+  initialValue: T,
+  onChange?: (value: T) => void,
+): [T, (value: T) => void] {
   const [value, setValue] = useState(() => {
     let newValue: T;
     try {
@@ -21,4 +25,4 @@ export function useStateStorage<T>(key: string, initialValue: T, onChange?: (val
       setValue(value);
     },
   ];
-};
+}

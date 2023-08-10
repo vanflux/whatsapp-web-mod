@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from "react";
 import { useOutsideAlert } from "../../../hooks/use-outside-alert";
 import { themerGradients } from "../../../mods/themer/gradients";
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 
 export interface BackgroundPickerProps {
   value: string;
@@ -10,7 +10,7 @@ export interface BackgroundPickerProps {
 
 export const BackgroundPicker = ({
   value,
-  onChange
+  onChange,
 }: BackgroundPickerProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -19,9 +19,12 @@ export const BackgroundPicker = ({
   const items = useMemo(() => {
     if (value) {
       return [
-        themerGradients.find(x => x.value === value) ?? { value, name: 'Custom' },
-        ...themerGradients.filter(x => x.value !== value)
-      ]
+        themerGradients.find((x) => x.value === value) ?? {
+          value,
+          name: "Custom",
+        },
+        ...themerGradients.filter((x) => x.value !== value),
+      ];
     } else {
       return themerGradients;
     }
@@ -38,14 +41,16 @@ export const BackgroundPicker = ({
         }}
         onClick={() => setOpen(!open)}
       >
-        <div>{items.find(x => x.value === value)?.name}</div>
+        <div>{items.find((x) => x.value === value)?.name}</div>
       </div>
       {open && (
         <div className={styles.selector}>
-          {items.map(gradient => (
+          {items.map((gradient) => (
             <div
               key={gradient.value}
-              className={`${styles.item} ${gradient.value === value ? styles.selected : ''}`}
+              className={`${styles.item} ${
+                gradient.value === value ? styles.selected : ""
+              }`}
               style={{
                 background: gradient.value,
               }}

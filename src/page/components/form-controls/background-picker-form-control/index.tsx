@@ -1,5 +1,8 @@
 import React from "react";
-import { BackgroundPicker, BackgroundPickerProps } from "../../basic/background-picker";
+import {
+  BackgroundPicker,
+  BackgroundPickerProps,
+} from "../../basic/background-picker";
 import { Flex } from "../../basic/flex";
 import { FormLabel } from "../../basic/form-label";
 
@@ -12,9 +15,9 @@ export const BackgroundPickerFormControl = ({
   ...backgroundPickerProps
 }: Props) => {
   return (
-    <Flex direction='column' gap={4}>
+    <Flex direction="column" gap={4}>
       <FormLabel>{label}</FormLabel>
       <BackgroundPicker {...backgroundPickerProps} />
     </Flex>
-  )
+  );
 };
