@@ -27,9 +27,29 @@
   justify-content: center;
   padding: 2px;
   background-color: #000000dd;
-  font-size: 8px;
+  font-size: 9px;
   font-weight: normal;
   overflow: hidden;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+}
+
+.footer a {
+  background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff, #0099ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow 2s linear infinite;
+  background-size: 400% 100%;
+}
+
+
+@keyframes rainbow {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 100% 0;
+  }
 }

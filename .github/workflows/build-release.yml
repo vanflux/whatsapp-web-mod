@@ -27,6 +27,8 @@ jobs:
       - name: Install dependencies
         run: npm i
       - name: Build for ${{ matrix.target }}
+        env:
+          VERSION: ${{ steps.tagName.outputs.tag }}
         run: npm run build ${{ matrix.target }}
       - name: Upload artifact
         uses: actions/upload-artifact@master

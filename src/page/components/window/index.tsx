@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode } from "react";
 import Draggable from "react-draggable";
 import { useStateStorage } from "../../hooks/use-state-storage";
 import styles from "./styles.module.css";
@@ -25,7 +25,7 @@ export const Window = ({ name, icon, title, children }: Props) => {
         </strong>
         {children}
         <div className={styles.footer}>
-          <span>MOD BY VANFLUX</span>
+          <a target="_blank" href='https://github.com/vanflux/whatsapp-web-mod'>MOD BY VANFLUX ({VERSION})</a>
         </div>
       </div>
     </Draggable>
