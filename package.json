@@ -4,7 +4,9 @@
   "description": "Project generated with VFE.",
   "scripts": {
     "start": "vfe start",
-    "build": "vfe build"
+    "build": "vfe build",
+    "format": "npx prettier --write .",
+    "postinstall": "npx husky install"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.2.7",
     "@types/react-modal": "^3.16.0",
+    "husky": "^8.0.3",
     "prettier": "^3.0.1",
     "react-color": "^2.19.3",
     "react-draggable": "^4.4.5",
