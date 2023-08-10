@@ -11,13 +11,21 @@
   <img src="https://img.shields.io/github/actions/workflow/status/vanflux/whatsapp-web-mod/build-release.yml" />
 </p>
 
-## Features:
+## Features
 
 - Themer (customization)
 
-## Screenshot
+## Default theme
 
 ![](./docs/images/wp-ui.png)
+
+## More than 300+ gradients for background
+
+![](./docs/images/gradients.png)
+
+## Export/import configurations
+
+![](./docs/images/export-import.png)
 
 ## Usage
 
