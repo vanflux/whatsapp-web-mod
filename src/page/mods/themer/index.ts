@@ -7,11 +7,11 @@ export const DEFAULT_THEMER_CONFIG: ThemerConfig = {
   roundedBorders: true,
   transparency: 0.5,
   uiColor: "0, 0, 0",
-  outgoingMessageBackground: "#005C4BCC",
-  incomingMessageBackground: "#202C33CC",
-  systemMessageBackground: "#182229CC",
-  messageColor: "#E9EDEF",
-  quotedMessageColor: "hsla(0, 0%, 100%, 0.6)",
+  outgoingMessageBackground: "#984DD4FF",
+  incomingMessageBackground: "#32659EFF",
+  systemMessageBackground: "#1F407F",
+  messageColor: "#E9EDEFFF",
+  quotedMessageColor: "#FFFFFF99",
 };
 
 export interface ThemerConfig {
@@ -146,6 +146,10 @@ export class ThemerMod {
         "--message-primary",
         this.config.messageColor,
       );
+      appWrapperWeb.style.setProperty(
+        "--bubble-meta",
+        this.config.messageColor,
+      );
 
       // Change quoted message color
       appWrapperWeb.style.setProperty(
@@ -208,6 +212,14 @@ export class ThemerMod {
           ? "16px"
           : "0px";
       }
+      const settingsDrawer = appWrapperWeb.querySelector<HTMLDivElement>('[data-testid="settings-drawer"]');
+      if (settingsDrawer) {
+        settingsDrawer.style.background = this.transparentRGBA(0.8);
+      }
+      const main = document.querySelector<HTMLDivElement>("#main");
+      if (main) {
+        main.style.background = this.transparentRGBA(0);
+      }
     }
   }
 
@@ -217,7 +229,6 @@ export class ThemerMod {
   }
 
   public static apply() {
-    // A hacky stuff to prevent [data-testid=conversation-panel-wrapper] element backgroundColor change
     if (!window.vfDivSetAttribute) {
       window.vfDivSetAttribute = HTMLDivElement.prototype.setAttribute;
       HTMLDivElement.prototype.setAttribute.toString = () =>
@@ -225,70 +236,25 @@ export class ThemerMod {
       HTMLDivElement.prototype.setAttribute.toString.toString =
         HTMLDivElement.prototype.setAttribute.toString;
     }
-    HTMLDivElement.prototype.setAttribute = function (...args: any) {
-      if (
-        args[0] === "data-testid" &&
-        args[1] === "conversation-panel-wrapper"
-      ) {
-        this.style.background = "transparent";
-      } else {
-        return window.vfDivSetAttribute!.call(this, ...args);
+    const self = this;
+    HTMLDivElement.prototype.setAttribute = function (key: string, value: string) {
+      if (key === 'data-testid') {
+        if (value === 'conversation-panel-wrapper') {
+          this.style.background = "transparent";
+        } else if (value === 'contact-menu-dropdown') {
+          this.style.backdropFilter = "blur(4px)";
+        } else if (value === 'media-viewer-modal') {
+          this.style.backdropFilter = "blur(4px)";
+        } else if (value === 'settings-drawer') {
+          this.style.background = self.transparentRGBA(0.8);
+        } else if (value.startsWith('status-') && value.endsWith('-main-panel')) {
+          this.style.backdropFilter = "blur(4px)";
+        }
       }
+      return window.vfDivSetAttribute!.call(this, key, value);
     };
 
     this.timers.push(setInterval(this.update.bind(this), 1000));
-    this.timers.push(
-      setInterval(() => {
-        const appWrapperWeb = document.querySelector(".app-wrapper-web");
-        if (appWrapperWeb) {
-          const appWrapperWebSpanDivs = [
-            ...appWrapperWeb.querySelectorAll<HTMLDivElement>(
-              ":scope > span > div",
-            ),
-          ];
-          for (const appWrapperWebSpanDiv of appWrapperWebSpanDivs) {
-            const statusPanel =
-              appWrapperWebSpanDiv.querySelector<HTMLDivElement>(
-                '[data-testid^="status-"][data-testid$="-main-panel"]',
-              );
-            if (statusPanel) {
-              statusPanel.style.backdropFilter = "blur(4px)";
-              appWrapperWebSpanDiv.style.background =
-                this.transparentRGBA(0.47);
-            }
-            const contactMenuDropdown =
-              appWrapperWebSpanDiv.querySelector<HTMLDivElement>(
-                '[data-testid="contact-menu-dropdown"]',
-              );
-            if (contactMenuDropdown) {
-              appWrapperWebSpanDiv.style.backdropFilter = "blur(4px)";
-              appWrapperWebSpanDiv.style.background =
-                this.transparentRGBA(0.47);
-            }
-            const mediaViewerModal =
-              appWrapperWebSpanDiv.querySelector<HTMLDivElement>(
-                '[data-testid="media-viewer-modal"]',
-              );
-            if (mediaViewerModal) {
-              mediaViewerModal.style.backdropFilter = "blur(4px)";
-              appWrapperWebSpanDiv.style.background =
-                this.transparentRGBA(0.47);
-            }
-          }
-          const settingsDrawer = document.querySelector<HTMLDivElement>(
-            '[data-testid="settings-drawer"]',
-          );
-          if (settingsDrawer) {
-            settingsDrawer.style.background = this.transparentRGBA(0.8);
-            settingsDrawer.style.backdropFilter = "blur(4px)";
-          }
-        }
-        const main = document.querySelector<HTMLDivElement>("#main");
-        if (main) {
-          main.style.background = this.transparentRGBA(0);
-        }
-      }, 100),
-    );
   }
 
   public static destroy() {
