@@ -15,18 +15,10 @@ export const ColorPicker = ({ value, onChange }: ColorPickerProps) => {
 
   return (
     <div className={styles.container} ref={ref}>
-      <div
-        className={styles.field}
-        style={{ background: value }}
-        onClick={() => setOpen(!open)}
-      />
+      <div className={styles.field} style={{ background: value }} onClick={() => setOpen(!open)} />
       {open && (
         <div className={styles.selector}>
-          <ChromePicker
-            color={value}
-            onChange={onChange}
-            onChangeComplete={onChange}
-          />
+          <ChromePicker color={value} onChange={onChange} onChangeComplete={onChange} />
         </div>
       )}
     </div>

@@ -13,17 +13,9 @@ const ThemerContext = createContext<Props>({
 });
 
 export const ThemerContextProvider = ({ children }: PropsWithChildren) => {
-  const [config, setConfig] = useStateStorage<ThemerConfig>(
-    "themer-config",
-    DEFAULT_THEMER_CONFIG,
-    (value) => ThemerMod.setConfig(value),
-  );
+  const [config, setConfig] = useStateStorage<ThemerConfig>("themer-config", DEFAULT_THEMER_CONFIG, (value) => ThemerMod.setConfig(value));
 
-  return (
-    <ThemerContext.Provider value={{ config, setConfig }}>
-      {children}
-    </ThemerContext.Provider>
-  );
+  return <ThemerContext.Provider value={{ config, setConfig }}>{children}</ThemerContext.Provider>;
 };
 
 export const useThemer = () => {

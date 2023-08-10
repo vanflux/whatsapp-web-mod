@@ -17,11 +17,7 @@ export const Window = ({ name, icon, title, children }: Props) => {
   });
 
   return (
-    <Draggable
-      position={position}
-      onDrag={(_, data) => setPosition({ x: data.x, y: data.y })}
-      handle="strong"
-    >
+    <Draggable position={position} onDrag={(_, data) => setPosition({ x: data.x, y: data.y })} handle="strong">
       <div className={styles.container}>
         <strong className={styles.header}>
           {icon}

@@ -30,13 +30,7 @@ interface Props {
 
 export const Modal = ({ open, label, children, onRequestClose }: Props) => {
   return (
-    <ReactModal
-      isOpen={open}
-      onRequestClose={onRequestClose}
-      style={customStyles}
-      contentLabel={label}
-      shouldCloseOnOverlayClick
-    >
+    <ReactModal isOpen={open} onRequestClose={onRequestClose} style={customStyles} contentLabel={label} shouldCloseOnOverlayClick>
       {children}
     </ReactModal>
   );

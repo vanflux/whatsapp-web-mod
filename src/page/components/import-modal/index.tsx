@@ -33,12 +33,7 @@ export const ImportModal = ({ open, onRequestClose }: Props) => {
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
       <Flex direction="column" gap={8}>
-        <TextInput
-          placeholder="Data here..."
-          value={value}
-          fullWidth
-          onChange={setValue}
-        />
+        <TextInput placeholder="Data here..." value={value} fullWidth onChange={setValue} />
         <Button onClick={handleImport} fullWidth>
           Import
         </Button>

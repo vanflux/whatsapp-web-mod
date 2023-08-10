@@ -8,12 +8,7 @@ interface Props {
   fullWidth?: boolean;
 }
 
-export const TextInput = ({
-  value,
-  placeholder,
-  onChange,
-  fullWidth,
-}: Props) => {
+export const TextInput = ({ value, placeholder, onChange, fullWidth }: Props) => {
   return (
     <input
       type="text"

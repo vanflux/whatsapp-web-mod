@@ -8,10 +8,7 @@ export interface BackgroundPickerProps {
   onChange: (value: string) => void;
 }
 
-export const BackgroundPicker = ({
-  value,
-  onChange,
-}: BackgroundPickerProps) => {
+export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   useOutsideAlert(ref, () => setOpen(false));
@@ -48,9 +45,7 @@ export const BackgroundPicker = ({
           {items.map((gradient) => (
             <div
               key={gradient.value}
-              className={`${styles.item} ${
-                gradient.value === value ? styles.selected : ""
-              }`}
+              className={`${styles.item} ${gradient.value === value ? styles.selected : ""}`}
               style={{
                 background: gradient.value,
               }}

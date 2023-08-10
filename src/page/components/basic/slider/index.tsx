@@ -11,15 +11,7 @@ export interface SliderProps {
   valueMinWidth?: number;
 }
 
-export const Slider = ({
-  value,
-  onChange,
-  min,
-  max,
-  step,
-  valueFormatter = String,
-  valueMinWidth = 0,
-}: SliderProps) => {
+export const Slider = ({ value, onChange, min, max, step, valueFormatter = String, valueMinWidth = 0 }: SliderProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.value} style={{ minWidth: valueMinWidth }}>

@@ -197,8 +197,7 @@ export const themerGradients = [
   },
   {
     name: "Baroque Gear",
-    value:
-      "linear-gradient(to right, rgb(254, 172, 94), rgb(199, 121, 208), rgb(75, 192, 200))",
+    value: "linear-gradient(to right, rgb(254, 172, 94), rgb(199, 121, 208), rgb(75, 192, 200))",
   },
   {
     name: "Baroque arts",
@@ -274,8 +273,7 @@ export const themerGradients = [
   },
   {
     name: "Canvases",
-    value:
-      "linear-gradient(to right, rgb(173, 169, 150), rgb(242, 242, 242), rgb(219, 219, 219), rgb(234, 234, 234))",
+    value: "linear-gradient(to right, rgb(173, 169, 150), rgb(242, 242, 242), rgb(219, 219, 219), rgb(234, 234, 234))",
   },
   {
     name: "Cass Art",
@@ -375,8 +373,7 @@ export const themerGradients = [
   },
   {
     name: "Crazy Artsy",
-    value:
-      "linear-gradient(to right, rgb(30, 150, 0), rgb(255, 242, 0), rgb(255, 0, 0))",
+    value: "linear-gradient(to right, rgb(30, 150, 0), rgb(255, 242, 0), rgb(255, 0, 0))",
   },
   {
     name: "Creativelors",
@@ -408,8 +405,7 @@ export const themerGradients = [
   },
   {
     name: "Deep Ellum",
-    value:
-      "linear-gradient(to right, rgb(89, 193, 115), rgb(161, 127, 224), rgb(93, 38, 193))",
+    value: "linear-gradient(to right, rgb(89, 193, 115), rgb(161, 127, 224), rgb(93, 38, 193))",
   },
   {
     name: "Design",
@@ -429,8 +425,7 @@ export const themerGradients = [
   },
   {
     name: "Dramatic Neg",
-    value:
-      "linear-gradient(to right, rgb(198, 255, 221), rgb(251, 215, 134), rgb(247, 121, 125))",
+    value: "linear-gradient(to right, rgb(198, 255, 221), rgb(251, 215, 134), rgb(247, 121, 125))",
   },
   {
     name: "Draw Me",
@@ -438,8 +433,7 @@ export const themerGradients = [
   },
   {
     name: "Drawings",
-    value:
-      "linear-gradient(to right, rgb(187, 210, 197), rgb(83, 105, 118), rgb(41, 46, 73))",
+    value: "linear-gradient(to right, rgb(187, 210, 197), rgb(83, 105, 118), rgb(41, 46, 73))",
   },
   {
     name: "Dream Edit",
@@ -503,8 +497,7 @@ export const themerGradients = [
   },
   {
     name: "Fine Knack",
-    value:
-      "linear-gradient(to right, rgb(64, 224, 208), rgb(255, 140, 0), rgb(255, 0, 128))",
+    value: "linear-gradient(to right, rgb(64, 224, 208), rgb(255, 140, 0), rgb(255, 0, 128))",
   },
   {
     name: "Fine Method",
@@ -532,8 +525,7 @@ export const themerGradients = [
   },
   {
     name: "Form Designs",
-    value:
-      "linear-gradient(to right, rgb(12, 235, 235), rgb(32, 227, 178), rgb(41, 255, 198))",
+    value: "linear-gradient(to right, rgb(12, 235, 235), rgb(32, 227, 178), rgb(41, 255, 198))",
   },
   {
     name: "Form Works",
@@ -573,8 +565,7 @@ export const themerGradients = [
   },
   {
     name: "Gallery View",
-    value:
-      "linear-gradient(to right, rgb(156, 236, 251), rgb(101, 199, 247), rgb(0, 82, 212))",
+    value: "linear-gradient(to right, rgb(156, 236, 251), rgb(101, 199, 247), rgb(0, 82, 212))",
   },
   {
     name: "Garfunkel",
@@ -598,8 +589,7 @@ export const themerGradients = [
   },
   {
     name: "Gentle Item",
-    value:
-      "linear-gradient(to right, rgb(18, 194, 233), rgb(196, 113, 237), rgb(246, 79, 89))",
+    value: "linear-gradient(to right, rgb(18, 194, 233), rgb(196, 113, 237), rgb(246, 79, 89))",
   },
   {
     name: "Gentle Skill",
@@ -651,8 +641,7 @@ export const themerGradients = [
   },
   {
     name: "Hand Skill",
-    value:
-      "linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100))",
+    value: "linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100))",
   },
   {
     name: "Handy Candy",
@@ -696,8 +685,7 @@ export const themerGradients = [
   },
   {
     name: "Ice Art, Inc",
-    value:
-      "linear-gradient(to right, rgb(0, 65, 106), rgb(121, 159, 12), rgb(255, 224, 0))",
+    value: "linear-gradient(to right, rgb(0, 65, 106), rgb(121, 159, 12), rgb(255, 224, 0))",
   },
   {
     name: "Idea Arts",
@@ -709,8 +697,7 @@ export const themerGradients = [
   },
   {
     name: "Images",
-    value:
-      "linear-gradient(to right, rgb(41, 128, 185), rgb(109, 213, 250), rgb(255, 255, 255))",
+    value: "linear-gradient(to right, rgb(41, 128, 185), rgb(109, 213, 250), rgb(255, 255, 255))",
   },
   {
     name: "Imaging",
@@ -730,8 +717,7 @@ export const themerGradients = [
   },
   {
     name: "Indian Sort",
-    value:
-      "linear-gradient(to right, rgb(31, 162, 255), rgb(18, 216, 250), rgb(166, 255, 203))",
+    value: "linear-gradient(to right, rgb(31, 162, 255), rgb(18, 216, 250), rgb(166, 255, 203))",
   },
   {
     name: "Indian Tip",
@@ -747,8 +733,7 @@ export const themerGradients = [
   },
   {
     name: "Invention",
-    value:
-      "linear-gradient(to right, rgb(53, 92, 125), rgb(108, 91, 123), rgb(192, 108, 132))",
+    value: "linear-gradient(to right, rgb(53, 92, 125), rgb(108, 91, 123), rgb(192, 108, 132))",
   },
   {
     name: "Islamic Sort",
@@ -792,8 +777,7 @@ export const themerGradients = [
   },
   {
     name: "Koko Art",
-    value:
-      "linear-gradient(to right, rgb(119, 161, 211), rgb(121, 203, 202), rgb(230, 132, 174))",
+    value: "linear-gradient(to right, rgb(119, 161, 211), rgb(121, 203, 202), rgb(230, 132, 174))",
   },
   {
     name: "Leadership",
@@ -813,8 +797,7 @@ export const themerGradients = [
   },
   {
     name: "Magic Design",
-    value:
-      "linear-gradient(to right, rgb(0, 82, 212), rgb(67, 100, 247), rgb(111, 177, 252))",
+    value: "linear-gradient(to right, rgb(0, 82, 212), rgb(67, 100, 247), rgb(111, 177, 252))",
   },
   {
     name: "Magic Images",
@@ -882,8 +865,7 @@ export const themerGradients = [
   },
   {
     name: "Minna Glora",
-    value:
-      "linear-gradient(to right, rgb(26, 42, 108), rgb(178, 31, 31), rgb(253, 187, 45))",
+    value: "linear-gradient(to right, rgb(26, 42, 108), rgb(178, 31, 31), rgb(253, 187, 45))",
   },
   {
     name: "Modern Item",
@@ -903,8 +885,7 @@ export const themerGradients = [
   },
   {
     name: "Musical Edge",
-    value:
-      "linear-gradient(to right, rgb(127, 127, 213), rgb(134, 168, 231), rgb(145, 234, 228))",
+    value: "linear-gradient(to right, rgb(127, 127, 213), rgb(134, 168, 231), rgb(145, 234, 228))",
   },
   {
     name: "Native Inc",
@@ -920,18 +901,15 @@ export const themerGradients = [
   },
   {
     name: "Nature",
-    value:
-      "linear-gradient(to right, rgb(3, 0, 30), rgb(115, 3, 192), rgb(236, 56, 188), rgb(253, 239, 249))",
+    value: "linear-gradient(to right, rgb(3, 0, 30), rgb(115, 3, 192), rgb(236, 56, 188), rgb(253, 239, 249))",
   },
   {
     name: "Noble Form",
-    value:
-      "linear-gradient(to right, rgb(15, 12, 41), rgb(48, 43, 99), rgb(36, 36, 62))",
+    value: "linear-gradient(to right, rgb(15, 12, 41), rgb(48, 43, 99), rgb(36, 36, 62))",
   },
   {
     name: "Noble Images",
-    value:
-      "linear-gradient(to right, rgb(84, 51, 255), rgb(32, 189, 255), rgb(165, 254, 203))",
+    value: "linear-gradient(to right, rgb(84, 51, 255), rgb(32, 189, 255), rgb(165, 254, 203))",
   },
   {
     name: "Noble Manner",
@@ -967,8 +945,7 @@ export const themerGradients = [
   },
   {
     name: "Paint",
-    value:
-      "linear-gradient(to right, rgb(58, 28, 113), rgb(215, 109, 119), rgb(255, 175, 123))",
+    value: "linear-gradient(to right, rgb(58, 28, 113), rgb(215, 109, 119), rgb(255, 175, 123))",
   },
   {
     name: "Painting",
@@ -988,8 +965,7 @@ export const themerGradients = [
   },
   {
     name: "Pet Artist",
-    value:
-      "linear-gradient(to right, rgb(167, 112, 239), rgb(207, 139, 243), rgb(253, 185, 155))",
+    value: "linear-gradient(to right, rgb(167, 112, 239), rgb(207, 139, 243), rgb(253, 185, 155))",
   },
   {
     name: "Pictures",
@@ -1025,8 +1001,7 @@ export const themerGradients = [
   },
   {
     name: "Popular Item",
-    value:
-      "linear-gradient(to right, rgb(131, 58, 180), rgb(253, 29, 29), rgb(252, 176, 69))",
+    value: "linear-gradient(to right, rgb(131, 58, 180), rgb(253, 29, 29), rgb(252, 176, 69))",
   },
   {
     name: "Popular Neg",
@@ -1074,8 +1049,7 @@ export const themerGradients = [
   },
   {
     name: "Pure Vol",
-    value:
-      "linear-gradient(to right, rgb(138, 35, 135), rgb(233, 64, 87), rgb(242, 113, 33))",
+    value: "linear-gradient(to right, rgb(138, 35, 135), rgb(233, 64, 87), rgb(242, 113, 33))",
   },
   {
     name: "Raven Row",
@@ -1095,8 +1069,7 @@ export const themerGradients = [
   },
   {
     name: "Rhythmic",
-    value:
-      "linear-gradient(to right, rgb(204, 149, 192), rgb(219, 212, 180), rgb(122, 161, 210))",
+    value: "linear-gradient(to right, rgb(204, 149, 192), rgb(219, 212, 180), rgb(122, 161, 210))",
   },
   {
     name: "Roman Images",
@@ -1168,8 +1141,7 @@ export const themerGradients = [
   },
   {
     name: "Soft Designs",
-    value:
-      "linear-gradient(to right, rgb(170, 75, 107), rgb(107, 107, 131), rgb(59, 141, 153))",
+    value: "linear-gradient(to right, rgb(170, 75, 107), rgb(107, 107, 131), rgb(59, 141, 153))",
   },
   {
     name: "Soul Space",

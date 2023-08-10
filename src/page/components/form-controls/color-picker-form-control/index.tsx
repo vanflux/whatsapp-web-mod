@@ -7,10 +7,7 @@ interface Props extends ColorPickerProps {
   label: string;
 }
 
-export const ColorPickerFormControl = ({
-  label,
-  ...colorPickerProps
-}: Props) => {
+export const ColorPickerFormControl = ({ label, ...colorPickerProps }: Props) => {
   return (
     <Flex direction="column" gap={4}>
       <FormLabel>{label}</FormLabel>
