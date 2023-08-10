@@ -19,7 +19,7 @@
 
 ![](./docs/images/wp-ui.png)
 
-## More than 300+ gradients for background
+## 300+ gradients for background
 
 ![](./docs/images/gradients.png)
 
