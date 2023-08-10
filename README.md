@@ -1,6 +1,18 @@
-# Whatsapp Web Mod
+<h1 align="center">
+  Whatsapp Web Mod <img width="32px" src="./docs/images/logo.png" />
+</h1>
+
+<p align="center">
+  An extension to apply mods on Whatsapp Web
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/v/release/vanflux/whatsapp-web-mod" />
+  <img src="https://img.shields.io/github/actions/workflow/status/vanflux/whatsapp-web-mod/build-release.yml" />
+</p>
 
 ## Features:
+
 - Themer (customization)
 
 ## Screenshot
