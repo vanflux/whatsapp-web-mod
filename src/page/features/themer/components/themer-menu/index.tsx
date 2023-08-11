@@ -1,30 +1,27 @@
 import styles from "./styles.module.css";
 import React, { useState } from "react";
-import { useThemer } from "../../contexts/themer";
-import { BackgroundPickerFormControl } from "../form-controls/background-picker-form-control";
-import { SliderFormControl } from "../form-controls/slider-form-control";
-import { CheckboxFormControl } from "../form-controls/checkbox-form-control";
-import { ColorPickerFormControl } from "../form-controls/color-picker-form-control";
-import { Button } from "../basic/button";
-import { Flex } from "../basic/flex";
-import { ImportModal } from "../import-modal";
-import { ResetModal } from "../reset-modal";
+import { useThemerConfig } from "@page-contexts/themer-config";
+import { BackgroundPickerFormControl } from "@page-components/form-controls/background-picker-form-control";
+import { CheckboxFormControl } from "@page-components/form-controls/checkbox-form-control";
+import { SliderFormControl } from "@page-components/form-controls/slider-form-control";
+import { ColorPickerFormControl } from "@page-components/form-controls/color-picker-form-control";
+import { Flex } from "@page-components/basic/flex";
+import { Button } from "@page-components/basic/button";
+import { useThemerThemes } from "@page-contexts/themer-themes";
+import { TextInput } from "@page-components/basic/text-input";
+import { Icon } from "@page-components/basic/icon";
 
-export function ConfigsMenu() {
-  const { config, setConfig } = useThemer();
-  const [importModalOpen, setImportModalOpen] = useState(false);
-  const [resetModalOpen, setResetModalOpen] = useState(false);
+export function ThemerMenu() {
+  const { config, setConfig } = useThemerConfig();
+  const { editingThemeName, upsertTheme, setEditingThemeName } = useThemerThemes();
 
-  const handleExport = async () => {
-    navigator.clipboard.writeText(btoa(JSON.stringify(config)));
-  };
-
-  const handleImport = async () => {
-    setImportModalOpen(!importModalOpen);
-  };
-
-  const handleReset = async () => {
-    setResetModalOpen(!resetModalOpen);
+  const handleSave = () => {
+    let name = editingThemeName;
+    if (!name) {
+      name = `My Theme ${Math.floor(Math.random() * 999999999999999)}`;
+      setEditingThemeName(name);
+    }
+    upsertTheme({ name, config });
   };
 
   return (
@@ -73,17 +70,13 @@ export function ConfigsMenu() {
         onChange={({ hex }) => setConfig({ ...config, quotedMessageColor: hex })}
       />
       <Flex gap={8}>
-        <Button fullWidth onClick={handleExport}>
-          Export
+        <TextInput value={editingThemeName} onChange={setEditingThemeName} placeholder="Theme Name" />
+        <Button fullWidth onClick={handleSave}>
+          <Flex gap={8} align="center">
+            <Icon type="save" size={16} />
+            Save
+          </Flex>
         </Button>
-        <Button fullWidth onClick={handleImport}>
-          Import
-        </Button>
-        <Button fullWidth onClick={handleReset}>
-          Reset
-        </Button>
-        <ImportModal open={importModalOpen} onRequestClose={() => setImportModalOpen(false)} />
-        <ResetModal open={resetModalOpen} onRequestClose={() => setResetModalOpen(false)} />
       </Flex>
     </div>
   );

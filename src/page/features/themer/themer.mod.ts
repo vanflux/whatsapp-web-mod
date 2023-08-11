@@ -1,30 +1,4 @@
-import { themerGradients } from "./gradients";
-
-export const DEFAULT_THEMER_CONFIG: ThemerConfig = {
-  background: themerGradients.find(({ name }) => name === "Professional")!.value,
-  blurContacts: false,
-  roundedBorders: true,
-  transparency: 0.5,
-  uiColor: "0, 0, 0",
-  outgoingMessageBackground: "#984DD4FF",
-  incomingMessageBackground: "#32659EFF",
-  systemMessageBackground: "#1F407F",
-  messageColor: "#E9EDEFFF",
-  quotedMessageColor: "#FFFFFF99",
-};
-
-export interface ThemerConfig {
-  background: string;
-  blurContacts: boolean;
-  roundedBorders: boolean;
-  transparency: number;
-  uiColor: string;
-  outgoingMessageBackground: string;
-  incomingMessageBackground: string;
-  systemMessageBackground: string;
-  messageColor: string;
-  quotedMessageColor: string;
-}
+import { DEFAULT_THEMER_CONFIG, ThemerConfig } from "./config";
 
 export class ThemerMod {
   private static config: ThemerConfig = DEFAULT_THEMER_CONFIG;
@@ -38,6 +12,9 @@ export class ThemerMod {
   }
 
   private static update() {
+    // Force darkmode
+    if (!document.body.classList.contains("dark")) document.body.classList.add("dark");
+    if (document.body.classList.contains("light")) document.body.classList.remove("light");
     const side = document.querySelector<HTMLDivElement>("#side");
     if (side) {
       side.style.background = this.transparentRGBA(0.27);
@@ -48,6 +25,12 @@ export class ThemerMod {
     }
     const appWrapperWeb = document.querySelector<HTMLDivElement>(".app-wrapper-web");
     if (appWrapperWeb) {
+      // Remove doodles
+      const doodles = document.querySelector<HTMLDivElement>('[data-asset-chat-background-dark="true"]');
+      if (doodles) {
+        doodles.style.opacity = "0";
+      }
+
       // Disable startup loader
       appWrapperWeb.style.setProperty("--startup-background-rgb", "-");
 
@@ -110,6 +93,9 @@ export class ThemerMod {
 
       // Make top panel transparent
       appWrapperWeb.style.setProperty("--panel-header-background", this.transparentRGBA(0.13));
+
+      // Make green top panel transparent
+      appWrapperWeb.style.setProperty("--app-background-stripe", this.transparentRGBA(0));
 
       // Change background
       appWrapperWeb.style.background = this.config.background;

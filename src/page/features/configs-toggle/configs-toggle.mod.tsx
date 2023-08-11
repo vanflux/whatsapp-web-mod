@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot, Root } from "react-dom/client";
-import { ConfigsButton } from "../../components/configs-button";
+import { ConfigsToggleButton } from "./components/configs-toggle-button";
 
 export class ConfigsMod {
   private static root?: Root;
@@ -10,7 +10,7 @@ export class ConfigsMod {
     const container = document.createElement("div");
     document.body.appendChild(container);
     this.root = createRoot(container);
-    this.root.render(<ConfigsButton />);
+    this.root.render(<ConfigsToggleButton />);
     this.timer = setInterval(() => {
       const menuBarCommunityTab = document.querySelector('[data-testid="menu-bar-community-tab"]');
       if (menuBarCommunityTab) {

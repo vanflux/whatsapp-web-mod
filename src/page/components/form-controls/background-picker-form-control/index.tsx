@@ -1,7 +1,7 @@
+import { BackgroundPicker, BackgroundPickerProps } from "@page-components/basic/background-picker";
+import { Flex } from "@page-components/basic/flex";
+import { FormLabel } from "@page-components/basic/form-label";
 import React from "react";
-import { BackgroundPicker, BackgroundPickerProps } from "../../basic/background-picker";
-import { Flex } from "../../basic/flex";
-import { FormLabel } from "../../basic/form-label";
 
 interface Props extends BackgroundPickerProps {
   label: string;

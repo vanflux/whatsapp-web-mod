@@ -1,6 +1,6 @@
+import { useOutsideAlert } from "@page-hooks/use-outside-alert";
 import React, { useRef, useState } from "react";
 import { ChromePicker, ColorResult } from "react-color";
-import { useOutsideAlert } from "../../../hooks/use-outside-alert";
 import styles from "./styles.module.css";
 
 export interface ColorPickerProps {

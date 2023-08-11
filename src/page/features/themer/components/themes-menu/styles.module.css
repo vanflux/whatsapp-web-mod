@@ -1,0 +1,29 @@
+.container {
+  padding: 8px;
+  min-width: 250px;
+  max-width: 250px;
+  height: 300px;
+  background-color: rgba(0, 0, 0, 40%);
+  overflow: auto;
+}
+
+.list {
+  overflow: auto;
+}
+
+.item {
+  background-color: rgba(0, 0, 0, 30%);
+  padding: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button {
+  display: flex;
+  max-width: 32px;
+}

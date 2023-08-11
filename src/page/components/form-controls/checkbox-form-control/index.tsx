@@ -1,7 +1,7 @@
+import { Checkbox, CheckboxProps } from "@page-components/basic/checkbox";
+import { Flex } from "@page-components/basic/flex";
+import { FormLabel } from "@page-components/basic/form-label";
 import React from "react";
-import { Checkbox, CheckboxProps } from "../../basic/checkbox";
-import { Flex } from "../../basic/flex";
-import { FormLabel } from "../../basic/form-label";
 
 interface Props extends CheckboxProps {
   label?: string;

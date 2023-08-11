@@ -1,6 +1,6 @@
+import { useStateStorage } from "@page-hooks/use-state-storage";
 import React, { ReactNode } from "react";
 import Draggable from "react-draggable";
-import { useStateStorage } from "../../hooks/use-state-storage";
 import styles from "./styles.module.css";
 
 interface Props {

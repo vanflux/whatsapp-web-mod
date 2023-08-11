@@ -1,6 +1,6 @@
+import { themerGradients } from "@page-features/themer/gradients";
+import { useOutsideAlert } from "@page-hooks/use-outside-alert";
 import React, { useMemo, useRef, useState } from "react";
-import { useOutsideAlert } from "../../../hooks/use-outside-alert";
-import { themerGradients } from "../../../mods/themer/gradients";
 import styles from "./styles.module.css";
 
 export interface BackgroundPickerProps {

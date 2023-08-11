@@ -1,5 +1,5 @@
+import { useStateStorage } from "@page-hooks/use-state-storage";
 import React, { createContext, PropsWithChildren, useContext } from "react";
-import { useStateStorage } from "../hooks/use-state-storage";
 
 interface Props {
   open: boolean;

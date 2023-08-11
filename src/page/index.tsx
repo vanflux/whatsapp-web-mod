@@ -1,8 +1,8 @@
+import { App } from "@page-components/app";
+import { ConfigsMod } from "@page-features/configs-toggle/configs-toggle.mod";
+import { ThemerMod } from "@page-features/themer/themer.mod";
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { App } from "./components/app";
-import { ConfigsMod } from "./mods/configs";
-import { ThemerMod } from "./mods/themer";
 
 export async function pageLoadedEntry() {
   window.destroyVFMod?.();

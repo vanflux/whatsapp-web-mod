@@ -8,6 +8,7 @@
   color: #ddd;
   border-radius: 4px;
   transition: background-color 100ms;
+  padding: 4px 8px;
 }
 
 .container:hover {

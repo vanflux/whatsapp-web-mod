@@ -1,7 +1,7 @@
+import { ColorPicker, ColorPickerProps } from "@page-components/basic/color-picker";
+import { Flex } from "@page-components/basic/flex";
+import { FormLabel } from "@page-components/basic/form-label";
 import React from "react";
-import { ColorPicker, ColorPickerProps } from "../../basic/color-picker";
-import { Flex } from "../../basic/flex";
-import { FormLabel } from "../../basic/form-label";
 
 interface Props extends ColorPickerProps {
   label: string;

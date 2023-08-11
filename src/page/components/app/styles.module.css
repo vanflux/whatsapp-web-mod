@@ -5,4 +5,10 @@
   inset: 0px;
   pointer-events: none;
   z-index: 999999999;
+  color: white;
+}
+
+.toastContainer {
+  --toastify-color-dark: #00000066;
+  backdrop-filter: blur(4px);
 }

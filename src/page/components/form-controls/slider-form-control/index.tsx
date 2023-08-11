@@ -1,7 +1,7 @@
+import { Flex } from "@page-components/basic/flex";
+import { FormLabel } from "@page-components/basic/form-label";
+import { Slider, SliderProps } from "@page-components/basic/slider";
 import React from "react";
-import { Slider, SliderProps } from "../../basic/slider";
-import { FormLabel } from "../../basic/form-label";
-import { Flex } from "../../basic/flex";
 
 interface Props extends SliderProps {
   label: string;
