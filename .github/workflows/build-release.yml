@@ -53,17 +53,16 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@master
         with:
-          path: artifacts
-      - name: Prepare extension artifacts # Rename all artifacts to their parent directory name
+          path: downloaded
+      - name: Prepare extension artifacts # Rename all artifacts to their parent directory name & build tm-whatsapp-web-mod.js
         run: |
-          find artifacts -type f -name "*.zip" -printf "/%P\n" | while read FILE; do \
+          mkdir artifacts
+          find downloaded -type f -name "*.zip" -printf "/%P\n" | while read FILE; do \
             DIR=$(dirname "$FILE" )
-            mv artifacts"$FILE" artifacts"$DIR""$DIR"
+            mv downloaded"$FILE" artifacts"$DIR"
           done
-      - name: Build tm-whatsapp-web-mod.js
-        run: |
           envsubst < tm.user-script.js > tm-whatsapp-web-mod.js
-          cat artifacts/page-chrome/page.js >> tm-whatsapp-web-mod.js
+          cat downloaded/page-chrome/page.js >> tm-whatsapp-web-mod.js
           mv tm-whatsapp-web-mod.js artifacts/tm-whatsapp-web-mod.js
         env:
           VERSION: ${{ steps.tagName.outputs.tag }}
@@ -74,7 +73,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "artifacts/**/*.zip"
+          artifacts: "artifacts/*"
           tag: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
           bodyFile: RELEASE_final.md
