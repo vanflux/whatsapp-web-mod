@@ -14,18 +14,19 @@
 ## Features
 
 - Themer (customization)
+  - Use or create your own theme!
 
 ## Default theme
 
 ![](./docs/images/wp-ui.png)
 
-## 300+ gradients for background
+## Themes and theme configuration
+
+![](./docs/images/mod-ui.png)
+
+## 300+ gradients available for the background
 
 ![](./docs/images/gradients.png)
-
-## Export/import configurations
-
-![](./docs/images/export-import.png)
 
 ## Usage
 

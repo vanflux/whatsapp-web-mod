@@ -2,6 +2,6 @@ Version $VERSION released! 🥳
 
 Changes:
 
-- First release
+- Themes added!
 
 Follow the readme instructions to install the extension

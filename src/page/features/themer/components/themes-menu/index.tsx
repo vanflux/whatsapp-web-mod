@@ -71,7 +71,7 @@ export function ThemesMenu() {
         <Button fullWidth onClick={() => setTab(0)}>
           <Flex gap={8} align="center">
             <Icon type="paintRoller" size={16} />
-            System
+            Predefined
           </Flex>
         </Button>
         <Button fullWidth onClick={() => setTab(1)}>

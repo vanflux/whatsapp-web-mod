@@ -1,7 +1,7 @@
 .container {
   padding: 8px;
-  min-width: 250px;
-  max-width: 250px;
+  min-width: 260px;
+  min-height: 260px;
   height: 300px;
   background-color: rgba(0, 0, 0, 40%);
   overflow: auto;

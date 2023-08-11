@@ -1,6 +1,7 @@
 import { Button } from "@page-components/basic/button";
 import { Flex } from "@page-components/basic/flex";
 import { Modal } from "@page-components/basic/modal";
+import { Text } from "@page-components/basic/text";
 import { TextInput } from "@page-components/basic/text-input";
 import { useThemerConfig } from "@page-contexts/themer-config";
 import { useThemerThemes } from "@page-contexts/themer-themes";
@@ -48,6 +49,7 @@ export const ImportModal = ({ open, onRequestClose, onImport }: Props) => {
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
       <Flex direction="column" gap={8}>
+        <Text>Import External Theme</Text>
         <TextInput placeholder="Data here..." value={value} fullWidth onChange={setValue} />
         <Flex gap={8}>
           <Button onClick={() => handleImport(false)} fullWidth>
