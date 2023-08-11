@@ -16,19 +16,7 @@
 - Themer (customization)
   - Use or create your own theme!
 
-## Default theme
-
-![](./docs/images/wp-ui.png)
-
-## Themes and theme configuration
-
-![](./docs/images/mod-ui.png)
-
-## 300+ gradients available for the background
-
-![](./docs/images/gradients.png)
-
-## Usage
+## How to install
 
 ## **Chrome**
 
@@ -48,3 +36,15 @@
 - Load temporary add-ons and pick the .zip
 - Go to [Whatsapp Web](https://web.whatsapp.com/) and click on the mod button to toggle configurations:
 - ![](./docs/images/toggle-button.png)
+
+## Default theme
+
+![](./docs/images/wp-ui.png)
+
+## Themes and theme configuration
+
+![](./docs/images/mod-ui.png)
+
+## 300+ gradients available for the background
+
+![](./docs/images/gradients.png)
