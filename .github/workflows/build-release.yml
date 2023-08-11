@@ -64,7 +64,7 @@ jobs:
         run: |
           envsubst < tm.user-script.js > tm-whatsapp-web-mod.js
           cat artifacts/page-chrome/page.js >> tm-whatsapp-web-mod.js
-          mv tm-whatsapp-web-mod.js artifacts/tm/tm-whatsapp-web-mod.js
+          mv tm-whatsapp-web-mod.js artifacts/tm-whatsapp-web-mod.js
         env:
           VERSION: ${{ steps.tagName.outputs.tag }}
       - name: Build RELEASE_final.md
