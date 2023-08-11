@@ -78,4 +78,3 @@ jobs:
           name: Release ${{ github.ref_name }}
           bodyFile: RELEASE_final.md
           token: ${{ secrets.GITHUB_TOKEN }}
-          draft: true
