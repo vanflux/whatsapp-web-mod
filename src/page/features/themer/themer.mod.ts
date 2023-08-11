@@ -25,10 +25,10 @@ export class ThemerMod {
     }
     const appWrapperWeb = document.querySelector<HTMLDivElement>(".app-wrapper-web");
     if (appWrapperWeb) {
-      // Remove doodles
+      // Make doodles opacity very low
       const doodles = document.querySelector<HTMLDivElement>('[data-asset-chat-background-dark="true"]');
       if (doodles) {
-        doodles.style.opacity = "0";
+        doodles.style.opacity = "0.05";
       }
 
       // Disable startup loader

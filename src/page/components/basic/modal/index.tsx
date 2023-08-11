@@ -1,7 +1,13 @@
 import React, { ReactNode } from "react";
 import ReactModal from "react-modal";
 
-ReactModal.setAppElement("#app");
+const timer = setInterval(() => {
+  const app = document.querySelector<HTMLDivElement>("#app");
+  if (app) {
+    ReactModal.setAppElement(app);
+    clearInterval(timer);
+  }
+}, 100);
 
 const customStyles: ReactModal.Styles = {
   overlay: {

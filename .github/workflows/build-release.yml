@@ -2,24 +2,22 @@ name: Build and Release Action
 on:
   push:
     tags:
-      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "[a-zA-Z]+[0-9]+.[0-9]+.[0-9]+"
 jobs:
   build:
     strategy:
       matrix:
         include:
           - target: chrome
-            build_dir: build/prod/chrome/extension.zip
+            build_zip_path: build/prod/chrome/extension.zip
+            page_script_path: build/prod/chrome/raw/page.js
           - target: firefox
-            build_dir: build/prod/firefox/whatsapp-web-mod.zip
+            build_zip_path: build/prod/firefox/whatsapp-web-mod.zip
+            page_script_path: build/prod/firefox/raw/page.js
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - uses: olegtarasov/get-tag@v2.1.2
-        id: tagName
-        with:
-          tagRegex: "v(.*)"
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -28,13 +26,20 @@ jobs:
         run: npm i
       - name: Build for ${{ matrix.target }}
         env:
-          VERSION: ${{ steps.tagName.outputs.tag }}
+          VERSION: ${{ github.ref_name }}
         run: npm run build ${{ matrix.target }}
-      - name: Upload artifact
+      - name: Upload zip artifact
         uses: actions/upload-artifact@master
         with:
           name: vf-wpp-mod.${{ matrix.target }}.zip
-          path: ${{ matrix.build_dir }}
+          path: ${{ matrix.build_zip_path }}
+          if-no-files-found: error
+      - name: Upload page artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: page-${{ matrix.target }}
+          path: ${{ matrix.page_script_path }}
+          if-no-files-found: error
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -44,26 +49,34 @@ jobs:
       - uses: olegtarasov/get-tag@v2.1.2
         id: tagName
         with:
-          tagRegex: "v(.*)"
+          tagRegex: "[a-zA-Z]+(.*)"
       - name: Download artifacts
         uses: actions/download-artifact@master
         with:
           path: artifacts
-      - name: Prepare artifacts # Rename all artifacts to their parent directory name
+      - name: Prepare extension artifacts # Rename all artifacts to their parent directory name
         run: |
           find artifacts -type f -name "*.zip" -printf "/%P\n" | while read FILE; do \
             DIR=$(dirname "$FILE" )
-            mv ./artifacts"$FILE" ./artifacts"$DIR""$DIR"
+            mv artifacts"$FILE" artifacts"$DIR""$DIR"
           done
+      - name: Build tm-whatsapp-web-mod.js
+        run: |
+          envsubst < tm.user-script.js > tm-whatsapp-web-mod.js
+          cat artifacts/page-chrome/page.js >> tm-whatsapp-web-mod.js
+          mv tm-whatsapp-web-mod.js artifacts/tm/tm-whatsapp-web-mod.js
+        env:
+          VERSION: ${{ steps.tagName.outputs.tag }}
       - name: Build RELEASE_final.md
         run: envsubst < RELEASE.md > RELEASE_final.md
         env:
-          VERSION: ${{ steps.tagName.outputs.tag }}
+          VERSION: ${{ github.ref_name }}
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "artifacts/**/*.zip"
-          tag: v${{ steps.tagName.outputs.tag }}
-          name: Release ${{ steps.tagName.outputs.tag }}
+          tag: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
           bodyFile: RELEASE_final.md
           token: ${{ secrets.GITHUB_TOKEN }}
+          draft: true
