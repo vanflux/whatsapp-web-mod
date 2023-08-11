@@ -61,15 +61,9 @@ jobs:
             DIR=$(dirname "$FILE" )
             mv downloaded"$FILE" artifacts"$DIR"
           done
-          ls
           envsubst < tm.user-script.js > tm-whatsapp-web-mod.js
-          ls
-          cat tm.user-script.js
-          cat tm-whatsapp-web-mod.js
           cat downloaded/page-chrome/page.js >> tm-whatsapp-web-mod.js
-          ls
           mv tm-whatsapp-web-mod.js artifacts/tm-whatsapp-web-mod.js
-          ls artifacts
         env:
           VERSION: ${{ steps.tagName.outputs.tag }}
       - name: Build RELEASE_final.md
