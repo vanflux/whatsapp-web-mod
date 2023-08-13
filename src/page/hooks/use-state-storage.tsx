@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function useStateStorage<T>(key: string, initialValue: T, onChange?: (value: T) => void): [T, (value: T) => void] {
   const [value, setValue] = useState(() => {
@@ -13,11 +13,14 @@ export function useStateStorage<T>(key: string, initialValue: T, onChange?: (val
     return newValue;
   });
 
+  useEffect(() => {
+    localStorage.setItem(`vf:${key}`, JSON.stringify(value));
+  }, [value]);
+
   return [
     value,
     (value: T) => {
       onChange?.(value);
-      localStorage.setItem(`vf:${key}`, JSON.stringify(value));
       setValue(value);
     },
   ];

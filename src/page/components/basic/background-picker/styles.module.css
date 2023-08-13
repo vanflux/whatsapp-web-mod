@@ -13,6 +13,7 @@
 .selector {
   display: flex;
   flex-direction: column;
+  align-items: center;
   position: absolute;
   top: 30px;
   left: 0px;
@@ -21,6 +22,48 @@
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   overflow: auto;
+  pointer-events: none;
+}
+
+.selector :global(.popup_tabs) {
+  background-color: #000000cc;
+  backdrop-filter: blur(4px);
+  pointer-events: all;
+}
+
+.selector :global(.popup_tabs-header) {
+  background-color: #ffffff08;
+  height: 30px;
+}
+
+.selector :global(.popup_tabs-header) > :global(.popup_tabs-header-label-active) {
+  background-color: #ffffff11;
+}
+
+.selector :global(.popup_tabs-header) > :global(.popup_tabs-header-label) {
+  color: white;
+  height: 30px;
+}
+
+.selector :global(.popup_tabs-body) {
+  background-color: transparent;
+  padding: 8px;
+}
+
+.selector :global(.colorpicker) {
+  background-color: transparent;
+}
+
+.selector :global(.colorpicker) :global(.color-picker-panel) {
+  background-color: transparent;
+}
+
+.selector label {
+  top: 1px !important;
+}
+
+.selector input {
+  height: 24px !important;
 }
 
 .item {

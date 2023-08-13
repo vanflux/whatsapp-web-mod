@@ -11,6 +11,7 @@ export const DEFAULT_THEMER_CONFIG: ThemerConfig = {
   systemMessageBackground: "#1F407F",
   messageColor: "#E9EDEFFF",
   quotedMessageColor: "#FFFFFF99",
+  doodlesOpacity: 0,
 };
 
 export interface ThemerConfig {
@@ -24,4 +25,5 @@ export interface ThemerConfig {
   systemMessageBackground: string;
   messageColor: string;
   quotedMessageColor: string;
+  doodlesOpacity: number;
 }

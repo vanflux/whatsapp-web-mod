@@ -1,4 +1,8 @@
-/* TODO: delete me */
+:root {
+  --doodles-opacity: 0;
+}
+
+/* Modify doodles */
 #main > div:first-child {
-  opacity: 0 !important;
+  opacity: var(--doodles-opacity) !important;
 }

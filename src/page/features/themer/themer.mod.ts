@@ -29,8 +29,7 @@ export class ThemerMod {
       // Make doodles opacity very low
       const doodles = document.querySelector<HTMLDivElement>('[data-asset-chat-background-dark="true"]');
       if (doodles) {
-        //doodles.style.background = 'url("https://img.freepik.com/vetores-gratis/arvore-isolada-no-fundo-branco_1308-26130.jpg")';
-        //doodles.style.opacity = "0.05";
+        appWrapperWeb.style.setProperty("--doodles-opacity", `${this.config.doodlesOpacity}`);
       }
 
       // Disable startup loader

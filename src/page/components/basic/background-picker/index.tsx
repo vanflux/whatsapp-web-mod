@@ -5,11 +5,12 @@ import styles from "./styles.module.css";
 import ReactGPicker from "react-gcolor-picker";
 
 export interface BackgroundPickerProps {
+  onlySolid?: boolean;
   value: string;
   onChange: (value: string) => void;
 }
 
-export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => {
+export const BackgroundPicker = ({ onlySolid, value, onChange }: BackgroundPickerProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   useOutsideAlert(ref, () => setOpen(false));
@@ -26,7 +27,7 @@ export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => 
     } else {
       return themerGradients;
     }
-  }, [open]);
+  }, [open, value]);
 
   return (
     <div className={styles.container} ref={ref}>
@@ -47,7 +48,7 @@ export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => 
             value={value}
             onChange={onChange}
             solid
-            gradient
+            gradient={!onlySolid}
             showAlpha
             showGradientAngle
             showGradientMode
@@ -55,22 +56,11 @@ export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => 
             showGradientResult
             showGradientStops
             showInputs
-            debounce={false}
-            debounceMS={1}
-            defaultColors={[]}
+            debounce
+            debounceMS={10}
+            defaultColors={themerGradients.map((x) => x.value)}
+            defaultColorsLimit={Infinity}
           />
-          {/* {items.map((gradient) => (
-            <div
-              key={gradient.value}
-              className={`${styles.item} ${gradient.value === value ? styles.selected : ""}`}
-              style={{
-                background: gradient.value,
-              }}
-              onClick={() => onChange(gradient.value)}
-            >
-              <div>{gradient.name}</div>
-            </div>
-          ))} */}
         </div>
       )}
     </div>
