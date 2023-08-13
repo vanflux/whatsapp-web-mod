@@ -1,3 +1,5 @@
+<base target="_blank">
+
 <h1 align="center">
   Whatsapp Web Mod <img width="32px" src="./docs/images/logo.png" />
 </h1>
