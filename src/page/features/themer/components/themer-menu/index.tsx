@@ -4,7 +4,6 @@ import { useThemerConfig } from "@page-contexts/themer-config";
 import { BackgroundPickerFormControl } from "@page-components/form-controls/background-picker-form-control";
 import { CheckboxFormControl } from "@page-components/form-controls/checkbox-form-control";
 import { SliderFormControl } from "@page-components/form-controls/slider-form-control";
-import { ColorPickerFormControl } from "@page-components/form-controls/color-picker-form-control";
 import { Flex } from "@page-components/basic/flex";
 import { Button } from "@page-components/basic/button";
 import { useThemerThemes } from "@page-contexts/themer-themes";
@@ -43,31 +42,51 @@ export function ThemerMenu() {
         valueFormatter={(value) => `${Math.floor(value)}%`}
         valueMinWidth={40}
       />
-      <ColorPickerFormControl
+      <SliderFormControl
+        label="Doodles Opacity"
+        value={config.doodlesOpacity * 100}
+        onChange={(v) => setConfig({ ...config, doodlesOpacity: Math.floor(v) / 100 })}
+        max={100}
+        min={0}
+        step={1}
+        valueFormatter={(value) => `${Math.floor(value)}%`}
+        valueMinWidth={40}
+      />
+      <BackgroundPickerFormControl
+        onlySolid
         label="UI Color"
         value={`rgb(${config.uiColor})`}
-        onChange={({ rgb: { r, g, b } }) => setConfig({ ...config, uiColor: `${r}, ${g}, ${b}` })}
+        onChange={(value) => setConfig({ ...config, uiColor: value.match(/\d+,\s*\d+,\s*\d+/)![0] })}
       />
-      <ColorPickerFormControl
+      <BackgroundPickerFormControl
+        onlySolid
         label="Outgoing Message Color"
         value={config.outgoingMessageBackground}
-        onChange={({ hex }) => setConfig({ ...config, outgoingMessageBackground: hex })}
+        onChange={(outgoingMessageBackground) => setConfig({ ...config, outgoingMessageBackground })}
       />
-      <ColorPickerFormControl
+      <BackgroundPickerFormControl
+        onlySolid
         label="Incoming Message Color"
         value={config.incomingMessageBackground}
-        onChange={({ hex }) => setConfig({ ...config, incomingMessageBackground: hex })}
+        onChange={(incomingMessageBackground) => setConfig({ ...config, incomingMessageBackground })}
       />
-      <ColorPickerFormControl
+      <BackgroundPickerFormControl
+        onlySolid
         label="System Message Color"
         value={config.systemMessageBackground}
-        onChange={({ hex }) => setConfig({ ...config, systemMessageBackground: hex })}
+        onChange={(systemMessageBackground) => setConfig({ ...config, systemMessageBackground })}
       />
-      <ColorPickerFormControl label="Message Color" value={config.messageColor} onChange={({ hex }) => setConfig({ ...config, messageColor: hex })} />
-      <ColorPickerFormControl
+      <BackgroundPickerFormControl
+        onlySolid
+        label="Message Color"
+        value={config.messageColor}
+        onChange={(messageColor) => setConfig({ ...config, messageColor })}
+      />
+      <BackgroundPickerFormControl
+        onlySolid
         label="Quoted Message Color"
         value={config.quotedMessageColor}
-        onChange={({ hex }) => setConfig({ ...config, quotedMessageColor: hex })}
+        onChange={(quotedMessageColor) => setConfig({ ...config, quotedMessageColor })}
       />
       <Flex gap={8}>
         <TextInput value={editingThemeName} onChange={setEditingThemeName} placeholder="Theme Name" />

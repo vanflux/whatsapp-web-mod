@@ -1,0 +1,8 @@
+:root {
+  --doodles-opacity: 0;
+}
+
+/* Modify doodles */
+#main > div:first-child {
+  opacity: var(--doodles-opacity) !important;
+}

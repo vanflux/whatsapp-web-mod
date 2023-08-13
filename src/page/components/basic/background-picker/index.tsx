@@ -2,13 +2,15 @@ import { themerGradients } from "@page-features/themer/gradients";
 import { useOutsideAlert } from "@page-hooks/use-outside-alert";
 import React, { useMemo, useRef, useState } from "react";
 import styles from "./styles.module.css";
+import ReactGPicker from "react-gcolor-picker";
 
 export interface BackgroundPickerProps {
+  onlySolid?: boolean;
   value: string;
   onChange: (value: string) => void;
 }
 
-export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => {
+export const BackgroundPicker = ({ onlySolid, value, onChange }: BackgroundPickerProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   useOutsideAlert(ref, () => setOpen(false));
@@ -25,7 +27,7 @@ export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => 
     } else {
       return themerGradients;
     }
-  }, [open]);
+  }, [open, value]);
 
   return (
     <div className={styles.container} ref={ref}>
@@ -42,18 +44,23 @@ export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => 
       </div>
       {open && (
         <div className={styles.selector}>
-          {items.map((gradient) => (
-            <div
-              key={gradient.value}
-              className={`${styles.item} ${gradient.value === value ? styles.selected : ""}`}
-              style={{
-                background: gradient.value,
-              }}
-              onClick={() => onChange(gradient.value)}
-            >
-              <div>{gradient.name}</div>
-            </div>
-          ))}
+          <ReactGPicker
+            value={value}
+            onChange={onChange}
+            solid
+            gradient={!onlySolid}
+            showAlpha
+            showGradientAngle
+            showGradientMode
+            showGradientPosition
+            showGradientResult
+            showGradientStops
+            showInputs
+            debounce
+            debounceMS={10}
+            defaultColors={themerGradients.map((x) => x.value)}
+            defaultColorsLimit={Infinity}
+          />
         </div>
       )}
     </div>

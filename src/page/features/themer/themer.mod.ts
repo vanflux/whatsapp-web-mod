@@ -1,4 +1,5 @@
 import { DEFAULT_THEMER_CONFIG, ThemerConfig } from "./config";
+import "./styles.css"; /* TODO: delete me */
 
 export class ThemerMod {
   private static config: ThemerConfig = DEFAULT_THEMER_CONFIG;
@@ -28,7 +29,7 @@ export class ThemerMod {
       // Make doodles opacity very low
       const doodles = document.querySelector<HTMLDivElement>('[data-asset-chat-background-dark="true"]');
       if (doodles) {
-        doodles.style.opacity = "0.05";
+        appWrapperWeb.style.setProperty("--doodles-opacity", `${this.config.doodlesOpacity}`);
       }
 
       // Disable startup loader
