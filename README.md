@@ -25,8 +25,8 @@
 
 ## How to install
 
-- Install <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank">Tamper Monkey</a> extension (<a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank">For Chrome</a> | <a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/" target="_blank">For Firefox</a>)
-- Visit <a href="https://github.com/vanflux/whatsapp-web-mod/releases/download/v1.2.1/wwm-vf.user.js" target="_blank">This Link</a> and click on "install"
+- Install [Tamper Monkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) extension ([For Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) | [For Firefox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/))
+- Visit [This Link](https://github.com/vanflux/whatsapp-web-mod/releases/download/v1.2.1/wwm-vf.user.js) and click on "install"
 - Go to [Whatsapp Web](https://web.whatsapp.com/) and click on the mod button to toggle configurations:
 - ![](./docs/images/toggle-button.png)
 
