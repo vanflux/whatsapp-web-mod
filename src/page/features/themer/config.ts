@@ -10,6 +10,7 @@ export const DEFAULT_THEMER_CONFIG: ThemerConfig = {
   incomingMessageBackground: "#32659EFF",
   systemMessageBackground: "#1F407F",
   messageColor: "#E9EDEFFF",
+  secondaryColor: "#FFFFFFFF",
   quotedMessageColor: "#FFFFFF99",
   doodlesOpacity: 0,
 };
@@ -24,6 +25,7 @@ export interface ThemerConfig {
   incomingMessageBackground: string;
   systemMessageBackground: string;
   messageColor: string;
+  secondaryColor: string;
   quotedMessageColor: string;
   doodlesOpacity: number;
 }

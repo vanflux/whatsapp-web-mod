@@ -75,6 +75,9 @@ export class ThemerMod {
       appWrapperWeb.style.setProperty("--message-primary", this.config.messageColor);
       appWrapperWeb.style.setProperty("--bubble-meta", this.config.messageColor);
 
+      // Change secondary color
+      appWrapperWeb.style.setProperty("--secondary", this.config.secondaryColor);
+
       // Change quoted message color
       appWrapperWeb.style.setProperty("--quoted-message-text", this.config.quotedMessageColor);
 

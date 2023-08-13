@@ -84,6 +84,12 @@ export function ThemerMenu() {
       />
       <BackgroundPickerFormControl
         onlySolid
+        label="Secondary Color"
+        value={config.secondaryColor}
+        onChange={(secondaryColor) => setConfig({ ...config, secondaryColor })}
+      />
+      <BackgroundPickerFormControl
+        onlySolid
         label="Quoted Message Color"
         value={config.quotedMessageColor}
         onChange={(quotedMessageColor) => setConfig({ ...config, quotedMessageColor })}
