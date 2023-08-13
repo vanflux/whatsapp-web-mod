@@ -13,7 +13,7 @@
 // @source       https://github.com/vanflux/whatsapp-web-mod
 // @match        https://web.whatsapp.com/*
 // @run-at       document-start
-// @updateURL    https://github.com/vanflux/whatsapp-web-mod/releases/latest/download/tm-whatsapp-web-mod.js
-// @downloadURL  https://github.com/vanflux/whatsapp-web-mod/releases/latest/download/tm-whatsapp-web-mod.js
+// @updateURL    https://github.com/vanflux/whatsapp-web-mod/releases/latest/download/wwm-vf.user.js
+// @downloadURL  https://github.com/vanflux/whatsapp-web-mod/releases/latest/download/wwm-vf.user.js
 // @supportURL   https://github.com/vanflux/whatsapp-web-mod
 // ==/UserScript==
