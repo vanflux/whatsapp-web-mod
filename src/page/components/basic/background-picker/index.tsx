@@ -2,6 +2,7 @@ import { themerGradients } from "@page-features/themer/gradients";
 import { useOutsideAlert } from "@page-hooks/use-outside-alert";
 import React, { useMemo, useRef, useState } from "react";
 import styles from "./styles.module.css";
+import ReactGPicker from "react-gcolor-picker";
 
 export interface BackgroundPickerProps {
   value: string;
@@ -42,7 +43,23 @@ export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => 
       </div>
       {open && (
         <div className={styles.selector}>
-          {items.map((gradient) => (
+          <ReactGPicker
+            value={value}
+            onChange={onChange}
+            solid
+            gradient
+            showAlpha
+            showGradientAngle
+            showGradientMode
+            showGradientPosition
+            showGradientResult
+            showGradientStops
+            showInputs
+            debounce={false}
+            debounceMS={1}
+            defaultColors={[]}
+          />
+          {/* {items.map((gradient) => (
             <div
               key={gradient.value}
               className={`${styles.item} ${gradient.value === value ? styles.selected : ""}`}
@@ -53,7 +70,7 @@ export const BackgroundPicker = ({ value, onChange }: BackgroundPickerProps) => 
             >
               <div>{gradient.name}</div>
             </div>
-          ))}
+          ))} */}
         </div>
       )}
     </div>
