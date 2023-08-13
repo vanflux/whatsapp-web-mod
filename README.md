@@ -14,13 +14,21 @@
 ## Summary
 
 - [Features](#features)
+- [**How to install**](#how-to-install)
 - [Default theme](#default-theme)
 - [Themes and theme configuration](#themes-and-theme-configuration)
 - [300+ gradients available for the background](#300-gradients-available-for-the-background)
 - [Themes and theme configuration](#themes-and-theme-configuration)
-- [**How to install**](#how-to-install)
+- [Development](#development)
   - [Chrome](#chrome)
   - [Firefox](#firefox)
+
+## How to install
+
+- Install [Tamper Monkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) extension ([For Chrome](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo) | [For Firefox](https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/))
+- Visit [This Link](https://github.com/vanflux/whatsapp-web-mod/releases/download/v1.2.1/wwm-vf.user.js) and click on "install"
+- Go to [Whatsapp Web](https://web.whatsapp.com/) and click on the mod button to toggle configurations:
+- ![](./docs/images/toggle-button.png)
 
 ## Features
 
@@ -39,23 +47,20 @@
 
 ![](./docs/images/gradients.png)
 
-## How to install
+## Development
 
 ### **Chrome**
 
-- Download the latest [vf-wpp-mod.chrome.zip](https://github.com/vanflux/whatsapp-web-mod/releases)
-- Unzip to some location on your PC
+- Run `npm install`
+- Run `npm run build`
 - Go to url chrome://extensions
 - Enable development mode
-- Load the uncompressed extension and pick the unzipped directory
-- Go to [Whatsapp Web](https://web.whatsapp.com/) and click on the mod button to toggle configurations:
-- ![](./docs/images/toggle-button.png)
+- Load the uncompressed extension and pick the unzipped directory at `build/dev`
 
 ### **Firefox**
 
-- Download the latest [vf-wpp-mod.firefox.zip](https://github.com/vanflux/whatsapp-web-mod/releases)
+- Run `npm install`
+- Run `npm run build firefox`
 - Go to url about:debugging
 - Go to This Firefox
-- Load temporary add-ons and pick the .zip
-- Go to [Whatsapp Web](https://web.whatsapp.com/) and click on the mod button to toggle configurations:
-- ![](./docs/images/toggle-button.png)
+- Load temporary add-ons and pick the .zip at at `build/dev`
