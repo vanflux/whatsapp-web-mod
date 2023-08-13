@@ -5,12 +5,16 @@ export interface Theme {
   config: ThemerConfig;
 }
 
+const fillWithDefault = (theme: Theme) => {
+  return { ...theme, config: { ...DEFAULT_THEMER_CONFIG, ...theme.config } };
+};
+
 export const serializeThemerTheme = (theme: Theme) => {
-  return btoa(JSON.stringify(theme));
+  return btoa(JSON.stringify(fillWithDefault(theme)));
 };
 
 export const deserializeThemerTheme = (value: string) => {
-  return JSON.parse(atob(value)) as Theme;
+  return fillWithDefault(JSON.parse(atob(value)));
 };
 
 export const DEFAULT_THEMES: Theme[] = [
@@ -21,9 +25,8 @@ export const DEFAULT_THEMES: Theme[] = [
   {
     name: "Fire",
     config: {
+      ...DEFAULT_THEMER_CONFIG,
       background: "linear-gradient(90deg, rgb(151, 145, 36) 0.00%,rgb(157, 37, 37) 100.00%)",
-      blurContacts: false,
-      roundedBorders: true,
       transparency: 0.27,
       uiColor: "45, 23, 9",
       outgoingMessageBackground: "#817c33",
@@ -32,15 +35,13 @@ export const DEFAULT_THEMES: Theme[] = [
       messageColor: "#FFFFFFFF",
       secondaryColor: "#FFFFFFFF",
       quotedMessageColor: "#e6e6e6",
-      doodlesOpacity: 0,
     },
   },
   {
     name: "Water",
     config: {
+      ...DEFAULT_THEMER_CONFIG,
       background: "linear-gradient(90deg, rgb(36, 67, 151) 0.00%,rgb(37, 157, 156) 100.00%)",
-      blurContacts: false,
-      roundedBorders: true,
       transparency: 0.45,
       uiColor: "0, 0, 0",
       outgoingMessageBackground: "rgb(35, 98, 149)",
@@ -55,10 +56,9 @@ export const DEFAULT_THEMES: Theme[] = [
   {
     name: "Rainbow",
     config: {
+      ...DEFAULT_THEMER_CONFIG,
       background:
         "linear-gradient(45deg, rgb(255, 0, 0) 0.00%,rgb(217, 255, 0) 16.66%,rgb(4, 255, 0) 33.33%,rgb(0, 240, 255) 50.00%,rgb(10, 0, 255) 66.66%,rgb(242, 0, 255) 83.33%,rgb(255, 0, 0) 100.00%)",
-      blurContacts: false,
-      roundedBorders: true,
       transparency: 0.45,
       uiColor: "0, 0, 0",
       outgoingMessageBackground: "rgb(125, 85, 174)",
@@ -67,7 +67,6 @@ export const DEFAULT_THEMES: Theme[] = [
       messageColor: "#FFFFFFFF",
       secondaryColor: "#FFFFFFFF",
       quotedMessageColor: "#e6e6e6",
-      doodlesOpacity: 0,
     },
   },
 ];

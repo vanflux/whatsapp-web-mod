@@ -3,6 +3,7 @@ import { themerGradients } from "./gradients";
 export const DEFAULT_THEMER_CONFIG: ThemerConfig = {
   background: themerGradients.find(({ name }) => name === "Professional")!.value,
   blurContacts: false,
+  blurProfilePhoto: false,
   roundedBorders: true,
   transparency: 0.5,
   uiColor: "0, 0, 0",
@@ -18,6 +19,7 @@ export const DEFAULT_THEMER_CONFIG: ThemerConfig = {
 export interface ThemerConfig {
   background: string;
   blurContacts: boolean;
+  blurProfilePhoto: boolean;
   roundedBorders: boolean;
   transparency: number;
   uiColor: string;

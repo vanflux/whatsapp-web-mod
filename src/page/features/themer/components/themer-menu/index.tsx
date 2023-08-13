@@ -28,6 +28,11 @@ export function ThemerMenu() {
       <BackgroundPickerFormControl label="Background" value={config.background} onChange={(background) => setConfig({ ...config, background })} />
       <CheckboxFormControl label="Blur Contacts" value={config.blurContacts} onChange={(blurContacts) => setConfig({ ...config, blurContacts })} />
       <CheckboxFormControl
+        label="Blur Profile Photo"
+        value={config.blurProfilePhoto}
+        onChange={(blurProfilePhoto) => setConfig({ ...config, blurProfilePhoto })}
+      />
+      <CheckboxFormControl
         label="Rounded Borders"
         value={config.roundedBorders}
         onChange={(roundedBorders) => setConfig({ ...config, roundedBorders })}

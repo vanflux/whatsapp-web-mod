@@ -35,7 +35,6 @@ export const ImportModal = ({ open, onRequestClose, onImport }: Props) => {
         setConfig(theme.config);
         toast.success(`Theme "${theme.name}" imported and applyed!`);
       } else {
-        setConfig(theme.config);
         toast.success(`Theme "${theme.name}" imported!`);
       }
       onImport?.();

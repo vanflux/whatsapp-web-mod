@@ -6,3 +6,11 @@
 #main > div:first-child {
   opacity: var(--doodles-opacity) !important;
 }
+
+[data-testid="conversation-header"] img {
+  filter: var(--profile-photo-filter);
+}
+
+[data-testid="chatlist-header"] img {
+  filter: var(--profile-photo-filter);
+}

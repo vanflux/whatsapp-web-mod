@@ -26,11 +26,11 @@ export class ThemerMod {
     }
     const appWrapperWeb = document.querySelector<HTMLDivElement>(".app-wrapper-web");
     if (appWrapperWeb) {
-      // Make doodles opacity very low
-      const doodles = document.querySelector<HTMLDivElement>('[data-asset-chat-background-dark="true"]');
-      if (doodles) {
-        appWrapperWeb.style.setProperty("--doodles-opacity", `${this.config.doodlesOpacity}`);
-      }
+      // Change doodles opacity
+      appWrapperWeb.style.setProperty("--doodles-opacity", `${this.config.doodlesOpacity}`);
+
+      // Blur profile photo
+      appWrapperWeb.style.setProperty("--profile-photo-filter", `${this.config.blurProfilePhoto ? "sepia(50%) blur(15px)" : ""}`);
 
       // Disable startup loader
       appWrapperWeb.style.setProperty("--startup-background-rgb", "-");

@@ -35,8 +35,6 @@ export const BackgroundPicker = ({ onlySolid, value, onChange }: BackgroundPicke
         className={`${styles.field} ${styles.item}`}
         style={{
           background: value,
-          borderBottomLeftRadius: open ? 0 : undefined,
-          borderBottomRightRadius: open ? 0 : undefined,
         }}
         onClick={() => setOpen(!open)}
       >
