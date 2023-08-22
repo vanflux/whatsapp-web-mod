@@ -1,3 +1,4 @@
+import { Icon } from "@page-components/basic/icon";
 import { useStateStorage } from "@page-hooks/use-state-storage";
 import React, { ReactNode } from "react";
 import Draggable from "react-draggable";
@@ -8,28 +9,46 @@ interface Props {
   icon?: ReactNode;
   title: string;
   children?: ReactNode;
+  defaultPosition?: { x: number; y: number };
+  getNextZIndex: () => number;
 }
 
-export const Window = ({ name, icon, title, children }: Props) => {
-  const [position, setPosition] = useStateStorage(`window-${name}-position`, {
-    x: 32,
-    y: 32,
+interface WindowConfig {
+  position: { x: number; y: number };
+  hidden: boolean;
+  zIndex: number;
+}
+
+export const Window = ({ name, icon, title, children, defaultPosition = { x: 32, y: 32 }, getNextZIndex }: Props) => {
+  const [config, setConfig] = useStateStorage<WindowConfig>(`window-${name}-config`, {
+    position: defaultPosition,
+    hidden: false,
+    zIndex: 0,
   });
 
   return (
-    <Draggable position={position} onDrag={(_, data) => setPosition({ x: data.x, y: data.y })} handle="strong">
-      <div className={styles.container}>
-        <strong className={styles.header}>
-          {icon}
-          <div>{title}</div>
-        </strong>
-        {children}
-        <div className={styles.footer}>
-          <a target="_blank" href="https://github.com/vanflux/whatsapp-web-mod">
-            MOD BY VANFLUX ({VERSION})
-          </a>
+    <div style={{ position: "absolute", zIndex: config.zIndex }}>
+      <Draggable position={config.position} onDrag={(_, data) => setConfig({ ...config, position: { x: data.x, y: data.y } })} handle="strong">
+        <div className={styles.container}>
+          <strong className={styles.header} onMouseDown={() => setConfig({ ...config, zIndex: getNextZIndex() })}>
+            <div className={styles.iconTitle}>
+              {icon}
+              <div>{title}</div>
+            </div>
+            <Icon onClick={() => setConfig({ ...config, hidden: !config.hidden })} type={config.hidden ? "eye" : "eyeSlash"} size={16} />
+          </strong>
+          {!config.hidden && (
+            <>
+              {children}
+              <div className={styles.footer}>
+                <a target="_blank" href="https://github.com/vanflux/whatsapp-web-mod">
+                  MOD BY VANFLUX ({VERSION})
+                </a>
+              </div>
+            </>
+          )}
         </div>
-      </div>
-    </Draggable>
+      </Draggable>
+    </div>
   );
 };

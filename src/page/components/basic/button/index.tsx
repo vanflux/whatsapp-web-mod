@@ -7,11 +7,16 @@ interface Props {
   fullWidth?: boolean;
   style?: CSSProperties;
   className?: string;
+  selected?: boolean;
 }
 
-export const Button = ({ children, onClick, fullWidth, style, className }: Props) => {
+export const Button = ({ children, onClick, fullWidth, style, className, selected }: Props) => {
   return (
-    <button style={{ width: fullWidth ? "100%" : undefined, ...style }} onClick={onClick} className={`${styles.container} ${className ?? ""}`}>
+    <button
+      style={{ width: fullWidth ? "100%" : undefined, border: selected ? "1px solid white" : "", ...style }}
+      onClick={onClick}
+      className={`${styles.container} ${className ?? ""}`}
+    >
       {children}
     </button>
   );

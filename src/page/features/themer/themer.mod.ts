@@ -1,9 +1,11 @@
+import { hookFn } from "../../utils/hook-fn";
 import { DEFAULT_THEMER_CONFIG, ThemerConfig } from "./config";
-import "./styles.css"; /* TODO: delete me */
+import "./styles.css";
 
 export class ThemerMod {
   private static config: ThemerConfig = DEFAULT_THEMER_CONFIG;
   private static timers: NodeJS.Timer[] = [];
+  private static destroySetAttributeHook: () => void;
 
   private static transparentRGBA(opacity: number) {
     const difference = (this.config.transparency - 0.5) * 2;
@@ -126,13 +128,8 @@ export class ThemerMod {
   }
 
   public static apply() {
-    if (!window.vfDivSetAttribute) {
-      window.vfDivSetAttribute = HTMLDivElement.prototype.setAttribute;
-      HTMLDivElement.prototype.setAttribute.toString = () => "function String() {\n    [native code]\n}";
-      HTMLDivElement.prototype.setAttribute.toString.toString = HTMLDivElement.prototype.setAttribute.toString;
-    }
     const self = this;
-    HTMLDivElement.prototype.setAttribute = function (key: string, value: string) {
+    this.destroySetAttributeHook = hookFn(HTMLDivElement.prototype, "setAttribute", function (this: HTMLElement, key, value) {
       if (key === "data-testid") {
         if (value === "conversation-panel-wrapper") {
           this.style.background = "transparent";
@@ -146,14 +143,13 @@ export class ThemerMod {
           this.style.backdropFilter = "blur(4px)";
         }
       }
-      return window.vfDivSetAttribute!.call(this, key, value);
-    };
+    });
 
     this.timers.push(setInterval(this.update.bind(this), 1000));
   }
 
   public static destroy() {
-    HTMLDivElement.prototype.setAttribute = window.vfDivSetAttribute!;
+    this.destroySetAttributeHook();
     this.timers.forEach((timer) => clearInterval(timer));
   }
 }

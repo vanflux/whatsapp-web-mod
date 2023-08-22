@@ -12,13 +12,21 @@
   display: flex;
   background-color: #000000dd;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
+  justify-content: space-between;
+  gap: 8px;
   min-height: 30px;
+  padding: 0px 8px;
   cursor: move;
   overflow: hidden;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
+}
+
+.iconTitle {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  gap: 4px;
 }
 
 .footer {

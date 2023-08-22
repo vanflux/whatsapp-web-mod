@@ -6,6 +6,7 @@ import { Windows } from "@page-components/windows";
 import { ThemerThemesContextProvider } from "@page-contexts/themer-themes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CryptographyConfigContextProvider } from "@page-contexts/cryptography-config";
 
 export function App() {
   return (
@@ -13,8 +14,10 @@ export function App() {
       <ConfigsOpenContextProvider>
         <ThemerConfigContextProvider>
           <ThemerThemesContextProvider>
-            <ToastContainer theme="dark" newestOnTop autoClose={2000} toastClassName={styles.toastContainer} />
-            <Windows />
+            <CryptographyConfigContextProvider>
+              <ToastContainer theme="dark" newestOnTop autoClose={2000} toastClassName={styles.toastContainer} />
+              <Windows />
+            </CryptographyConfigContextProvider>
           </ThemerThemesContextProvider>
         </ThemerConfigContextProvider>
       </ConfigsOpenContextProvider>
