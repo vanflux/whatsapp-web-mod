@@ -54,7 +54,7 @@ export function CryptographyMenu() {
         <TextInput ref={ref} fullWidth value={message} onChange={setMessage} placeholder="Message plain text" onKeyDown={handleKeyDown} />
         <Button onClick={handleSend}>
           <Flex gap={8} align="center">
-            <Icon type="save" size={16} />
+            <Icon type="send" size={16} />
             Send
           </Flex>
         </Button>

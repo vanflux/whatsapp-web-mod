@@ -43,7 +43,7 @@ const decryptMessage = async (config: CryptographyConfig, encryptedMessage: stri
 };
 
 export const PGPCryptographyModule: CryptographyModule = {
-  name: "PGP",
+  name: "PGPBeta",
   apply() {
     WapiMod.onAnyMessage(async (messageModel) => {
       if (!messageModel) return;
@@ -94,14 +94,14 @@ export const PGPCryptographyModule: CryptographyModule = {
           <TextInput fullWidth value={config.privateKey} onChange={(privateKey) => setConfig({ privateKey })} placeholder="Private key" />
           <Button onClick={handleRandomPrivateKey}>
             <Flex gap={8} align="center">
-              <Icon type="save" size={16} />
+              <Icon type="reload" size={16} />
               <div style={{ whiteSpace: "nowrap" }}>Random Private Key</div>
             </Flex>
           </Button>
         </Flex>
         <Button onClick={handleSendPublicKey}>
           <Flex gap={8} align="center">
-            <Icon type="save" size={16} />
+            <Icon type="send" size={16} />
             <div style={{ whiteSpace: "nowrap" }}>Send Public Key</div>
           </Flex>
         </Button>

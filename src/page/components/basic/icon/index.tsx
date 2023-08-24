@@ -10,7 +10,9 @@ import { LockIcon } from "./icons/lock";
 import { LogoIcon } from "./icons/logo";
 import { PaintIcon } from "./icons/paint";
 import { PaintRollerIcon } from "./icons/paint-roller";
+import { ReloadIcon } from "./icons/reload";
 import { SaveIcon } from "./icons/save";
+import { SendIcon } from "./icons/send";
 
 interface Props {
   type: IconType;
@@ -32,6 +34,8 @@ const icons = {
   lock: LockIcon,
   eye: EyeIcon,
   eyeSlash: EyeSlashIcon,
+  send: SendIcon,
+  reload: ReloadIcon,
 } as const;
 
 export type IconType = keyof typeof icons;
