@@ -1,12 +1,12 @@
 import styles from "./styles.module.css";
-import React, { useState } from "react";
-import { useThemerConfig } from "@page-contexts/themer-config";
+import React from "react";
+import { useThemerConfig } from "@page-features/themer/hooks/use-themer-config";
 import { BackgroundPickerFormControl } from "@page-components/form-controls/background-picker-form-control";
 import { CheckboxFormControl } from "@page-components/form-controls/checkbox-form-control";
 import { SliderFormControl } from "@page-components/form-controls/slider-form-control";
 import { Flex } from "@page-components/basic/flex";
 import { Button } from "@page-components/basic/button";
-import { useThemerThemes } from "@page-contexts/themer-themes";
+import { useThemerThemes } from "@page-features/themer/hooks/use-themer-themes";
 import { TextInput } from "@page-components/basic/text-input";
 import { Icon } from "@page-components/basic/icon";
 
@@ -26,12 +26,13 @@ export function ThemerMenu() {
   return (
     <div className={styles.container}>
       <BackgroundPickerFormControl label="Background" value={config.background} onChange={(background) => setConfig({ ...config, background })} />
-      <CheckboxFormControl label="Blur Contacts" value={config.blurContacts} onChange={(blurContacts) => setConfig({ ...config, blurContacts })} />
+      {/* TODO: FIX ME */}
+      {/* <CheckboxFormControl label="Blur Contacts" value={config.blurContacts} onChange={(blurContacts) => setConfig({ ...config, blurContacts })} />
       <CheckboxFormControl
         label="Blur Profile Photo"
         value={config.blurProfilePhoto}
         onChange={(blurProfilePhoto) => setConfig({ ...config, blurProfilePhoto })}
-      />
+      /> */}
       <CheckboxFormControl
         label="Rounded Borders"
         value={config.roundedBorders}

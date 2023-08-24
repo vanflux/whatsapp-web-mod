@@ -22,11 +22,15 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      - uses: olegtarasov/get-tag@v2.1.2
+        id: tagName
+        with:
+          tagRegex: "[a-zA-Z]+(.*)"
       - name: Install dependencies
         run: npm i
       - name: Build for ${{ matrix.target }}
         env:
-          VERSION: ${{ github.ref_name }}
+          VERSION: ${{ steps.tagName.outputs.tag }}
         run: npm run build ${{ matrix.target }}
       - name: Upload zip artifact
         uses: actions/upload-artifact@master

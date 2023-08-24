@@ -1,8 +1,15 @@
 import { hookFn } from "../../utils/hook-fn";
 import { DEFAULT_THEMER_CONFIG, ThemerConfig } from "./config";
+import { EventEmitter } from "events";
+import { StorageService } from "../../services/storage.service";
 import "./styles.css";
+import { ThemerThemes } from "./themes";
+
+const CONFIG_STORAGE_KEY = "themer-config";
 
 export class ThemerMod {
+  public static displayName = "Themer";
+  public static events = new EventEmitter();
   private static config: ThemerConfig = DEFAULT_THEMER_CONFIG;
   private static timers: NodeJS.Timer[] = [];
   private static destroySetAttributeHook: () => void;
@@ -40,8 +47,9 @@ export class ThemerMod {
       // Make status page transparent
       appWrapperWeb.style.setProperty("--status-background", this.transparentRGBA(0.87));
 
-      // Make media viewer transparent
+      // Make media viewer transparent and blur
       appWrapperWeb.style.setProperty("--media-viewer-background", this.transparentRGBA(0.8));
+      appWrapperWeb.style.setProperty("--media-viewer-backdrop-filter", "blur(4px)");
 
       // Make drawer transparent
       appWrapperWeb.style.setProperty("--drawer-background", this.transparentRGBA(0.8));
@@ -103,6 +111,9 @@ export class ThemerMod {
       // Make green top panel transparent
       appWrapperWeb.style.setProperty("--app-background-stripe", this.transparentRGBA(0));
 
+      // Define settings drawer background
+      appWrapperWeb.style.setProperty("--settings-drawer-background", this.transparentRGBA(0.8));
+
       // Change background
       appWrapperWeb.style.background = this.config.background;
 
@@ -111,10 +122,6 @@ export class ThemerMod {
         appWrapperWebDiv.style.background = this.transparentRGBA(0);
         appWrapperWebDiv.style.borderRadius = this.config.roundedBorders ? "16px" : "0px";
       }
-      const settingsDrawer = appWrapperWeb.querySelector<HTMLDivElement>('[data-testid="settings-drawer"]');
-      if (settingsDrawer) {
-        settingsDrawer.style.background = this.transparentRGBA(0.8);
-      }
       const main = document.querySelector<HTMLDivElement>("#main");
       if (main) {
         main.style.background = this.transparentRGBA(0);
@@ -122,24 +129,23 @@ export class ThemerMod {
     }
   }
 
+  public static getConfig() {
+    return this.config;
+  }
+
   public static setConfig(config: ThemerConfig) {
     this.config = config;
     this.update();
+    StorageService.setItem(CONFIG_STORAGE_KEY, config);
+    this.events.emit("change:config", config);
   }
 
   public static apply() {
-    const self = this;
+    this.config = StorageService.getItem<ThemerConfig>(CONFIG_STORAGE_KEY) ?? DEFAULT_THEMER_CONFIG;
+    ThemerThemes.setup();
     this.destroySetAttributeHook = hookFn(HTMLDivElement.prototype, "setAttribute", function (this: HTMLElement, key, value) {
-      if (key === "data-testid") {
-        if (value === "conversation-panel-wrapper") {
-          this.style.background = "transparent";
-        } else if (value === "contact-menu-dropdown") {
-          this.style.backdropFilter = "blur(4px)";
-        } else if (value === "media-viewer-modal") {
-          this.style.backdropFilter = "blur(4px)";
-        } else if (value === "settings-drawer") {
-          this.style.background = self.transparentRGBA(0.8);
-        } else if (value.startsWith("status-") && value.endsWith("-main-panel")) {
+      if (key === "role" && value === "application") {
+        if (this.querySelector("ul > div > div > li")) {
           this.style.backdropFilter = "blur(4px)";
         }
       }

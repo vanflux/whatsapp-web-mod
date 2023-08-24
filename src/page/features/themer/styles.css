@@ -7,6 +7,20 @@
   opacity: var(--doodles-opacity) !important;
 }
 
+#main {
+  background: transparent !important;
+}
+
+/* Settings drawer */
+div.two > div > div > span > div {
+  background: var(--settings-drawer-background);
+}
+
+/* Media viewer */
+[data-animate-media-viewer] {
+  backdrop-filter: var(--media-viewer-backdrop-filter);
+}
+
 [data-testid="conversation-header"] img {
   filter: var(--profile-photo-filter);
 }

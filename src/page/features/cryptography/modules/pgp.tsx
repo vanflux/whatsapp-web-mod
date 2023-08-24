@@ -5,8 +5,9 @@ import { TextInput } from "@page-components/basic/text-input";
 import React from "react";
 import { CryptographyModule } from "../module";
 import { CryptographyConfig } from "../config";
-import { createMessage, encrypt, generateKey, readPrivateKey } from "openpgp";
+import { createMessage, decrypt, encrypt, generateKey, readKey, readMessage, readPrivateKey } from "openpgp";
 import { WapiMod } from "@page-features/wapi/wapi.mod";
+import { CryptographyMod } from "../cryptography.mod";
 
 const getRandomPrivateKey = async (config: CryptographyConfig) => {
   if (!config.name) return;
@@ -21,30 +22,55 @@ const getRandomPublicKey = async (config: CryptographyConfig) => {
   return privateKey.toPublic().armor();
 };
 
-const encryptMessage = async (config: CryptographyConfig, message: string) => {
+const encryptMessage = async (config: CryptographyConfig, chatId: string, message: string) => {
   if (!config.privateKey) return;
-  const privateKey = await readPrivateKey({ armoredKey: config.privateKey });
-  const encrypted = await encrypt({ message: await createMessage({ text: message }), encryptionKeys: privateKey });
+  const publicKeyStr = config.publicKeys?.[chatId];
+  if (!publicKeyStr) return;
+  const publicKey = await readKey({ armoredKey: publicKeyStr });
+  const encrypted = await encrypt({ message: await createMessage({ text: message }), encryptionKeys: publicKey });
   return String(encrypted);
 };
 
-const decryptMessage = async (config: CryptographyConfig, chatId: string, encryptedMessage: string) => {
+const decryptMessage = async (config: CryptographyConfig, encryptedMessage: string) => {
   if (!config.privateKey) return;
-  // const publicKeyStr = config.publicKeys
-  // const publicKey = await readPrivateKey({ armoredKey: config.privateKey });
-  // const encrypted = await encrypt({ message: await createMessage({ text: encryptedMessage }), encryptionKeys: privateKey });
-  // return String(encrypted);
+  try {
+    const privateKey = await readPrivateKey({ armoredKey: config.privateKey });
+    const decrypted = await decrypt({ message: await readMessage({ armoredMessage: encryptedMessage }), decryptionKeys: privateKey });
+    return String(decrypted.data);
+  } catch (exc) {
+    console.log("Failed to decrypt", encryptedMessage);
+  }
 };
 
 export const PGPCryptographyModule: CryptographyModule = {
   name: "PGP",
-  apply() {},
-  destroy() {},
-  async encrypt(config: CryptographyConfig, message: string) {
-    return encryptMessage(config, message);
+  apply() {
+    WapiMod.onAnyMessage(async (messageModel) => {
+      if (!messageModel) return;
+      const received = messageModel.body;
+      if (!received) return;
+      const senderId = messageModel.senderObj?.id?._serialized;
+      if (!senderId) return;
+      const matches = received.match(/\[\-PublicKey\-start\-\]([^\[]+)\[/);
+      if (matches?.length) {
+        const [_, publicKeyString] = matches;
+        const config = CryptographyMod.getConfig();
+        CryptographyMod.setConfig({
+          ...config,
+          publicKeys: {
+            ...config.publicKeys,
+            [senderId]: publicKeyString,
+          },
+        });
+      }
+    });
   },
-  async decrypt(config, encryptedMessage) {
-    return undefined;
+  destroy() {},
+  async encrypt(config, chatId, message) {
+    return encryptMessage(config, chatId, message);
+  },
+  async decrypt(config, chatId, encryptedMessage) {
+    return decryptMessage(config, encryptedMessage);
   },
   component: ({ config, setConfig }) => {
     const handleRandomPrivateKey = async () => {

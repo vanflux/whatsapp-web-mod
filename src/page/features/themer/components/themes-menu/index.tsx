@@ -1,10 +1,10 @@
 import styles from "./styles.module.css";
 import React, { useState } from "react";
-import { useThemerConfig } from "@page-contexts/themer-config";
+import { useThemerConfig } from "@page-features/themer/hooks/use-themer-config";
 import { Flex } from "@page-components/basic/flex";
 import { Button } from "@page-components/basic/button";
 import { DEFAULT_THEMES, serializeThemerTheme, Theme } from "@page-features/themer/theme";
-import { useThemerThemes } from "@page-contexts/themer-themes";
+import { useThemerThemes } from "@page-features/themer/hooks/use-themer-themes";
 import { Text } from "@page-components/basic/text";
 import { ImportModal } from "../import-modal";
 import { Icon } from "@page-components/basic/icon";

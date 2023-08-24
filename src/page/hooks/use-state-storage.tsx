@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
+import { StorageService } from "../services/storage.service";
 
-export function useStateStorage<T>(key: string, initialValue: T, onChange?: (value: T) => void): [T, (value: T) => void] {
+export function useStateStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
   const [value, setValue] = useState(() => {
     let newValue: T;
     try {
-      newValue = JSON.parse(localStorage.getItem(`vf:${key}`)!) as T;
-      if (newValue == null) newValue = initialValue;
+      const item = StorageService.getItem<T>(key);
+      newValue = item == null ? initialValue : item;
     } catch {
       newValue = initialValue;
     }
-    onChange?.(newValue);
     return newValue;
   });
 
   useEffect(() => {
-    localStorage.setItem(`vf:${key}`, JSON.stringify(value));
+    StorageService.setItem(key, value);
   }, [value]);
 
-  return [
-    value,
-    (value: T) => {
-      onChange?.(value);
-      setValue(value);
-    },
-  ];
+  return [value, setValue];
 }

@@ -1,6 +1,6 @@
 import { Icon } from "@page-components/basic/icon";
 import { Window } from "@page-components/window";
-import { useConfigsOpen } from "@page-contexts/configs-open";
+import { useConfigsToggle } from "@page-features/configs-toggle/use-configs-toggle";
 import { CryptographyMenu } from "@page-features/cryptography/components/cryptography-menu";
 import { ThemerMenu } from "@page-features/themer/components/themer-menu";
 import { ThemesMenu } from "@page-features/themer/components/themes-menu";
@@ -9,7 +9,7 @@ import React from "react";
 
 export const Windows = () => {
   const [nextZIndex, setNextZIndex] = useStateStorage("windows-next-zindex", 0);
-  const { open } = useConfigsOpen();
+  const { open } = useConfigsToggle();
 
   const getNextZIndex = () => {
     setNextZIndex(nextZIndex + 1);

@@ -1,6 +1,10 @@
 const hooks = new Map<any, Map<any, any[]>>();
 
-export function hookFn<T, K extends keyof T>(obj: T, key: K, fn: T[K]) {
+export function hookFn<T, K extends keyof T, V = T[K] extends (...args: Parameters<(...args: any) => any>) => void ? T[K] : unknown>(
+  obj: T,
+  key: K,
+  fn: V,
+) {
   const aux = obj[key] as any;
   let objHooks = hooks.get(obj)!;
   if (!objHooks) hooks.set(obj, (objHooks = new Map<any, any>()));
@@ -9,7 +13,7 @@ export function hookFn<T, K extends keyof T>(obj: T, key: K, fn: T[K]) {
     objHooks.set(key, (fns = []));
     obj[key] = function (this: any, ...args: any) {
       fns.forEach((fn) => fn.apply(this, args));
-      aux.apply(this, args);
+      return aux.apply(this, args);
     } as T[K];
   }
   fns.push(fn);

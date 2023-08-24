@@ -12,8 +12,8 @@
 // @website      https://github.com/vanflux/whatsapp-web-mod
 // @source       https://github.com/vanflux/whatsapp-web-mod
 // @match        https://web.whatsapp.com/*
-// @run-at       document-start
 // @updateURL    https://github.com/vanflux/whatsapp-web-mod/releases/latest/download/wwm-vf.user.js
 // @downloadURL  https://github.com/vanflux/whatsapp-web-mod/releases/latest/download/wwm-vf.user.js
 // @supportURL   https://github.com/vanflux/whatsapp-web-mod
+// @grant        none
 // ==/UserScript==

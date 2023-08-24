@@ -6,9 +6,22 @@ declare global {
   }
 }
 
+type EventHandler = (...args: any) => any;
+type EventEmitterSource = {
+  on: (name: string, handler: EventHandler) => void;
+  off: (name: string, handler: EventHandler) => void;
+};
+
 export class WapiMod {
+  public static displayName = "Wapi";
   private static events = new EventEmitter();
   private static listeningChats = new Set();
+  private static listeners: { source: EventEmitterSource; name: string; handler: EventHandler }[] = [];
+
+  private static listen(source: EventEmitterSource, name: string, handler: EventHandler) {
+    this.listeners.push({ source, handler, name });
+    source.on(name, handler);
+  }
 
   public static getAllChats() {
     return window.Store.Chat.toArray();
@@ -47,28 +60,21 @@ export class WapiMod {
     window.webpackChunkbuild = window.webpackChunkwhatsapp_web_client;
     require("./downloaded/wapi.js");
 
-    window.Store.Msg.on("add", (message: any) => {
+    this.listen(window.Store.Msg, "add", (message: any) => {
       this.events.emit("anyMessage", message);
     });
     const applyChatHooks = (chat: any) => {
       if (this.listeningChats.has(chat)) return;
       this.listeningChats.add(chat);
-      chat.on("change:active", (chat: any, active: boolean) => {
+      this.listen(chat, "change:active", (chat: any, active: boolean) => {
         if (active) this.events.emit("activeChat", chat);
       });
     };
-    window.Store.Chat.on("add", (chat: any) => {
-      applyChatHooks(chat);
-    });
-    window.Store.Chat.on("remove", (chat: any) => {
-      chat.removeAllListeners();
-    });
+    this.listen(window.Store.Chat, "add", applyChatHooks);
     this.getAllChats().forEach(applyChatHooks);
   }
 
   public static destroy() {
-    window.Store.Msg.removeAllListeners();
-    window.Store.Chat.removeAllListeners();
-    this.getAllChats().forEach((chat: any) => chat.removeAllListeners());
+    this.listeners.forEach(({ source, name, handler }) => source.off(name, handler));
   }
 }

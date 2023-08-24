@@ -4,9 +4,9 @@ import React, { KeyboardEvent, useMemo, useRef, useState } from "react";
 import { Flex } from "@page-components/basic/flex";
 import { Icon } from "@page-components/basic/icon";
 import { TextInput } from "@page-components/basic/text-input";
-import { useCryptographyConfig } from "@page-contexts/cryptography-config";
 import { CryptographyMod } from "@page-features/cryptography/cryptography.mod";
 import { WapiMod } from "@page-features/wapi/wapi.mod";
+import { useCryptographyConfig } from "@page-features/cryptography/hooks/use-cryptography-config";
 
 export function CryptographyMenu() {
   const ref = useRef<HTMLInputElement>(null);
@@ -26,7 +26,7 @@ export function CryptographyMenu() {
     if (!selectedModule) return;
     const activeChatId = WapiMod.getActiveChatId();
     if (!activeChatId) return;
-    const encryptedMessage = await selectedModule.encrypt(config, message);
+    const encryptedMessage = await selectedModule.encrypt(config, activeChatId, message);
     if (!encryptedMessage) return;
     const toSend = `[-${selectedModule.name}-]${encryptedMessage}[`;
     WapiMod.sendTextMessage(activeChatId, toSend);
