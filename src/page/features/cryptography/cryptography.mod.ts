@@ -13,7 +13,10 @@ export class CryptographyMod {
   public static displayName = "Cryptography";
   public static events = new EventEmitter();
   private static config: CryptographyConfig;
-  private static modules: CryptographyModule[] = [PGPCryptographyModule, AguaraCryptographyModule];
+  private static modules: CryptographyModule[] = [
+    //PGPCryptographyModule,
+    AguaraCryptographyModule,
+  ];
   private static destroySetAttributeHook: () => void;
 
   public static getModules() {
