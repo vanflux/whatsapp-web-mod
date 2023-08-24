@@ -34,6 +34,8 @@
 
 - Themer (customization)
   - Use or create your own theme!
+- Cryptography
+  - Custom encryptions for you!
 
 ## Default theme
 
