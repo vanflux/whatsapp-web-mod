@@ -3,6 +3,8 @@ import { EventEmitter } from "events";
 declare global {
   interface Window {
     Store: any;
+    webpackChunkbuild: any;
+    webpackChunkwhatsapp_web_client: any;
   }
 }
 
@@ -36,7 +38,7 @@ export class WapiMod {
   }
 
   public static getActiveChatId() {
-    return window.Store.Chat.getActive().id.toString();
+    return window.Store.Chat.getActive()?.id?.toString();
   }
 
   public static getChatById(id: string) {
@@ -55,8 +57,16 @@ export class WapiMod {
     return this.getChatById(id).sendMessage(message);
   }
 
-  public static async apply() {
-    // @ts-ignore
+  private static async waitModules() {
+    const start = Date.now();
+    while (Date.now() - start < 10000) {
+      if (window?.webpackChunkwhatsapp_web_client?.length && window.webpackChunkwhatsapp_web_client.length > 15) return;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    throw new Error("Wait modules failed");
+  }
+
+  private static injectWapi() {
     window.webpackChunkbuild = window.webpackChunkwhatsapp_web_client;
     require("./downloaded/wapi.js");
 
@@ -72,6 +82,11 @@ export class WapiMod {
     };
     this.listen(window.Store.Chat, "add", applyChatHooks);
     this.getAllChats().forEach(applyChatHooks);
+  }
+
+  public static async apply() {
+    await this.waitModules();
+    this.injectWapi();
   }
 
   public static destroy() {
