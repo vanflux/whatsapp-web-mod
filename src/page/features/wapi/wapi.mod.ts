@@ -26,7 +26,7 @@ export class WapiMod {
   }
 
   public static getAllChats() {
-    return window.Store.Chat.toArray();
+    return window?.Store?.Chat?.toArray();
   }
 
   public static onAnyMessage(handler: (message: any) => void) {
@@ -37,20 +37,24 @@ export class WapiMod {
     return this.events.on("activeChat", handler);
   }
 
+  public static offActiveChat(handler: (chat: any) => void) {
+    return this.events.off("activeChat", handler);
+  }
+
   public static getActiveChatId() {
-    return window.Store.Chat.getActive()?.id?.toString();
+    return window?.Store?.Chat?.getActive()?.id?.toString();
   }
 
   public static getChatById(id: string) {
-    return window.Store.Chat.get(id);
+    return window?.Store?.Chat?.get(id);
   }
 
   public static getAllMessages() {
-    return window.Store.Msg.toArray();
+    return window?.Store?.Msg?.toArray();
   }
 
   public static getMessageById(id: string) {
-    return window.Store.Msg.get(id);
+    return window?.Store?.Msg?.get(id);
   }
 
   public static sendTextMessage(id: string, message: string) {
@@ -70,7 +74,7 @@ export class WapiMod {
     window.webpackChunkbuild = window.webpackChunkwhatsapp_web_client;
     require("./downloaded/wapi.js");
 
-    this.listen(window.Store.Msg, "add", (message: any) => {
+    this.listen(window?.Store?.Msg, "add", (message: any) => {
       this.events.emit("anyMessage", message);
     });
     const applyChatHooks = (chat: any) => {
@@ -80,7 +84,7 @@ export class WapiMod {
         if (active) this.events.emit("activeChat", chat);
       });
     };
-    this.listen(window.Store.Chat, "add", applyChatHooks);
+    this.listen(window?.Store?.Chat, "add", applyChatHooks);
     this.getAllChats().forEach(applyChatHooks);
   }
 

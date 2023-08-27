@@ -9,8 +9,9 @@ interface Props {
 export interface CryptographyModule {
   component: FC<Props>;
   name: string;
-  encrypt: (config: CryptographyConfig, chatId: string, message: string) => Promise<string | undefined>;
-  decrypt: (config: CryptographyConfig, chatId: string, encryptedMessage: string) => Promise<string | undefined>;
+  canSend: (chatId: string) => boolean;
+  encrypt: (chatId: string, message: string) => Promise<string | undefined>;
+  decrypt: (chatId: string, encryptedMessage: string) => Promise<string | undefined>;
   apply: () => void;
   destroy: () => void;
 }
