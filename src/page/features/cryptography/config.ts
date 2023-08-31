@@ -6,8 +6,6 @@ export interface CryptographyConfig {
     privateKey?: string;
     publicKeys?: Record<string, string>;
   };
-  name?: string;
-  email?: string;
   autoDecrypt?: boolean;
   hideEncryptedBody?: boolean;
 }

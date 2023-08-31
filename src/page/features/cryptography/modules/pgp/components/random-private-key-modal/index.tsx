@@ -3,6 +3,7 @@ import { Flex } from "@page-components/basic/flex";
 import { Modal } from "@page-components/basic/modal";
 import { Text } from "@page-components/basic/text";
 import React from "react";
+import styles from "./styles.module.css";
 
 interface Props {
   open: boolean;
@@ -13,9 +14,15 @@ interface Props {
 export const PGPRandomPrivateKeyModal = ({ open, onRequestClose, onConfirm }: Props) => {
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
-      <Flex direction="column" gap={8}>
-        <Text>Regenerate the current private key?</Text>
-        <Text>IMPORTANT: If you want to be able to decrypt messages from PGP again you will need to re-send your public key for each person.</Text>
+      <Flex direction="column" gap={16} className={styles.container}>
+        <Flex justify="center">
+          <Text size={18} bold>
+            Are you sure?
+          </Text>
+        </Flex>
+        <Text size={14}>
+          IMPORTANT: If you want to be able to decrypt messages from PGP again you will need to re-send your public key for each person.
+        </Text>
         <Flex gap={8}>
           <Button onClick={onRequestClose} fullWidth>
             Close

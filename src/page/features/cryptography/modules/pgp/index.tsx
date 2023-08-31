@@ -37,8 +37,6 @@ export const PGPCryptographyModule: CryptographyModule = {
   destroy() {},
   canSend(chatId: string) {
     const config = CryptographyMod.getConfig();
-    if (!config.name) return false;
-    if (!config.email) return false;
     if (!config.pgp) return false;
     if (!config.pgp.privateKey) return false;
     if (!config.pgp.publicKeys?.[chatId]) return false;
@@ -66,18 +64,15 @@ export const PGPCryptographyModule: CryptographyModule = {
   },
   component: ({ config, setConfig }) => {
     const [randomPrivateKeyModalOpen, setRandomPrivateKeyModalOpen] = useState(false);
-    const canGenPrivateKey = !!config.name && !!config.email;
     const canSendPublicKey = !!config.pgp?.privateKey;
 
     const handleRandomPrivateKey = async (confirmed: boolean) => {
       if (config.pgp?.privateKey && !confirmed) {
         setRandomPrivateKeyModalOpen(true);
       } else {
-        if (!config.name) return;
-        if (!config.email) return;
         const { privateKey: privateKeyModel } = await generateKey({
           curve: "curve25519",
-          userIDs: [{ name: config.name, email: config.email }],
+          userIDs: [],
           format: "object",
         });
         const privateKey = privateKeyModel.armor();
@@ -105,17 +100,14 @@ export const PGPCryptographyModule: CryptographyModule = {
           }}
           onRequestClose={() => setRandomPrivateKeyModalOpen(false)}
         />
-        <TextInput fullWidth value={config.name} onChange={(name) => setConfig({ ...config, name })} placeholder="Name" />
-        <TextInput fullWidth value={config.email} onChange={(email) => setConfig({ ...config, email })} placeholder="Email" />
         <Flex gap={8}>
           <TextInput
-            disabled={!canGenPrivateKey}
             fullWidth
             value={config.pgp?.privateKey}
             onChange={(privateKey) => setConfig({ ...config, pgp: { ...config.pgp, privateKey } })}
             placeholder="Private key"
           />
-          <Button disabled={!canGenPrivateKey} onClick={() => handleRandomPrivateKey(false)}>
+          <Button onClick={() => handleRandomPrivateKey(false)}>
             <Flex gap={8} align="center">
               <Icon type="reload" size={16} />
               <div style={{ whiteSpace: "nowrap" }}>Random Private Key</div>
