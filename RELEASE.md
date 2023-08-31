@@ -2,7 +2,6 @@ Version $VERSION released! 🥳
 
 Changes:
 
-- PGP(Beta) re-added.
-- Fixed a crash when whatsapp webpack modules take a long time to load.
+- Preventing windows from being dragged out of window (#3)
 
 Follow the readme instructions to install the extension
