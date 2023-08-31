@@ -34,7 +34,7 @@ export class CryptographyMod {
 
   private static async updateMessage(messageModel: any) {
     if (!messageModel) return;
-    if (!messageModel.__vfOriginalBody) messageModel.__vfOriginalBody = messageModel.body;
+    if (messageModel.__vfOriginalBody == null) messageModel.__vfOriginalBody = messageModel.body;
     const originalBody = messageModel.__vfOriginalBody;
     if (!originalBody) return;
     if (this.config.autoDecrypt) {
@@ -45,7 +45,8 @@ export class CryptographyMod {
       const [_, moduleName, encryptedMessage] = matches;
       const module = this.modules.find((module) => module.name === moduleName);
       if (!module) return;
-      const message = await module.decrypt(senderId, encryptedMessage);
+      if (messageModel.__vfDecryptedBody == null) messageModel.__vfDecryptedBody = await module.decrypt(senderId, encryptedMessage);
+      const message = messageModel.__vfDecryptedBody;
       if (this.config.hideEncryptedBody) {
         if (message) messageModel.body = `[${moduleName}] ${message}`;
       } else {
