@@ -25,40 +25,57 @@ export class CryptographyMod {
   }
 
   public static setConfig(config: CryptographyConfig) {
+    const oldConfig = this.config;
     this.config = config;
     StorageService.setItem(CONFIG_STORAGE_KEY, config);
     this.events.emit("change:config", config);
+    if (oldConfig?.autoDecrypt !== config?.autoDecrypt || oldConfig?.hideEncryptedBody !== config?.hideEncryptedBody) this.updateAllMessages();
   }
 
-  public static apply() {
-    const self = this;
-    this.config = StorageService.getItem<CryptographyConfig>(CONFIG_STORAGE_KEY) ?? DEFAULT_CRYPTOGRAPHY_CONFIG;
-    const processMessage = async (messageModel: any) => {
-      if (!messageModel) return;
-      const received = messageModel.body;
-      if (!received) return;
+  private static async updateMessage(messageModel: any) {
+    if (!messageModel) return;
+    if (!messageModel.__vfOriginalBody) messageModel.__vfOriginalBody = messageModel.body;
+    const originalBody = messageModel.__vfOriginalBody;
+    if (!originalBody) return;
+    if (this.config.autoDecrypt) {
       const senderId = messageModel.senderObj?.id?._serialized;
       if (!senderId) return;
-      const matches = received.match(/\[\-(\w+)\-\]([^\[]+)\[/);
-      if (matches?.length) {
-        const [_, moduleName, encryptedMessage] = matches;
-        const module = self.modules.find((module) => module.name === moduleName);
-        if (module) {
-          const message = await module.decrypt(self.config, senderId, encryptedMessage);
-          if (message) messageModel.body = `[Decrypted-${moduleName}] ${message}\n\n[Encrypted-${moduleName}] ${encryptedMessage}`;
-        }
+      const matches = originalBody.match(/\[\-(\w+)\-\]([^\[]+)\[/);
+      if (!matches?.length) return;
+      const [_, moduleName, encryptedMessage] = matches;
+      const module = this.modules.find((module) => module.name === moduleName);
+      if (!module) return;
+      const message = await module.decrypt(senderId, encryptedMessage);
+      if (this.config.hideEncryptedBody) {
+        if (message) messageModel.body = `[${moduleName}] ${message}`;
+      } else {
+        if (message) messageModel.body = `[Decrypted-${moduleName}] ${message}\n\n[Encrypted-${moduleName}] ${encryptedMessage}`;
       }
-    };
-    this.modules.forEach((module) => module.apply());
-    WapiMod.getAllMessages().forEach(processMessage);
-    WapiMod.onAnyMessage(processMessage);
-    this.destroySetAttributeHook = hookFn(HTMLDivElement.prototype, "setAttribute", async function (this: HTMLElement, key, value) {
+    } else {
+      messageModel.body = originalBody;
+    }
+  }
+
+  private static updateAllMessages() {
+    WapiMod.getAllMessages().forEach((message: any) => this.updateMessage(message));
+  }
+
+  private static applyMessageHooks() {
+    WapiMod.onAnyMessage((message: any) => this.updateMessage(message));
+    this.destroySetAttributeHook = hookFn(HTMLDivElement.prototype, "setAttribute", async (key, value) => {
       if (key === "data-id") {
         const message = WapiMod.getMessageById(value);
         if (!message) return;
-        processMessage(message);
+        this.updateMessage(message);
       }
     });
+  }
+
+  public static apply() {
+    this.config = StorageService.getItem<CryptographyConfig>(CONFIG_STORAGE_KEY) ?? DEFAULT_CRYPTOGRAPHY_CONFIG;
+    this.modules.forEach((module) => module.apply());
+    this.updateAllMessages();
+    this.applyMessageHooks();
   }
 
   public static destroy() {

@@ -14,3 +14,8 @@
 .container:hover {
   background-color: rgba(100, 100, 100, 40%);
 }
+
+.container:disabled {
+  background-color: rgba(167, 167, 167, 0.4);
+  cursor: default;
+}

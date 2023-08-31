@@ -12,7 +12,11 @@ export function hookFn<T, K extends keyof T, V = T[K] extends (...args: Paramete
   if (!fns) {
     objHooks.set(key, (fns = []));
     obj[key] = function (this: any, ...args: any) {
-      fns.forEach((fn) => fn.apply(this, args));
+      try {
+        fns.forEach((fn) => fn.apply(this, args));
+      } catch (exc) {
+        console.log("HookFn failed for", obj, key, fn, String(fn));
+      }
       return aux.apply(this, args);
     } as T[K];
   }

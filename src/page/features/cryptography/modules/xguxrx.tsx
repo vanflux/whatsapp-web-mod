@@ -22,62 +22,57 @@ function transform(vowel: string) {
   }
 }
 
-const encryptMessage = (message: string) => {
-  return (
-    message
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .match(/[a-z]+|[^a-z]+/gi)
-      ?.map((word) => {
-        if (!word.trim().length) return word;
-        const syllables = syllabify(word);
-        if (syllables == null) return word;
-        const hasMultiSyllable = syllables.length > 1;
-        let encrypted = "";
-        for (const syllable of syllables) {
-          let foundVowel = false;
-          if (hasMultiSyllable) {
-            for (let i = syllable.length - 1; i >= 0; i--) {
-              const vowel = syllable[i];
-              const ret = transform(vowel);
-              if (ret) {
-                foundVowel = true;
-                encrypted += syllable + ret;
-                break;
-              }
-            }
-          } else {
-            for (let i = 0; i < syllable.length; i++) {
-              const vowel = syllable[i];
-              const ret = transform(vowel);
-              encrypted += vowel;
-              if (ret) {
-                foundVowel = true;
-                encrypted += ret;
-              }
-            }
-          }
-          if (!foundVowel) encrypted += syllable;
-        }
-        return encrypted;
-      })
-      .join("") ?? ""
-  );
-};
-
-const decryptMessage = (encryptedMessage: string) => {
-  return encryptedMessage.replace(/gu?[aeiou]r[aeiou]/gi, "");
-};
-
 export const AguaraCryptographyModule: CryptographyModule = {
   name: "Xguxrx",
   apply() {},
   destroy() {},
-  async encrypt(config, chatId, message) {
-    return encryptMessage(message);
+  canSend() {
+    return true;
   },
-  async decrypt(config, chatId, encryptedMessage) {
-    return decryptMessage(encryptedMessage);
+  async encrypt(_, message) {
+    return (
+      message
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .match(/[a-z]+|[^a-z]+/gi)
+        ?.map((word) => {
+          if (!word.trim().length) return word;
+          const syllables = syllabify(word);
+          if (syllables == null) return word;
+          const hasMultiSyllable = syllables.length > 1;
+          let encrypted = "";
+          for (const syllable of syllables) {
+            let foundVowel = false;
+            if (hasMultiSyllable) {
+              for (let i = syllable.length - 1; i >= 0; i--) {
+                const vowel = syllable[i];
+                const ret = transform(vowel);
+                if (ret) {
+                  foundVowel = true;
+                  encrypted += syllable + ret;
+                  break;
+                }
+              }
+            } else {
+              for (let i = 0; i < syllable.length; i++) {
+                const vowel = syllable[i];
+                const ret = transform(vowel);
+                encrypted += vowel;
+                if (ret) {
+                  foundVowel = true;
+                  encrypted += ret;
+                }
+              }
+            }
+            if (!foundVowel) encrypted += syllable;
+          }
+          return encrypted;
+        })
+        .join("") ?? ""
+    );
+  },
+  async decrypt(chatId, encryptedMessage) {
+    return encryptedMessage.replace(/gu?[aeiou]r[aeiou]/gi, "");
   },
   component: () => null,
 };
