@@ -24,7 +24,7 @@ export class WapiMod {
   }
 
   public static getAllChats() {
-    return window?.Store?.Chat?.toArray();
+    return window?.Store?.Chat?.toArray() as any[];
   }
 
   public static onAnyMessage(handler: (message: any) => void) {

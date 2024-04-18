@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chatList {
+  display: flex;
+  flex-direction: column;
+  max-height: 200px;
+  overflow: auto;
+  gap: 4px;
+}
+
+.chatItem {
+  border: 1px solid rgba(255, 255, 255, 40%);
+}
+
+.chatItem:hover {
+  background-color: rgba(255, 255, 255, 10%);
+}
+
+.selectedChatItem {
+  background-color: rgba(255, 255, 255, 20%);
+}
+
+.selectedChatItem:hover {
+  background-color: rgba(255, 255, 255, 30%);
+}
