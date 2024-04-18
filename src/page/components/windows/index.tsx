@@ -23,7 +23,7 @@ export const Windows = () => {
           <Window
             name="cryptography"
             icon={<Icon type="lock" size={16} />}
-            defaultPosition={{ x: 16, y: 96 }}
+            defaultPosition={{ x: 112, y: 112 }}
             title="Cryptography"
             getNextZIndex={getNextZIndex}
           >
@@ -32,7 +32,7 @@ export const Windows = () => {
           <Window
             name="themes"
             icon={<Icon type="paint" size={16} />}
-            defaultPosition={{ x: 16, y: 56 }}
+            defaultPosition={{ x: 80, y: 80 }}
             title="Themes"
             getNextZIndex={getNextZIndex}
           >
@@ -41,7 +41,7 @@ export const Windows = () => {
           <Window
             name="configs"
             icon={<Icon type="config" size={16} />}
-            defaultPosition={{ x: 16, y: 16 }}
+            defaultPosition={{ x: 48, y: 48 }}
             title="Configs"
             getNextZIndex={getNextZIndex}
           >

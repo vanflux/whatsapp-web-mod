@@ -30,13 +30,13 @@ export class ConfigsMod {
     this.root = createRoot(container);
     this.root.render(<ConfigsToggleButton />);
     this.timer = setInterval(() => {
-      const icon = document.querySelector('header [data-icon="community-tab"]');
-      const menuBarCommunityTab = icon?.parentElement?.parentElement;
-      if (menuBarCommunityTab) {
-        const parent = menuBarCommunityTab.parentElement;
+      const icon = document.querySelector('header [data-icon="community-outline"]');
+      const menuBarCommunity = icon?.parentElement?.parentElement;
+      if (menuBarCommunity) {
+        const parent = menuBarCommunity.parentElement;
         if (!parent?.contains(container)) {
           if (parent) {
-            parent.insertBefore(container, menuBarCommunityTab);
+            parent.insertBefore(container, menuBarCommunity);
           }
         }
       }

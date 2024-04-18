@@ -6,3 +6,4 @@ declare interface Window {
 }
 
 declare var VERSION: string;
+declare var WAPI_JS_CODE: string;

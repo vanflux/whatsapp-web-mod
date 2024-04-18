@@ -3,8 +3,6 @@ import { EventEmitter } from "events";
 declare global {
   interface Window {
     Store: any;
-    webpackChunkbuild: any;
-    webpackChunkwhatsapp_web_client: any;
   }
 }
 
@@ -61,19 +59,39 @@ export class WapiMod {
     return this.getChatById(id).sendMessage(message);
   }
 
-  private static async waitModules() {
+  private static async inject() {
     const start = Date.now();
     while (Date.now() - start < 10000) {
-      if (window?.webpackChunkwhatsapp_web_client?.length && window.webpackChunkwhatsapp_web_client.length > 15) return;
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      try {
+        if (
+          // @ts-ignore
+          window.Debug?.VERSION != undefined &&
+          // @ts-ignore
+          window.require?.("__debug").modulesMap["WAWebLoadMainBundleFileDefinitions"] &&
+          this.tryInjectWapi()
+        )
+          return;
+      } catch (exc: unknown) {
+        console.log("Waiting modules to load:", exc);
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
     throw new Error("Wait modules failed");
   }
 
-  private static injectWapi() {
-    window.webpackChunkbuild = window.webpackChunkwhatsapp_web_client;
-    require("./downloaded/wapi.js");
+  private static tryInjectWapi() {
+    try {
+      (() => {
+        WAPI_JS_CODE; // This seams random yeah, but code is injected here
+      })();
+      if (window?.Store.Msg && window?.Store.Chat) return true;
+    } catch (exc: unknown) {
+      console.log("wapi.js code injection failure:", exc);
+    }
+    return false;
+  }
 
+  private static async hook() {
     this.listen(window?.Store?.Msg, "add", (message: any) => {
       this.events.emit("anyMessage", message);
     });
@@ -89,8 +107,8 @@ export class WapiMod {
   }
 
   public static async apply() {
-    await this.waitModules();
-    this.injectWapi();
+    await this.inject();
+    await this.hook();
   }
 
   public static destroy() {

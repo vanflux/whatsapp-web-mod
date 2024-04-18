@@ -32,7 +32,7 @@ export class CryptographyMod {
     if (oldConfig?.autoDecrypt !== config?.autoDecrypt || oldConfig?.hideEncryptedBody !== config?.hideEncryptedBody) this.updateAllMessages();
   }
 
-  private static async updateMessage(messageModel: any) {
+  private static async updateMessage(messageModel: any, isNew: boolean) {
     if (!messageModel) return;
     if (messageModel.__vfOriginalBody == null) messageModel.__vfOriginalBody = messageModel.body;
     const originalBody = messageModel.__vfOriginalBody;
@@ -47,8 +47,13 @@ export class CryptographyMod {
       if (!module) return;
       if (messageModel.__vfDecryptedBody == null) messageModel.__vfDecryptedBody = await module.decrypt(senderId, encryptedMessage);
       const message = messageModel.__vfDecryptedBody;
+      if (isNew) {
+        while (messageModel.ack < 1) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+      }
       if (this.config.hideEncryptedBody) {
-        if (message) messageModel.body = `[${moduleName}] ${message}`;
+        if (message) messageModel.body = message;
       } else {
         if (message) messageModel.body = `[Decrypted-${moduleName}] ${message}\n\n[Encrypted-${moduleName}] ${encryptedMessage}`;
       }
@@ -58,16 +63,16 @@ export class CryptographyMod {
   }
 
   private static updateAllMessages() {
-    WapiMod.getAllMessages().forEach((message: any) => this.updateMessage(message));
+    WapiMod.getAllMessages().forEach((message: any) => this.updateMessage(message, false));
   }
 
   private static applyMessageHooks() {
-    WapiMod.onAnyMessage((message: any) => this.updateMessage(message));
+    WapiMod.onAnyMessage((message: any) => this.updateMessage(message, true));
     this.destroySetAttributeHook = hookFn(HTMLDivElement.prototype, "setAttribute", async (key, value) => {
       if (key === "data-id") {
         const message = WapiMod.getMessageById(value);
         if (!message) return;
-        this.updateMessage(message);
+        this.updateMessage(message, true);
       }
     });
   }
