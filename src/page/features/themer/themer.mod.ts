@@ -44,6 +44,9 @@ export class ThemerMod {
       // Disable startup loader
       appWrapperWeb.style.setProperty("--startup-background-rgb", "-");
 
+      // Make header/navbar transparent
+      appWrapperWeb.style.setProperty("--navbar-background", this.transparentRGBA(0.27));
+
       // Make status page transparent
       appWrapperWeb.style.setProperty("--status-background", this.transparentRGBA(0.87));
 
@@ -111,13 +114,17 @@ export class ThemerMod {
       // Make green top panel transparent
       appWrapperWeb.style.setProperty("--app-background-stripe", this.transparentRGBA(0));
 
+      // Gallery drawer transparent
+      appWrapperWeb.style.setProperty("--drawer-gallery-background", this.transparentRGBA(0));
+      appWrapperWeb.style.setProperty("--drawer-gallery-background-active", this.transparentRGBA(0.27));
+
       // Define settings drawer background
       appWrapperWeb.style.setProperty("--settings-drawer-background", this.transparentRGBA(0.8));
 
       // Change background
       appWrapperWeb.style.background = this.config.background;
 
-      const appWrapperWebDiv = appWrapperWeb.querySelector<HTMLDivElement>(":scope > div");
+      const appWrapperWebDiv = appWrapperWeb.querySelector<HTMLDivElement>(":scope > div.two");
       if (appWrapperWebDiv) {
         appWrapperWebDiv.style.background = this.transparentRGBA(0);
         appWrapperWebDiv.style.borderRadius = this.config.roundedBorders ? "16px" : "0px";
