@@ -6,6 +6,7 @@ import { FormLabel } from "@page-components/basic/form-label";
 import { TextInput } from "@page-components/basic/text-input";
 import { Button } from "@page-components/basic/button";
 import { DateAlertItem, DateAlertMessageAction } from "@page-features/date-alert/config";
+import { DateTimePicker } from "@page-components/basic/datetime-picker";
 
 interface Props {
   open: boolean;
@@ -16,7 +17,8 @@ interface Props {
 export function CreateDateAlertModal({ open, onCreate, onRequestClose }: Props) {
   const [chatId, setChatId] = useState<string>();
   const [message, setMessage] = useState<string>();
-  const [date, setDate] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date>();
+  const [endDate, setEndDate] = useState<Date>();
 
   const chats = useMemo<any[]>(() => {
     if (!open) return [];
@@ -28,21 +30,10 @@ export function CreateDateAlertModal({ open, onCreate, onRequestClose }: Props) 
       <div className={styles.container}>
         <FormLabel>Message:</FormLabel>
         <TextInput fullWidth value={message} onChange={setMessage} />
-        <FormLabel>Date time:</FormLabel>
-        <input
-          value={date?.toISOString()?.match(/^\d{4}\-\d{1,2}\-\d{1,2}T\d{1,2}:\d{1,2}/) ?? ""}
-          onChange={(e) => {
-            console.log(e.target.value);
-            const date = new Date(e.target.value);
-            console.log(date);
-            if (!isNaN(date.getTime())) {
-              setDate(date);
-            } else {
-              setDate(undefined);
-            }
-          }}
-          type="datetime-local"
-        />
+        <FormLabel>Start date time:</FormLabel>
+        <DateTimePicker value={startDate} onChange={setStartDate} fullWidth />
+        <FormLabel>End date time:</FormLabel>
+        <DateTimePicker value={endDate} onChange={setEndDate} fullWidth />
         <FormLabel>Chat list:</FormLabel>
         <div className={styles.chatList}>
           {chats.map((chat) => {
@@ -59,10 +50,11 @@ export function CreateDateAlertModal({ open, onCreate, onRequestClose }: Props) 
           onClick={() => {
             if (!chatId) return;
             if (!message) return;
-            if (!date) return;
-            const cron = `0 ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`;
+            if (!startDate) return;
+            if (!endDate) return;
             const item: DateAlertItem = {
-              cron,
+              startDate: startDate.toISOString(),
+              endDate: endDate.toISOString(),
               action: {
                 chatId,
                 message,

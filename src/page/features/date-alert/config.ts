@@ -3,7 +3,9 @@ export const DEFAULT_DATE_ALERT_CONFIG: DateAlertConfig = {
 };
 
 export type DateAlertItem = {
-  cron: string;
+  startDate: string;
+  endDate: string;
+  lastExecution?: string;
   action?: DateAlertAction;
 };
 

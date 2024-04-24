@@ -3,6 +3,7 @@ import { Flex } from "@page-components/basic/flex";
 import { useDateAlertConfig } from "@page-features/date-alert/hooks/use-date-alert-config";
 import React, { useState } from "react";
 import { CreateDateAlertModal } from "../create-date-alert-modal";
+import { DateAlertItemView } from "../date-alert-item-view";
 import styles from "./styles.module.css";
 
 export function DateAlertMenu() {
@@ -22,15 +23,7 @@ export function DateAlertMenu() {
       <Button onClick={() => setOpen(true)}>Create Date Alert</Button>
       <Flex direction="column" gap={4}>
         {config.items.map((item, i) => (
-          <Flex key={i} direction="column" className={styles.item}>
-            <p>Cron: {item.cron}</p>
-            {item.action?.type === "message" && (
-              <>
-                <p>Chat Id: {item.action.chatId}</p>
-                <p>Message: {item.action.message}</p>
-              </>
-            )}
-          </Flex>
+          <DateAlertItemView key={i} item={item} />
         ))}
       </Flex>
     </Flex>
