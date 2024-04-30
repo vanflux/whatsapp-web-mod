@@ -1,9 +1,16 @@
 import { EventEmitter } from "events";
+import { Queue } from "../../utils/queue";
+import { sleep } from "../../utils/sleep";
 
 declare global {
   interface Window {
     Store: any;
   }
+}
+
+interface SendMessageDto {
+  chatId: string;
+  message: string;
 }
 
 type EventHandler = (...args: any) => any;
@@ -17,6 +24,7 @@ export class WapiMod {
   private static events = new EventEmitter();
   private static listeningChats = new Set();
   private static listeners: { source: EventEmitterSource; name: string; handler: EventHandler }[] = [];
+  private static sendMessageQueue = new Queue(1000, ({ chatId, message }: SendMessageDto) => this.getChatById(chatId).sendMessage(message));
 
   private static listen(source: EventEmitterSource, name: string, handler: EventHandler) {
     this.listeners.push({ source, handler, name });
@@ -55,8 +63,8 @@ export class WapiMod {
     return window?.Store?.Msg?.get(id);
   }
 
-  public static sendTextMessage(id: string, message: string) {
-    return this.getChatById(id).sendMessage(message);
+  public static async sendTextMessage(chatId: string, message: string) {
+    this.sendMessageQueue.push({ chatId, message });
   }
 
   private static async inject() {
@@ -74,7 +82,7 @@ export class WapiMod {
       } catch (exc: unknown) {
         console.log("Waiting modules to load:", exc);
       }
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await sleep(1000);
     }
     throw new Error("Wait modules failed");
   }

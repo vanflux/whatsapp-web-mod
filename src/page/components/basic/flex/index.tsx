@@ -1,4 +1,4 @@
-import React, { CSSProperties, ReactNode } from "react";
+import React, { CSSProperties, ReactNode, useMemo } from "react";
 
 interface Props {
   direction?: "column" | "row" | "column-reverse" | "row-reverse";
@@ -26,19 +26,20 @@ const justifyMapping = {
 };
 
 export const Flex = ({ direction, align, justify, gap, flex, style, className, children }: Props) => {
+  const internalStyle = useMemo(
+    () => ({
+      display: "flex",
+      alignItems: alignMapping[align!],
+      justifyContent: justifyMapping[justify!],
+      flexDirection: direction,
+      gap,
+      flex,
+      ...style,
+    }),
+    [style],
+  );
   return (
-    <div
-      className={className}
-      style={{
-        display: "flex",
-        alignItems: alignMapping[align!],
-        justifyContent: justifyMapping[justify!],
-        flexDirection: direction,
-        gap,
-        flex,
-        ...style,
-      }}
-    >
+    <div className={className} style={internalStyle}>
       {children}
     </div>
   );

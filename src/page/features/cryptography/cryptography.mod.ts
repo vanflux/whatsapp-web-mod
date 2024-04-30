@@ -6,6 +6,7 @@ import { CryptographyConfig, DEFAULT_CRYPTOGRAPHY_CONFIG } from "./config";
 import { WapiMod } from "@page-features/wapi/wapi.mod";
 import { EventEmitter } from "events";
 import { StorageService } from "../../services/storage.service";
+import { sleep } from "../../utils/sleep";
 
 const CONFIG_STORAGE_KEY = "cryptography-config";
 
@@ -49,7 +50,7 @@ export class CryptographyMod {
       const message = messageModel.__vfDecryptedBody;
       if (isNew) {
         while (messageModel.ack < 1) {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await sleep(100);
         }
       }
       if (this.config.hideEncryptedBody) {

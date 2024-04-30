@@ -1,8 +1,8 @@
 import { Icon } from "@page-components/basic/icon";
 import { Window } from "@page-components/window";
+import { AutomationMenu } from "@page-features/automation/components/automation-menu";
 import { useConfigsToggle } from "@page-features/configs-toggle/use-configs-toggle";
 import { CryptographyMenu } from "@page-features/cryptography/components/cryptography-menu";
-import { DateAlertMenu } from "@page-features/date-alert/components/date-alert-menu";
 import { ThemerMenu } from "@page-features/themer/components/themer-menu";
 import { ThemesMenu } from "@page-features/themer/components/themes-menu";
 import { useStateStorage } from "@page-hooks/use-state-storage";
@@ -49,13 +49,13 @@ export const Windows = () => {
             <ThemerMenu />
           </Window>
           <Window
-            name="date-alert"
+            name="automation"
             icon={<Icon type="paint" size={16} />}
             defaultPosition={{ x: 16, y: 16 }}
-            title="Date Alert"
+            title="Automation"
             getNextZIndex={getNextZIndex}
           >
-            <DateAlertMenu />
+            <AutomationMenu />
           </Window>
         </>
       )}
