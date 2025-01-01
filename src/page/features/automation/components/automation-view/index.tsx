@@ -1,11 +1,11 @@
 import { Flex } from "@page-components/basic/flex";
-import React, { useMemo } from "react";
+import React from "react";
 import { formatDDMMYYYY, formatDDMMYYYYHHMMSS } from "../../../../utils/date";
 import styles from "./styles.module.css";
-import { WapiMod } from "@page-features/wapi/wapi.mod";
 import { Icon } from "@page-components/basic/icon";
 import { Button } from "@page-components/basic/button";
 import { Automation } from "@page-features/automation/config";
+import { useChat } from "@page-features/wapi/hooks/use-chat-id";
 
 interface Props {
   item: Automation;
@@ -14,10 +14,7 @@ interface Props {
 }
 
 export function AutomationView({ item, onEdit, onDelete }: Props) {
-  const chat = useMemo(() => {
-    if (!item.entrypoint?.action?.chatId) return;
-    return WapiMod.getChatById(item.entrypoint?.action.chatId);
-  }, [item.entrypoint?.action?.chatId]);
+  const chat = useChat(item.entrypoint?.action?.chatId);
 
   return (
     <Flex direction="column" gap={4} className={styles.container}>

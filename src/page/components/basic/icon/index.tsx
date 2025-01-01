@@ -11,6 +11,7 @@ import { LogoIcon } from "./icons/logo";
 import { PaintIcon } from "./icons/paint";
 import { PaintRollerIcon } from "./icons/paint-roller";
 import { ReloadIcon } from "./icons/reload";
+import { RobotIcon } from "./icons/robot";
 import { SaveIcon } from "./icons/save";
 import { SendIcon } from "./icons/send";
 
@@ -36,6 +37,7 @@ const icons = {
   eyeSlash: EyeSlashIcon,
   send: SendIcon,
   reload: ReloadIcon,
+  robot: RobotIcon,
 } as const;
 
 export type IconType = keyof typeof icons;

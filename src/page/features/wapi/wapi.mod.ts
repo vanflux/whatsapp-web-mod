@@ -35,6 +35,10 @@ export class WapiMod {
     return window?.Store?.Chat?.toArray() as any[];
   }
 
+  public static onReady(handler: () => void) {
+    return this.events.on("ready", handler);
+  }
+
   public static onAnyMessage(handler: (message: any) => void) {
     return this.events.on("anyMessage", handler);
   }
@@ -99,7 +103,24 @@ export class WapiMod {
     return false;
   }
 
+  private static async waitReady() {
+    while (true) {
+      try {
+        const chats = await this.getAllChats();
+        if (chats.length) {
+          this.events.emit("ready");
+          console.log("Wapi Mod ready!");
+          return;
+        }
+      } catch (exc: unknown) {
+        console.log("Waiting all chats:", exc);
+      }
+      await sleep(1000);
+    }
+  }
+
   private static async hook() {
+    await this.waitReady();
     this.listen(window?.Store?.Msg, "add", (message: any) => {
       this.events.emit("anyMessage", message);
     });
@@ -116,7 +137,7 @@ export class WapiMod {
 
   public static async apply() {
     await this.inject();
-    await this.hook();
+    this.hook();
   }
 
   public static destroy() {

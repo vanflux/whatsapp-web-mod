@@ -50,7 +50,7 @@ export const Windows = () => {
           </Window>
           <Window
             name="automation"
-            icon={<Icon type="paint" size={16} />}
+            icon={<Icon type="robot" size={16} />}
             defaultPosition={{ x: 16, y: 16 }}
             title="Automation"
             getNextZIndex={getNextZIndex}

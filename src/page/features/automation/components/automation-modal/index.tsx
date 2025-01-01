@@ -8,6 +8,7 @@ import { Button } from "@page-components/basic/button";
 import { DateTimePicker } from "@page-components/basic/datetime-picker";
 import { Automation } from "@page-features/automation/config";
 import { Flex } from "@page-components/basic/flex";
+import { useChats } from "@page-features/wapi/hooks/use-chats";
 
 interface Props {
   open: boolean;
@@ -21,6 +22,7 @@ export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
   const [message, setMessage] = useState<string>();
   const [dateOfBirth, setDateOfBirth] = useState<Date>();
   const [lastExecution, setLastExecution] = useState<Date>();
+  const chats = useChats();
 
   useEffect(() => {
     if (!open) return;
@@ -29,11 +31,6 @@ export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
     setDateOfBirth(item?.entrypoint?.dateOfBirth ? new Date(item?.entrypoint?.dateOfBirth) : undefined);
     setLastExecution(item?.lastExecution ? new Date(item?.lastExecution) : undefined);
   }, [item, open]);
-
-  const chats = useMemo<any[]>(() => {
-    if (!open) return [];
-    return WapiMod.getAllChats();
-  }, [open]);
 
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
@@ -44,7 +41,7 @@ export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
         <DateTimePicker value={dateOfBirth} onChange={setDateOfBirth} fullWidth onlyDate />
         <FormLabel>Chat list:</FormLabel>
         <div className={styles.chatList}>
-          {chats.map((chat) => {
+          {chats.map((chat: any) => {
             const id = chat?.id?._serialized;
             const name = chat?.formattedTitle;
             return (
