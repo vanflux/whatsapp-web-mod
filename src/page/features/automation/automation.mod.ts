@@ -2,6 +2,7 @@ import { WapiMod } from "@page-features/wapi/wapi.mod";
 import { EventEmitter } from "events";
 import { StorageService } from "../../services/storage.service";
 import { Automation, AutomationConfig, DEFAULT_AUTOMATION_CONFIG } from "./config";
+import { Cron } from "croner";
 
 const CONFIG_STORAGE_KEY = "automation-config";
 
@@ -27,19 +28,43 @@ export class AutomationMod {
       const entrypoint = item.entrypoint;
       if (!entrypoint) return;
       if (!entrypoint.action) return;
-      if (entrypoint.type === "birthday") {
-        const dateOfBirth = new Date(entrypoint.dateOfBirth);
+      if (entrypoint.type === "schedule") {
         const action = entrypoint.action;
         const now = new Date();
-        const startDate = new Date(now.getFullYear(), dateOfBirth.getMonth(), dateOfBirth.getDate(), 0, 0, 0, 0);
-        const endDate = new Date(now.getFullYear(), dateOfBirth.getMonth(), dateOfBirth.getDate() + 1, 0, 0, 0, 0);
-        if (!(Date.now() >= startDate.getTime() && Date.now() < endDate.getTime())) return;
-        if (lastExecution && lastExecution.getTime() >= startDate.getTime() && lastExecution.getTime() < endDate.getTime()) return;
-        console.log("Executing, item:", item);
-        await WapiMod.sendTextMessage(action.chatId, action.message);
-        item.lastExecution = new Date().toISOString();
-        this.setConfig({ ...this.config });
-        console.log("Executed:", item);
+        const triggerItems = entrypoint.trigger.items;
+        for (const triggerItem of triggerItems) {
+          const job = new Cron(triggerItem.cron);
+          const prevDate = new Date(
+            now?.getFullYear(),
+            now?.getMonth(),
+            now?.getDate(),
+            now?.getHours(),
+            now?.getMinutes(),
+            now?.getSeconds() - 1,
+            now?.getMilliseconds(),
+          );
+          const startDate = job.nextRun(prevDate);
+          if (!startDate) continue;
+          const endDate = new Date(
+            startDate.getFullYear(),
+            startDate.getMonth(),
+            startDate.getDate(),
+            startDate.getHours(),
+            startDate.getMinutes() + 1,
+            startDate.getSeconds(),
+            startDate.getMilliseconds(),
+          );
+          if (!(now.getTime() >= startDate.getTime() && now.getTime() < endDate.getTime())) continue;
+          if (lastExecution && lastExecution.getTime() >= startDate.getTime() && lastExecution.getTime() < endDate.getTime()) continue;
+          console.log("Executing, item:", item);
+          for (const chatId of action.chatIds) {
+            await WapiMod.sendTextMessage(chatId, action.message);
+          }
+          item.lastExecution = new Date().toISOString();
+          this.setConfig({ ...this.config });
+          console.log("Executed:", item);
+          break;
+        }
       }
     } catch (exc: unknown) {
       console.error("Check failed:", item, exc);

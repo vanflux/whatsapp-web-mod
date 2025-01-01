@@ -12,12 +12,22 @@ export type Automation = {
 
 // Automation entrypoints
 
-export type AutomationEntrypoint = BirthdayEntrypoint;
+export type AutomationEntrypoint = ScheduleEntrypoint;
 
-export type BirthdayEntrypoint = {
-  type: "birthday";
-  dateOfBirth: string;
+export type ScheduleEntrypoint = {
+  type: "schedule";
+  trigger: ScheduleTrigger;
   action?: AutomationAction;
+};
+
+export type ScheduleTrigger = {
+  items: ScheduleTriggerItem[];
+};
+
+export type ScheduleTriggerItem = {
+  cron: string;
+  type: string;
+  description?: string;
 };
 
 // Automation actions
@@ -27,7 +37,7 @@ export type AutomationAction = AutomationMessageAction;
 export type AutomationMessageAction = {
   type: "message";
   message: string;
-  chatId: string;
+  chatIds: string[];
 };
 
 // Automation config
