@@ -71,11 +71,12 @@ export class WapiMod {
     const start = Date.now();
     while (Date.now() - start < 10000) {
       try {
+        console.log("Inject try");
         if (
           // @ts-ignore
           window.Debug?.VERSION != undefined &&
           // @ts-ignore
-          window.require?.("__debug").modulesMap["WAWebLoadMainBundleFileDefinitions"] &&
+          typeof window.require === "function" &&
           this.tryInjectWapi()
         )
           return;
@@ -89,9 +90,11 @@ export class WapiMod {
 
   private static tryInjectWapi() {
     try {
+      console.log("Injecting WAPI");
       (() => {
         WAPI_JS_CODE; // This seams random yeah, but code is injected here
       })();
+      console.log("WAPI code executed");
       if (window?.Store.Msg && window?.Store.Chat) return true;
     } catch (exc: unknown) {
       console.log("wapi.js code injection failure:", exc);

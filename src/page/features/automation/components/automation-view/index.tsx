@@ -1,11 +1,11 @@
 import { Flex } from "@page-components/basic/flex";
-import React, { useMemo } from "react";
-import { formatDDMMYYYY, formatDDMMYYYYHHMMSS } from "../../../../utils/date";
+import { formatDDMMYYYYHHMMSS } from "../../../../utils/date";
 import styles from "./styles.module.css";
 import { WapiMod } from "@page-features/wapi/wapi.mod";
 import { Icon } from "@page-components/basic/icon";
 import { Button } from "@page-components/basic/button";
 import { Automation } from "@page-features/automation/config";
+import React, { useMemo } from "react";
 
 interface Props {
   item: Automation;
@@ -14,20 +14,26 @@ interface Props {
 }
 
 export function AutomationView({ item, onEdit, onDelete }: Props) {
-  const chat = useMemo(() => {
-    if (!item.entrypoint?.action?.chatId) return;
-    return WapiMod.getChatById(item.entrypoint?.action.chatId);
-  }, [item.entrypoint?.action?.chatId]);
+  const names = useMemo(() => {
+    if (!item.entrypoint?.action?.chatIds) return;
+    const chats = WapiMod.getAllChats();
+    const chatIds = item.entrypoint?.action.chatIds ?? [];
+    const names = chatIds.map((chatId) => {
+      const chat = chats.find((item) => item?.id?._serialized === chatId);
+      return chat?.formattedTitle;
+    });
+    return names.join(", ");
+  }, []);
 
   return (
     <Flex direction="column" gap={4} className={styles.container}>
       <Flex direction="column" gap={2}>
-        {item.entrypoint?.type === "birthday" && (
+        {item.entrypoint?.type === "schedule" && (
           <>
-            <p>Date of birth: {formatDDMMYYYY(item.entrypoint.dateOfBirth)}</p>
+            <p>Crons: {item.entrypoint.trigger.items.map((item) => item.cron).join(" - ")}</p>
             {item.entrypoint.action?.type === "message" && (
               <>
-                <p>Chat: {chat?.formattedTitle ?? "-"}</p>
+                <p>Chat: {names ?? "-"}</p>
                 <p>Message: {item.entrypoint.action.message}</p>
               </>
             )}

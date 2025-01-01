@@ -6,8 +6,9 @@ import { FormLabel } from "@page-components/basic/form-label";
 import { TextInput } from "@page-components/basic/text-input";
 import { Button } from "@page-components/basic/button";
 import { DateTimePicker } from "@page-components/basic/datetime-picker";
-import { Automation } from "@page-features/automation/config";
+import { Automation, ScheduleTrigger } from "@page-features/automation/config";
 import { Flex } from "@page-components/basic/flex";
+import { ScheduleTriggerInput } from "@page-components/basic/schedule-trigger-input";
 
 interface Props {
   open: boolean;
@@ -17,38 +18,55 @@ interface Props {
 }
 
 export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
-  const [chatId, setChatId] = useState<string>();
+  const [chatIds, setChatIds] = useState<string[]>([]);
   const [message, setMessage] = useState<string>();
-  const [dateOfBirth, setDateOfBirth] = useState<Date>();
+  const [search, setSearch] = useState<string>();
+  const [trigger, setTrigger] = useState<ScheduleTrigger>();
   const [lastExecution, setLastExecution] = useState<Date>();
 
   useEffect(() => {
     if (!open) return;
-    setChatId(item?.entrypoint?.action?.chatId);
+    setChatIds(item?.entrypoint?.action?.chatIds ?? []);
     setMessage(item?.entrypoint?.action?.message);
-    setDateOfBirth(item?.entrypoint?.dateOfBirth ? new Date(item?.entrypoint?.dateOfBirth) : undefined);
+    setTrigger(item?.entrypoint?.trigger);
     setLastExecution(item?.lastExecution ? new Date(item?.lastExecution) : undefined);
   }, [item, open]);
 
-  const chats = useMemo<any[]>(() => {
+  const allChats = useMemo<any[]>(() => {
     if (!open) return [];
     return WapiMod.getAllChats();
   }, [open]);
+
+  const chats = useMemo<any[]>(() => {
+    return allChats.filter((item) => item?.formattedTitle?.toLowerCase().includes(search ?? ""));
+  }, [search, allChats]);
 
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
       <div className={styles.container}>
         <FormLabel>Message:</FormLabel>
         <TextInput fullWidth value={message} onChange={setMessage} />
-        <FormLabel>Date of birth:</FormLabel>
-        <DateTimePicker value={dateOfBirth} onChange={setDateOfBirth} fullWidth onlyDate />
+        <FormLabel>Triggers:</FormLabel>
+        <ScheduleTriggerInput value={trigger} onChange={setTrigger} />
         <FormLabel>Chat list:</FormLabel>
+        <TextInput fullWidth value={search} onChange={setSearch} placeholder="Pesquisa..." />
         <div className={styles.chatList}>
           {chats.map((chat) => {
             const id = chat?.id?._serialized;
             const name = chat?.formattedTitle;
             return (
-              <Button key={id} className={`${styles.chatItem} ${id === chatId ? styles.selectedChatItem : ""}`} onClick={() => setChatId(id)}>
+              <Button
+                key={id}
+                className={`${styles.chatItem} ${chatIds?.includes(id) ? styles.selectedChatItem : ""}`}
+                onClick={() => {
+                  const already = chatIds.includes(id);
+                  if (already) {
+                    setChatIds(chatIds.filter((item) => item !== id));
+                  } else {
+                    setChatIds([...chatIds, id]);
+                  }
+                }}
+              >
                 <p>{name}</p>
               </Button>
             );
@@ -61,19 +79,19 @@ export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
         </Flex>
         <Button
           onClick={() => {
-            if (!chatId) return;
+            if (!chatIds) return;
             if (!message) return;
-            if (!dateOfBirth) return;
+            if (!trigger) return;
             const id = item?.id ?? `${Math.floor(Math.random() * 999999999999999)}`;
             const newItem: Automation = {
               id,
               lastExecution: lastExecution?.toISOString(),
               entrypoint: {
-                type: "birthday",
-                dateOfBirth: dateOfBirth.toISOString(),
+                type: "schedule",
+                trigger,
                 action: {
                   type: "message",
-                  chatId,
+                  chatIds,
                   message,
                 },
               },
