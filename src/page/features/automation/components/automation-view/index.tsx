@@ -29,7 +29,7 @@ export function AutomationView({ item, onEdit, onDelete }: Props) {
       <div className="flex flex-col gap-0.5">
         {item.entrypoint?.type === 'schedule' && (
           <>
-            <p>Crons: {item.entrypoint.trigger.items.map((item) => item.cron).join(' - ')}</p>
+            <p>Crons: {item.entrypoint.schedule.items.map((item) => item.cron).join(' - ')}</p>
             {item.entrypoint.action?.type === 'message' && (
               <>
                 <p>Chat: {names ?? '-'}</p>

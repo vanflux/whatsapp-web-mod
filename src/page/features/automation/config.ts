@@ -15,16 +15,16 @@ export type Automation = {
 export type AutomationEntrypoint = ScheduleEntrypoint;
 
 export type ScheduleEntrypoint = {
-  type: "schedule";
-  trigger: ScheduleTrigger;
+  type: 'schedule';
+  schedule: Schedule;
   action?: AutomationAction;
 };
 
-export type ScheduleTrigger = {
-  items: ScheduleTriggerItem[];
+export type Schedule = {
+  items: ScheduleItem[];
 };
 
-export type ScheduleTriggerItem = {
+export type ScheduleItem = {
   cron: string;
   type: string;
   description?: string;
@@ -35,7 +35,7 @@ export type ScheduleTriggerItem = {
 export type AutomationAction = AutomationMessageAction;
 
 export type AutomationMessageAction = {
-  type: "message";
+  type: 'message';
   message: string;
   chatIds: string[];
 };

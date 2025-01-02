@@ -1,13 +1,13 @@
-import { WapiMod } from "@page-features/wapi/wapi.mod";
-import { EventEmitter } from "events";
-import { StorageService } from "../../services/storage.service";
-import { Automation, AutomationConfig, DEFAULT_AUTOMATION_CONFIG } from "./config";
-import { Cron } from "croner";
+import { WapiMod } from '@page-features/wapi/wapi.mod';
+import { EventEmitter } from 'events';
+import { StorageService } from '../../services/storage.service';
+import { Automation, AutomationConfig, DEFAULT_AUTOMATION_CONFIG } from './config';
+import { Cron } from 'croner';
 
-const CONFIG_STORAGE_KEY = "automation-config";
+const CONFIG_STORAGE_KEY = 'automation-config';
 
 export class AutomationMod {
-  public static displayName = "Automation";
+  public static displayName = 'Automation';
   public static events = new EventEmitter();
   private static config: AutomationConfig;
   private static checking = false;
@@ -19,7 +19,7 @@ export class AutomationMod {
   public static setConfig(config: AutomationConfig) {
     this.config = config;
     StorageService.setItem(CONFIG_STORAGE_KEY, config);
-    this.events.emit("change:config", config);
+    this.events.emit('change:config', config);
   }
 
   private static async check(item: Automation) {
@@ -28,12 +28,12 @@ export class AutomationMod {
       const entrypoint = item.entrypoint;
       if (!entrypoint) return;
       if (!entrypoint.action) return;
-      if (entrypoint.type === "schedule") {
+      if (entrypoint.type === 'schedule') {
         const action = entrypoint.action;
         const now = new Date();
-        const triggerItems = entrypoint.trigger.items;
-        for (const triggerItem of triggerItems) {
-          const job = new Cron(triggerItem.cron);
+        const scheduleItems = entrypoint.schedule.items;
+        for (const scheduleItem of scheduleItems) {
+          const job = new Cron(scheduleItem.cron);
           const prevDate = new Date(
             now?.getFullYear(),
             now?.getMonth(),
@@ -56,18 +56,18 @@ export class AutomationMod {
           );
           if (!(now.getTime() >= startDate.getTime() && now.getTime() < endDate.getTime())) continue;
           if (lastExecution && lastExecution.getTime() >= startDate.getTime() && lastExecution.getTime() < endDate.getTime()) continue;
-          console.log("Executing, item:", item);
+          console.log('Executing, item:', item);
           for (const chatId of action.chatIds) {
             await WapiMod.sendTextMessage(chatId, action.message);
           }
           item.lastExecution = new Date().toISOString();
           this.setConfig({ ...this.config });
-          console.log("Executed:", item);
+          console.log('Executed:', item);
           break;
         }
       }
     } catch (exc: unknown) {
-      console.error("Check failed:", item, exc);
+      console.error('Check failed:', item, exc);
     }
   }
 
