@@ -1,5 +1,4 @@
-import React from "react";
-import styles from "./styles.module.css";
+import React from 'react';
 
 export interface CheckboxProps {
   value?: boolean;
@@ -7,5 +6,5 @@ export interface CheckboxProps {
 }
 
 export const Checkbox = ({ value, onChange }: CheckboxProps) => {
-  return <input className={styles.container} type="checkbox" checked={value} onChange={(e) => onChange?.(e.target.checked)} />;
+  return <input type="checkbox" checked={value} onChange={(e) => onChange?.(e.target.checked)} />;
 };

@@ -1,7 +1,6 @@
-import React, { useCallback, useMemo } from "react";
-import Datetime from "react-datetime";
-import styles from "./styles.module.css";
-import "react-datetime/css/react-datetime.css";
+import React, { useCallback, useMemo } from 'react';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
 
 interface Props {
   value?: Date;
@@ -13,14 +12,14 @@ interface Props {
 }
 
 export const DateTimePicker = ({ value, placeholder, disabled, fullWidth, onlyDate, onChange }: Props) => {
-  const renderInput = useCallback((props: any) => <input {...props} value={value == undefined ? "" : props.value} />, [value]);
+  const renderInput = useCallback((props: any) => <input {...props} value={value == undefined ? '' : props.value} />, [value]);
 
   const inputProps = useMemo<React.HTMLProps<HTMLInputElement> | undefined>(
     () => ({
       disabled,
       placeholder,
-      className: styles.input,
-      style: { width: fullWidth ? "100%" : undefined },
+      className: 'flex m-0 p-1 border border-gray-400 h-7 rounded box-border',
+      style: { width: fullWidth ? '100%' : undefined },
     }),
     [disabled, placeholder, fullWidth],
   );
@@ -33,10 +32,10 @@ export const DateTimePicker = ({ value, placeholder, disabled, fullWidth, onlyDa
     <Datetime
       renderInput={renderInput}
       inputProps={inputProps}
-      timeFormat={onlyDate ? "" : "HH:mm:ss"}
+      timeFormat={onlyDate ? '' : 'HH:mm:ss'}
       value={intervalValue}
       onChange={internalOnChange}
-      className={styles.container}
+      className="text-black"
     />
   );
 };

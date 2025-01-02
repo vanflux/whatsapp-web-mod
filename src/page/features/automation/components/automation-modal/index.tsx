@@ -1,14 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Modal } from "@page-components/basic/modal";
-import styles from "./styles.module.css";
-import { FormLabel } from "@page-components/basic/form-label";
-import { TextInput } from "@page-components/basic/text-input";
-import { Button } from "@page-components/basic/button";
-import { DateTimePicker } from "@page-components/basic/datetime-picker";
-import { Automation, ScheduleTrigger } from "@page-features/automation/config";
-import { Flex } from "@page-components/basic/flex";
-import { useChats } from "@page-features/wapi/hooks/use-chats";
-import { ScheduleTriggerInput } from "@page-components/basic/schedule-trigger-input";
+import React, { useEffect, useMemo, useState } from 'react';
+import { Modal } from '@page-components/basic/modal';
+import { FormLabel } from '@page-components/basic/form-label';
+import { TextInput } from '@page-components/basic/text-input';
+import { Button } from '@page-components/basic/button';
+import { DateTimePicker } from '@page-components/basic/datetime-picker';
+import { Automation, ScheduleTrigger } from '@page-features/automation/config';
+import { useChats } from '@page-features/wapi/hooks/use-chats';
+import { ScheduleTriggerInput } from '@page-components/basic/schedule-trigger-input';
+import { cn } from '../../../../utils/cn';
 
 interface Props {
   open: boolean;
@@ -34,26 +33,27 @@ export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
   }, [item, open]);
 
   const chats = useMemo<any[]>(() => {
-    return allChats.filter((item: any) => item?.formattedTitle?.toLowerCase().includes(search ?? ""));
+    return allChats.filter((item: any) => item?.formattedTitle?.toLowerCase().includes(search ?? ''));
   }, [search, allChats]);
 
   return (
     <Modal open={open} onRequestClose={onRequestClose}>
-      <div className={styles.container}>
+      <div className="flex flex-col gap-2">
+        <p className="font-bold text-center text-lg">Create Automation</p>
         <FormLabel>Message:</FormLabel>
         <TextInput fullWidth value={message} onChange={setMessage} />
-        <FormLabel>Triggers:</FormLabel>
+        <FormLabel>Trigger:</FormLabel>
         <ScheduleTriggerInput value={trigger} onChange={setTrigger} />
         <FormLabel>Chat list:</FormLabel>
         <TextInput fullWidth value={search} onChange={setSearch} placeholder="Pesquisa..." />
-        <div className={styles.chatList}>
+        <div className="flex flex-col gap-1 overflow-auto max-h-[200px]">
           {chats.map((chat: any) => {
             const id = chat?.id?._serialized;
             const name = chat?.formattedTitle;
             return (
               <Button
                 key={id}
-                className={`${styles.chatItem} ${chatIds?.includes(id) ? styles.selectedChatItem : ""}`}
+                className={cn('border border-white/10 hover:bg-white/40', chatIds?.includes(id) && 'bg-white/20 hover:bg-white/30')}
                 onClick={() => {
                   const already = chatIds.includes(id);
                   if (already) {
@@ -69,10 +69,10 @@ export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
           })}
         </div>
         <FormLabel>Last execution:</FormLabel>
-        <Flex gap={4} justify="between">
+        <div className="flex justify-between gap-1">
           <DateTimePicker value={lastExecution} onChange={setLastExecution} fullWidth disabled />
           <Button onClick={() => setLastExecution(undefined)}>Reset</Button>
-        </Flex>
+        </div>
         <Button
           onClick={() => {
             if (!chatIds) return;
@@ -83,10 +83,10 @@ export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
               id,
               lastExecution: lastExecution?.toISOString(),
               entrypoint: {
-                type: "schedule",
+                type: 'schedule',
                 trigger,
                 action: {
-                  type: "message",
+                  type: 'message',
                   chatIds,
                   message,
                 },

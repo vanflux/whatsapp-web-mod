@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["{([\\s\\S]*)}", ":\\s*['\"`]([^'\"`]*)['\"`]"],
+    ["cn\\(([^)]*)\\)", "'([^']*)'"]
+  ],
+  "tailwindCSS.classAttributes": [".*[cC]lass.*"]
+}

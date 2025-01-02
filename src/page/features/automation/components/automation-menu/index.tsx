@@ -1,11 +1,9 @@
-import { Button } from "@page-components/basic/button";
-import { Flex } from "@page-components/basic/flex";
-import { Automation } from "@page-features/automation/config";
-import { useAutomationConfig } from "@page-features/automation/hooks/use-automation-config";
-import React, { useState } from "react";
-import { AutomationModal } from "../automation-modal";
-import { AutomationView } from "../automation-view";
-import styles from "./styles.module.css";
+import { Button } from '@page-components/basic/button';
+import { Automation } from '@page-features/automation/config';
+import { useAutomationConfig } from '@page-features/automation/hooks/use-automation-config';
+import React, { useState } from 'react';
+import { AutomationModal } from '../automation-modal';
+import { AutomationView } from '../automation-view';
 
 export function AutomationMenu() {
   const { config, setConfig } = useAutomationConfig();
@@ -13,7 +11,7 @@ export function AutomationMenu() {
   const [editing, setEditing] = useState<Automation>();
 
   return (
-    <Flex direction="column" gap={8} className={styles.container}>
+    <div className="flex flex-col gap-2 p-2 min-w-[300px] min-h-[300px] bg-black/40">
       <AutomationModal
         open={open}
         item={editing}
@@ -32,7 +30,7 @@ export function AutomationMenu() {
         onRequestClose={() => setOpen(false)}
       />
       <Button onClick={() => setOpen(true)}>Create Automation</Button>
-      <Flex direction="column" gap={4}>
+      <div className="flex flex-col gap-1">
         {config.items.map((item, i) => (
           <AutomationView
             key={i}
@@ -48,7 +46,7 @@ export function AutomationMenu() {
             }}
           />
         ))}
-      </Flex>
-    </Flex>
+      </div>
+    </div>
   );
 }

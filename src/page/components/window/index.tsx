@@ -1,10 +1,10 @@
-import { Icon } from "@page-components/basic/icon";
-import { useElemSize } from "@page-hooks/use-elem-size";
-import { useStateStorage } from "@page-hooks/use-state-storage";
-import { useWindowSize } from "@page-hooks/use-window-size";
-import React, { ReactNode, useRef } from "react";
-import Draggable, { DraggableEventHandler } from "react-draggable";
-import styles from "./styles.module.css";
+import { Icon } from '@page-components/basic/icon';
+import { useElemSize } from '@page-hooks/use-elem-size';
+import { useStateStorage } from '@page-hooks/use-state-storage';
+import { useWindowSize } from '@page-hooks/use-window-size';
+import React, { ReactNode, useRef } from 'react';
+import Draggable from 'react-draggable';
+import styles from './styles.module.css';
 
 interface Props {
   name: string;
@@ -32,7 +32,7 @@ export const Window = ({ name, icon, title, children, defaultPosition = { x: 32,
   });
 
   return (
-    <div style={{ position: "absolute", zIndex: config.zIndex }}>
+    <div style={{ position: 'absolute', zIndex: config.zIndex }}>
       <Draggable
         position={config.position}
         bounds={{
@@ -46,19 +46,19 @@ export const Window = ({ name, icon, title, children, defaultPosition = { x: 32,
         }}
         handle="strong"
       >
-        <div className={styles.container}>
+        <div className="flex flex-col pointer-events-auto w-min rounded border border-solid border-white/40 backdrop-blur">
           <strong ref={headerRef} className={styles.header} onMouseDown={() => setConfig({ ...config, zIndex: getNextZIndex() })}>
-            <div className={styles.iconTitle}>
+            <div className="flex justify-center flex-1 gap-1">
               {icon}
               <div>{title}</div>
             </div>
-            <Icon onClick={() => setConfig({ ...config, hidden: !config.hidden })} type={config.hidden ? "eye" : "eyeSlash"} size={16} />
+            <Icon onClick={() => setConfig({ ...config, hidden: !config.hidden })} type={config.hidden ? 'eye' : 'eyeSlash'} size={16} />
           </strong>
           {!config.hidden && (
             <>
               {children}
-              <div className={styles.footer}>
-                <a target="_blank" href="https://github.com/vanflux/whatsapp-web-mod">
+              <div className="flex justify-center items-center p-0.5 bg-black/60 text-[9px] overflow-hidden rounded-t">
+                <a className={styles.footerText} target="_blank" href="https://github.com/vanflux/whatsapp-web-mod">
                   MOD BY VANFLUX ({VERSION})
                 </a>
               </div>

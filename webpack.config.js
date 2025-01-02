@@ -5,6 +5,14 @@ const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
 const { readFileSync } = require("fs");
 
 module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['postcss-loader'],
+      },
+    ],
+  },
   resolve: {
     plugins: [
       new TsconfigPathsPlugin({

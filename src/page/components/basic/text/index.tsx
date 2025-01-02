@@ -1,5 +1,4 @@
-import React, { ReactNode } from "react";
-import styles from "./styles.module.css";
+import React, { ReactNode } from 'react';
 
 interface Props {
   size?: number;
@@ -9,7 +8,7 @@ interface Props {
 
 export const Text = ({ size, bold, children }: Props) => {
   return (
-    <div style={{ fontSize: size, fontWeight: bold ? "bold" : undefined }} className={styles.container}>
+    <div style={{ fontSize: size, fontWeight: bold ? 'bold' : undefined }} className="text-xs">
       {children}
     </div>
   );

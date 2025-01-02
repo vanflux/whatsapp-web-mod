@@ -1,7 +1,6 @@
-import { BackgroundPicker, BackgroundPickerProps } from "@page-components/basic/background-picker";
-import { Flex } from "@page-components/basic/flex";
-import { FormLabel } from "@page-components/basic/form-label";
-import React from "react";
+import { BackgroundPicker, BackgroundPickerProps } from '@page-components/basic/background-picker';
+import { FormLabel } from '@page-components/basic/form-label';
+import React from 'react';
 
 interface Props extends BackgroundPickerProps {
   label: string;
@@ -9,9 +8,9 @@ interface Props extends BackgroundPickerProps {
 
 export const BackgroundPickerFormControl = ({ label, ...backgroundPickerProps }: Props) => {
   return (
-    <Flex direction="column" gap={4}>
+    <div className="flex flex-col gap-1">
       <FormLabel>{label}</FormLabel>
       <BackgroundPicker {...backgroundPickerProps} />
-    </Flex>
+    </div>
   );
 };

@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
-import ReactModal from "react-modal";
+import React, { ReactNode } from 'react';
+import ReactModal from 'react-modal';
 
 const timer = setInterval(() => {
-  const app = document.querySelector<HTMLDivElement>("#app");
+  const app = document.querySelector<HTMLDivElement>('#app');
   if (app) {
     ReactModal.setAppElement(app);
     clearInterval(timer);
@@ -11,20 +11,20 @@ const timer = setInterval(() => {
 
 const customStyles: ReactModal.Styles = {
   overlay: {
-    zIndex: 999999999,
-    background: "transparent",
+    zIndex: 1001,
+    background: 'transparent',
   },
   content: {
-    background: "#00000088",
-    backdropFilter: "blur(4px)",
-    border: "1px solid rgba(255, 255, 255, 40%)",
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    overflow: "visible",
+    background: '#00000088',
+    backdropFilter: 'blur(4px)',
+    border: '1px solid rgba(255, 255, 255, 40%)',
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+    overflow: 'visible',
+    padding: '8px',
   },
 };
 

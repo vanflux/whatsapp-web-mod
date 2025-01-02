@@ -1,5 +1,4 @@
-import React, { ForwardedRef, KeyboardEvent, RefObject, forwardRef } from "react";
-import styles from "./styles.module.css";
+import React, { ForwardedRef, KeyboardEvent, forwardRef } from 'react';
 
 interface Props {
   value?: string;
@@ -18,13 +17,13 @@ export const TextInput = forwardRef(
         ref={ref}
         type="text"
         disabled={disabled}
-        style={{ width: fullWidth ? "100%" : undefined }}
-        value={value ?? ""}
+        style={{ width: fullWidth ? '100%' : undefined }}
+        value={value ?? ''}
         placeholder={placeholder}
         onChange={(e) => onChange?.(e.target.value)}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
-        className={styles.container}
+        className="flex m-0 p-1 border border-gray-300 h-7 rounded box-border text-black"
       />
     );
   },

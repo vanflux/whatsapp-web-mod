@@ -1,8 +1,9 @@
-import { themerGradients } from "@page-features/themer/gradients";
-import { useOutsideAlert } from "@page-hooks/use-outside-alert";
-import React, { useMemo, useRef, useState } from "react";
-import styles from "./styles.module.css";
-import ReactGPicker from "react-gcolor-picker";
+import { themerGradients } from '@page-features/themer/gradients';
+import { useOutsideAlert } from '@page-hooks/use-outside-alert';
+import React, { useMemo, useRef, useState } from 'react';
+import styles from './styles.module.css';
+import ReactGPicker from 'react-gcolor-picker';
+import { cn } from '../../../utils/cn';
 
 export interface BackgroundPickerProps {
   onlySolid?: boolean;
@@ -20,7 +21,7 @@ export const BackgroundPicker = ({ onlySolid, value, onChange }: BackgroundPicke
       return [
         themerGradients.find((x) => x.value === value) ?? {
           value,
-          name: "Custom",
+          name: 'Custom',
         },
         ...themerGradients.filter((x) => x.value !== value),
       ];
@@ -30,9 +31,9 @@ export const BackgroundPicker = ({ onlySolid, value, onChange }: BackgroundPicke
   }, [open, value]);
 
   return (
-    <div className={styles.container} ref={ref}>
+    <div className="flex flex-col relative" ref={ref}>
       <div
-        className={`${styles.field} ${styles.item}`}
+        className={cn('min-w-[150px] overflow-hidden rounded', styles.item)}
         style={{
           background: value,
         }}

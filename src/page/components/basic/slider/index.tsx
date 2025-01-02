@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./styles.module.css";
+import React from 'react';
+import styles from './styles.module.css';
 
 export interface SliderProps {
   value: number;
@@ -13,8 +13,8 @@ export interface SliderProps {
 
 export const Slider = ({ value, onChange, min, max, step, valueFormatter = String, valueMinWidth = 0 }: SliderProps) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.value} style={{ minWidth: valueMinWidth }}>
+    <div className="flex items-center gap-1">
+      <div className="flex justify-center items-center" style={{ minWidth: valueMinWidth }}>
         {valueFormatter(value)}
       </div>
       <input

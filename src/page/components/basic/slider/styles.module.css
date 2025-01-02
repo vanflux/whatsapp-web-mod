@@ -1,15 +1,3 @@
-.container {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.value {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .slider {
   width: 100%;
   height: 6px;

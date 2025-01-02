@@ -1,14 +1,12 @@
-import styles from "./styles.module.css";
-import React from "react";
-import { useThemerConfig } from "@page-features/themer/hooks/use-themer-config";
-import { BackgroundPickerFormControl } from "@page-components/form-controls/background-picker-form-control";
-import { CheckboxFormControl } from "@page-components/form-controls/checkbox-form-control";
-import { SliderFormControl } from "@page-components/form-controls/slider-form-control";
-import { Flex } from "@page-components/basic/flex";
-import { Button } from "@page-components/basic/button";
-import { useThemerThemes } from "@page-features/themer/hooks/use-themer-themes";
-import { TextInput } from "@page-components/basic/text-input";
-import { Icon } from "@page-components/basic/icon";
+import React from 'react';
+import { useThemerConfig } from '@page-features/themer/hooks/use-themer-config';
+import { BackgroundPickerFormControl } from '@page-components/form-controls/background-picker-form-control';
+import { CheckboxFormControl } from '@page-components/form-controls/checkbox-form-control';
+import { SliderFormControl } from '@page-components/form-controls/slider-form-control';
+import { Button } from '@page-components/basic/button';
+import { useThemerThemes } from '@page-features/themer/hooks/use-themer-themes';
+import { TextInput } from '@page-components/basic/text-input';
+import { Icon } from '@page-components/basic/icon';
 
 export function ThemerMenu() {
   const { config, setConfig } = useThemerConfig();
@@ -24,8 +22,12 @@ export function ThemerMenu() {
   };
 
   return (
-    <div className={styles.container}>
-      <BackgroundPickerFormControl label="Background" value={config.background} onChange={(background) => setConfig({ ...config, background })} />
+    <div className="flex flex-col gap-2 p-2 min-w-[300px] min-h-[300px] bg-black/40">
+      <BackgroundPickerFormControl
+        label="Background"
+        value={config.background}
+        onChange={(background) => setConfig({ ...config, background })}
+      />
       {/* TODO: FIX ME */}
       {/* <CheckboxFormControl label="Blur Contacts" value={config.blurContacts} onChange={(blurContacts) => setConfig({ ...config, blurContacts })} />
       <CheckboxFormControl
@@ -100,15 +102,15 @@ export function ThemerMenu() {
         value={config.quotedMessageColor}
         onChange={(quotedMessageColor) => setConfig({ ...config, quotedMessageColor })}
       />
-      <Flex gap={8}>
+      <div className="flex gap-2">
         <TextInput value={editingThemeName} onChange={setEditingThemeName} placeholder="Theme Name" />
         <Button fullWidth onClick={handleSave}>
-          <Flex gap={8} align="center">
+          <div className="flex gap-2 items-center">
             <Icon type="save" size={16} />
             Save
-          </Flex>
+          </div>
         </Button>
-      </Flex>
+      </div>
     </div>
   );
 }

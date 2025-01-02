@@ -1,16 +1,15 @@
-import { Button } from "@page-components/basic/button";
-import { Flex } from "@page-components/basic/flex";
-import { Icon } from "@page-components/basic/icon";
-import { TextInput } from "@page-components/basic/text-input";
-import React, { useState } from "react";
-import { createMessage, decrypt, encrypt, generateKey, readKey, readMessage, readPrivateKey } from "openpgp";
-import { WapiMod } from "@page-features/wapi/wapi.mod";
-import { CryptographyModule } from "@page-features/cryptography/module";
-import { CryptographyMod } from "@page-features/cryptography/cryptography.mod";
-import { PGPRandomPrivateKeyModal } from "./components/random-private-key-modal";
+import { Button } from '@page-components/basic/button';
+import { Icon } from '@page-components/basic/icon';
+import { TextInput } from '@page-components/basic/text-input';
+import React, { useState } from 'react';
+import { createMessage, decrypt, encrypt, generateKey, readKey, readMessage, readPrivateKey } from 'openpgp';
+import { WapiMod } from '@page-features/wapi/wapi.mod';
+import { CryptographyModule } from '@page-features/cryptography/module';
+import { CryptographyMod } from '@page-features/cryptography/cryptography.mod';
+import { PGPRandomPrivateKeyModal } from './components/random-private-key-modal';
 
 export const PGPCryptographyModule: CryptographyModule = {
-  name: "PGPBeta",
+  name: 'PGPBeta',
   apply() {
     WapiMod.onAnyMessage(async (messageModel) => {
       if (!messageModel) return;
@@ -59,7 +58,7 @@ export const PGPCryptographyModule: CryptographyModule = {
       const decrypted = await decrypt({ message: await readMessage({ armoredMessage: encryptedMessage }), decryptionKeys: privateKey });
       return String(decrypted.data);
     } catch (exc) {
-      console.log("Failed to decrypt", encryptedMessage);
+      console.log('Failed to decrypt', encryptedMessage);
     }
   },
   component: ({ config, setConfig }) => {
@@ -71,9 +70,9 @@ export const PGPCryptographyModule: CryptographyModule = {
         setRandomPrivateKeyModalOpen(true);
       } else {
         const { privateKey: privateKeyModel } = await generateKey({
-          curve: "curve25519",
+          curve: 'curve25519',
           userIDs: [],
-          format: "object",
+          format: 'object',
         });
         const privateKey = privateKeyModel.armor();
         setConfig({ ...config, pgp: { ...config.pgp, privateKey } });
@@ -100,7 +99,7 @@ export const PGPCryptographyModule: CryptographyModule = {
           }}
           onRequestClose={() => setRandomPrivateKeyModalOpen(false)}
         />
-        <Flex gap={8}>
+        <div className="flex gap-2">
           <TextInput
             fullWidth
             value={config.pgp?.privateKey}
@@ -108,17 +107,17 @@ export const PGPCryptographyModule: CryptographyModule = {
             placeholder="Private key"
           />
           <Button onClick={() => handleRandomPrivateKey(false)}>
-            <Flex gap={8} align="center">
+            <div className="flex gap-2 items-center">
               <Icon type="reload" size={16} />
-              <div style={{ whiteSpace: "nowrap" }}>Random Private Key</div>
-            </Flex>
+              <div style={{ whiteSpace: 'nowrap' }}>Random Private Key</div>
+            </div>
           </Button>
-        </Flex>
+        </div>
         <Button disabled={!canSendPublicKey} onClick={handleSendPublicKey}>
-          <Flex gap={8} align="center">
+          <div className="flex gap-2 items-center">
             <Icon type="send" size={16} />
-            <div style={{ whiteSpace: "nowrap" }}>Send Public Key</div>
-          </Flex>
+            <div style={{ whiteSpace: 'nowrap' }}>Send Public Key</div>
+          </div>
         </Button>
       </>
     );

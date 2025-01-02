@@ -1,14 +1,12 @@
-import styles from "./styles.module.css";
-import React, { useState } from "react";
-import { useThemerConfig } from "@page-features/themer/hooks/use-themer-config";
-import { Flex } from "@page-components/basic/flex";
-import { Button } from "@page-components/basic/button";
-import { DEFAULT_THEMES, serializeThemerTheme, Theme } from "@page-features/themer/theme";
-import { useThemerThemes } from "@page-features/themer/hooks/use-themer-themes";
-import { Text } from "@page-components/basic/text";
-import { ImportModal } from "../import-modal";
-import { Icon } from "@page-components/basic/icon";
-import { toast } from "react-toastify";
+import React, { useState } from 'react';
+import { useThemerConfig } from '@page-features/themer/hooks/use-themer-config';
+import { Button } from '@page-components/basic/button';
+import { DEFAULT_THEMES, serializeThemerTheme, Theme } from '@page-features/themer/theme';
+import { useThemerThemes } from '@page-features/themer/hooks/use-themer-themes';
+import { Text } from '@page-components/basic/text';
+import { ImportModal } from '../import-modal';
+import { Icon } from '@page-components/basic/icon';
+import { toast } from 'react-toastify';
 
 export function ThemesMenu() {
   const [tab, setTab] = useState(0);
@@ -22,7 +20,7 @@ export function ThemesMenu() {
       await navigator.clipboard.writeText(text);
       toast.success(`Theme "${theme.name}"(${text.length} bytes) exported to clipboard!`);
     } catch (exc) {
-      console.error("Theme export failed:", exc);
+      console.error('Theme export failed:', exc);
       toast.error(`Theme export failed for "${theme.name}"! Message: ${(exc as Error)?.message}`);
     }
   };
@@ -31,11 +29,11 @@ export function ThemesMenu() {
     tab === _tab ? (
       <>
         <Text>Count: {themes.length}</Text>
-        <Flex className={styles.list} direction="column" gap={8}>
+        <div className="flex flex-col gap-1 overflow-auto">
           {themes.map((theme) => (
-            <Flex gap={4} key={theme.name} className={styles.item}>
+            <div key={theme.name} className="flex gap-1 bg-black/30 p-1 rounded overflow-hidden">
               <Button
-                className={styles.button}
+                className="max-w-8"
                 onClick={() => {
                   setConfig(theme.config);
                   setEditingThemeName(tab > 0 ? theme.name : undefined);
@@ -47,48 +45,46 @@ export function ThemesMenu() {
               </Button>
               {tab > 0 && (
                 <>
-                  <Button className={styles.button} onClick={() => handleExport(theme)} fullWidth>
+                  <Button className="max-w-8" onClick={() => handleExport(theme)} fullWidth>
                     <Icon type="export" size={16} />
                   </Button>
-                  <Button className={styles.button} onClick={() => removeTheme(theme.name)} fullWidth>
+                  <Button className="max-w-8" onClick={() => removeTheme(theme.name)} fullWidth>
                     <Icon type="delete" size={16} color="#aa3333" />
                   </Button>
                 </>
               )}
-              <Flex className={styles.name} align="center" flex={1}>
-                {theme.name}
-              </Flex>
-            </Flex>
+              <div className="flex items-center flex-1 overflow-hidden text-ellipsis">{theme.name}</div>
+            </div>
           ))}
-        </Flex>
+        </div>
       </>
     ) : null;
 
   return (
-    <Flex direction="column" gap={8} className={styles.container}>
+    <div className="flex flex-col gap-2 p-2 min-w-[260px] min-h-[260px] h-[300px] bg-black/40 overflow-auto">
       <ImportModal open={importModalOpen} onRequestClose={() => setImportModalOpen(false)} onImport={() => setTab(1)} />
-      <Flex gap={8}>
+      <div className="flex gap-2">
         <Button fullWidth onClick={() => setTab(0)}>
-          <Flex gap={8} align="center">
+          <div className="flex gap-2 items-center">
             <Icon type="paintRoller" size={16} />
             Predefined
-          </Flex>
+          </div>
         </Button>
         <Button fullWidth onClick={() => setTab(1)}>
-          <Flex gap={8} align="center">
+          <div className="flex gap-2 items-center">
             <Icon type="save" size={16} />
             Saved
-          </Flex>
+          </div>
         </Button>
         <Button fullWidth onClick={() => setImportModalOpen(true)}>
-          <Flex gap={8} align="center">
+          <div className="flex gap-2 items-center">
             <Icon type="import" size={16} />
             Import
-          </Flex>
+          </div>
         </Button>
-      </Flex>
+      </div>
       {renderThemeList(0, DEFAULT_THEMES)}
       {renderThemeList(1, themes)}
-    </Flex>
+    </div>
   );
 }

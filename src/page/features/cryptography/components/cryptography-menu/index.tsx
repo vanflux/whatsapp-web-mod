@@ -1,14 +1,12 @@
-import { Button } from "@page-components/basic/button";
-import styles from "./styles.module.css";
-import React, { KeyboardEvent, useMemo, useRef, useState } from "react";
-import { Flex } from "@page-components/basic/flex";
-import { Icon } from "@page-components/basic/icon";
-import { TextInput } from "@page-components/basic/text-input";
-import { CryptographyMod } from "@page-features/cryptography/cryptography.mod";
-import { WapiMod } from "@page-features/wapi/wapi.mod";
-import { useCryptographyConfig } from "@page-features/cryptography/hooks/use-cryptography-config";
-import { CheckboxFormControl } from "@page-components/form-controls/checkbox-form-control";
-import { useActiveChatID } from "@page-features/wapi/hooks/use-active-chat-id";
+import { Button } from '@page-components/basic/button';
+import React, { KeyboardEvent, useMemo, useRef, useState } from 'react';
+import { Icon } from '@page-components/basic/icon';
+import { TextInput } from '@page-components/basic/text-input';
+import { CryptographyMod } from '@page-features/cryptography/cryptography.mod';
+import { WapiMod } from '@page-features/wapi/wapi.mod';
+import { useCryptographyConfig } from '@page-features/cryptography/hooks/use-cryptography-config';
+import { CheckboxFormControl } from '@page-components/form-controls/checkbox-form-control';
+import { useActiveChatID } from '@page-features/wapi/hooks/use-active-chat-id';
 
 export function CryptographyMenu() {
   const ref = useRef<HTMLInputElement>(null);
@@ -37,27 +35,35 @@ export function CryptographyMenu() {
     if (!encryptedMessage) return;
     const toSend = `[-${selectedModule.name}-]${encryptedMessage}[`;
     WapiMod.sendTextMessage(activeChatId, toSend);
-    setMessage("");
+    setMessage('');
     ref.current?.focus();
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleSend();
     }
   };
 
   return (
-    <div className={styles.container}>
-      <Flex gap={4}>
+    <div className="flex flex-col gap-2 p-2 min-w-[300px] min-h-[300px] bg-black/40">
+      <div className="flex gap-1">
         {modules.map((module) => (
-          <Button key={module.name} selected={selectedModule === module} onClick={() => setConfig({ ...config, selectedModuleName: module.name })}>
+          <Button
+            key={module.name}
+            selected={selectedModule === module}
+            onClick={() => setConfig({ ...config, selectedModuleName: module.name })}
+          >
             {module.name}
           </Button>
         ))}
-      </Flex>
+      </div>
       {selectedModule && <selectedModule.component config={config} setConfig={setConfig} />}
-      <CheckboxFormControl label="Auto Decrypt" value={config.autoDecrypt} onChange={(autoDecrypt) => setConfig({ ...config, autoDecrypt })} />
+      <CheckboxFormControl
+        label="Auto Decrypt"
+        value={config.autoDecrypt}
+        onChange={(autoDecrypt) => setConfig({ ...config, autoDecrypt })}
+      />
       {config.autoDecrypt && (
         <CheckboxFormControl
           label="Hide Encrypted Body"
@@ -65,7 +71,7 @@ export function CryptographyMenu() {
           onChange={(hideEncryptedBody) => setConfig({ ...config, hideEncryptedBody })}
         />
       )}
-      <Flex gap={8}>
+      <div className="flex gap-2">
         <TextInput
           ref={ref}
           disabled={!canSend}
@@ -76,12 +82,12 @@ export function CryptographyMenu() {
           onKeyDown={handleKeyDown}
         />
         <Button onClick={handleSend} disabled={!canSend || !message}>
-          <Flex gap={8} align="center">
+          <div className="flex gap-2 items-center">
             <Icon type="send" size={16} />
             Send
-          </Flex>
+          </div>
         </Button>
-      </Flex>
+      </div>
     </div>
   );
 }

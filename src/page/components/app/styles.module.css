@@ -4,7 +4,7 @@
   position: fixed;
   inset: 0px;
   pointer-events: none;
-  z-index: 999999999;
+  z-index: 1000;
   color: white;
 }
 
