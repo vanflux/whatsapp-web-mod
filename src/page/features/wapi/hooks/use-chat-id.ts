@@ -1,18 +1,8 @@
-import { useEffect, useState } from "react";
-import { WapiMod } from "../wapi.mod";
+import { useMemo } from 'react';
+import { useChats } from './use-chats';
 
 export function useChat(chatId?: string): any | undefined {
-  const [chat, setChat] = useState(() => (chatId ? WapiMod.getChatById(chatId) : undefined));
-
-  useEffect(() => {
-    const handler = () => {
-      setChat(() => (chatId ? WapiMod.getChatById(chatId) : undefined));
-    };
-    WapiMod.onReady(handler);
-    return () => {
-      WapiMod.onReady(handler);
-    };
-  }, [chatId]);
-
+  const chats = useChats();
+  const chat = useMemo(() => chats.find((item: any) => item?.id?._serialized === chatId), [chats, chatId]);
   return chat;
 }

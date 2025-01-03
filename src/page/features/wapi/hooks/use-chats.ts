@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { WapiMod } from "../wapi.mod";
+import { useEffect, useState } from 'react';
+import { WapiMod } from '../wapi.mod';
 
 export function useChats(): any | undefined {
   const [chats, setChats] = useState(() => WapiMod.getAllChats());
@@ -8,9 +8,9 @@ export function useChats(): any | undefined {
     const handler = () => {
       setChats(() => WapiMod.getAllChats());
     };
-    WapiMod.onReady(handler);
+    const destroy = WapiMod.onChatsChange(handler);
     return () => {
-      WapiMod.onReady(handler);
+      destroy();
     };
   }, []);
 

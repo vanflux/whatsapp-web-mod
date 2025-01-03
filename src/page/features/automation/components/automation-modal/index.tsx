@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Modal } from '@page-components/basic/modal';
 import { FormLabel } from '@page-components/basic/form-label';
 import { TextInput } from '@page-components/basic/text-input';
@@ -8,12 +8,27 @@ import { Automation, ScheduleTrigger } from '@page-features/automation/config';
 import { useChats } from '@page-features/wapi/hooks/use-chats';
 import { ScheduleTriggerInput } from '@page-components/basic/schedule-trigger-input';
 import { cn } from '../../../../utils/cn';
+import { SelectInput } from '@page-components/basic/select-input';
+import { useChat } from '@page-features/wapi/hooks/use-chat-id';
 
 interface Props {
   open: boolean;
   item?: Automation;
   onSave?: (item: Automation) => void;
   onRequestClose?: () => void;
+}
+
+function ChatOption({ value, label }: { value: string; label: string }) {
+  const chat = useChat(value);
+
+  const imgUrl = useMemo(() => chat?.contact?.getProfilePicThumb?.()?.img, [chat]);
+
+  return (
+    <div className="flex gap-2 items-center">
+      <img className="w-6 h-6 rounded-full" loading="lazy" src={imgUrl} />
+      {label}
+    </div>
+  );
 }
 
 export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
@@ -45,29 +60,17 @@ export function AutomationModal({ open, item, onSave, onRequestClose }: Props) {
         <FormLabel>Trigger:</FormLabel>
         <ScheduleTriggerInput value={trigger} onChange={setTrigger} />
         <FormLabel>Chat list:</FormLabel>
-        <TextInput fullWidth value={search} onChange={setSearch} placeholder="Pesquisa..." />
-        <div className="flex flex-col gap-1 overflow-auto max-h-[200px]">
-          {chats.map((chat: any) => {
-            const id = chat?.id?._serialized;
-            const name = chat?.formattedTitle;
-            return (
-              <Button
-                key={id}
-                className={cn('border border-white/10 hover:bg-white/40', chatIds?.includes(id) && 'bg-white/20 hover:bg-white/30')}
-                onClick={() => {
-                  const already = chatIds.includes(id);
-                  if (already) {
-                    setChatIds(chatIds.filter((item) => item !== id));
-                  } else {
-                    setChatIds([...chatIds, id]);
-                  }
-                }}
-              >
-                <p>{name}</p>
-              </Button>
-            );
-          })}
-        </div>
+        <SelectInput
+          searchable
+          multi
+          options={chats.map((chat: any) => ({
+            value: chat?.id?._serialized,
+            label: chat?.formattedTitle,
+          }))}
+          renderOption={ChatOption}
+          value={chatIds}
+          onChange={(ids?: string[]) => setChatIds(ids ?? [])}
+        />
         <FormLabel>Last execution:</FormLabel>
         <div className="flex justify-between gap-1">
           <DateTimePicker value={lastExecution} onChange={setLastExecution} fullWidth disabled />

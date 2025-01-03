@@ -22,7 +22,7 @@ export function AutomationView({ item, onEdit, onDelete }: Props) {
       return chat?.formattedTitle;
     });
     return names.join(', ');
-  }, [chats]);
+  }, [item, chats]);
 
   return (
     <div className="flex flex-col gap-1 p-1 rounded border border-gray-300/40">

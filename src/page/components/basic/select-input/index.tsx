@@ -1,4 +1,4 @@
-import { FocusEvent } from 'react';
+import { FocusEvent, ReactNode, useMemo } from 'react';
 import ReactSelect, { ContainerProps, MenuProps, MultiValue, OptionProps, SingleValue, components } from 'react-select';
 import { cn } from '../../../utils/cn';
 
@@ -18,6 +18,7 @@ interface BaseProps<T extends string> {
   searchable?: boolean;
   searchFilter?: (option: Option<T>, inputValue: string) => boolean;
   onBlur?: (e: FocusEvent) => void;
+  renderOption?: ({ value, label }: { value: string; label: string }) => ReactNode;
 }
 
 type Props<T extends string> = BaseProps<T> &
@@ -34,35 +35,6 @@ type Props<T extends string> = BaseProps<T> &
       }
   );
 
-function Menu<Props extends MenuProps<any>>(props: Props) {
-  return (
-    <div prevent-swipe="true">
-      <components.Menu {...props} />
-    </div>
-  );
-}
-
-function SelectContainer<Props extends ContainerProps<any>>(props: Props) {
-  return (
-    <div prevent-swipe="true">
-      <components.SelectContainer {...props} />
-    </div>
-  );
-}
-
-function Option<Props extends OptionProps<any>>(props: Props) {
-  return (
-    <div>
-      <components.Option {...props}>
-        <input type="checkbox" checked={props.isSelected} onChange={() => null} /> <label>{props.label}</label>
-      </components.Option>
-    </div>
-  );
-}
-
-const singleComponents = { Menu, SelectContainer };
-const multiComponents = { Menu, SelectContainer, Option };
-
 export function SelectInput<T extends string>({
   multi,
   value,
@@ -77,10 +49,45 @@ export function SelectInput<T extends string>({
   searchFilter,
   onBlur,
   onChange,
+  renderOption,
 }: Props<T>) {
   const inputValue = multi ? value ?? [] : value ? [value] : [];
   const selectValue = options?.filter((item) => inputValue.includes(item.value));
   const filterOption = searchFilter ? (option: { data: Option<T> }, input: string) => searchFilter(option.data, input) : undefined;
+
+  const Components = useMemo(() => {
+    const Menu = <Props extends MenuProps<any>>(props: Props) => {
+      return (
+        <div prevent-swipe="true">
+          <components.Menu {...props} />
+        </div>
+      );
+    };
+
+    const SelectContainer = <Props extends ContainerProps<any>>(props: Props) => {
+      return (
+        <div prevent-swipe="true">
+          <components.SelectContainer {...props} />
+        </div>
+      );
+    };
+
+    const Option = <Props extends OptionProps<any>>(props: Props) => {
+      return (
+        <components.Option {...props}>
+          <div className="flex gap-2 items-center">
+            {props.isMulti && (
+              <>
+                <input type="checkbox" checked={props.isSelected} onChange={() => null} />
+              </>
+            )}
+            {renderOption?.(props.data) ?? <label>{props.label}</label>}
+          </div>
+        </components.Option>
+      );
+    };
+    return { Menu, SelectContainer, Option };
+  }, [renderOption]);
 
   return (
     <div className={cn('flex flex-col', className)}>
@@ -111,7 +118,7 @@ export function SelectInput<T extends string>({
           dropdownIndicator: () => '!p-1',
           loadingIndicator: () => '!p-1',
         }}
-        components={multi ? multiComponents : singleComponents}
+        components={Components}
         onChange={(option) => {
           if (multi) {
             onChange?.((option as MultiValue<Option<T>>)?.map((item) => item.value));

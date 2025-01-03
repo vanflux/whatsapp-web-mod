@@ -1,6 +1,6 @@
-import { EventEmitter } from "events";
-import { Queue } from "../../utils/queue";
-import { sleep } from "../../utils/sleep";
+import { EventEmitter } from 'events';
+import { Queue } from '../../utils/queue';
+import { sleep } from '../../utils/sleep';
 
 declare global {
   interface Window {
@@ -20,15 +20,21 @@ type EventEmitterSource = {
 };
 
 export class WapiMod {
-  public static displayName = "Wapi";
+  public static displayName = 'Wapi';
   private static events = new EventEmitter();
   private static listeningChats = new Set();
   private static listeners: { source: EventEmitterSource; name: string; handler: EventHandler }[] = [];
   private static sendMessageQueue = new Queue(1000, ({ chatId, message }: SendMessageDto) => this.getChatById(chatId).sendMessage(message));
 
   private static listen(source: EventEmitterSource, name: string, handler: EventHandler) {
-    this.listeners.push({ source, handler, name });
+    const item = { source, handler, name };
+    this.listeners.push(item);
     source.on(name, handler);
+    return () => {
+      source.off(name, handler);
+      const index = this.listeners.indexOf(item);
+      this.listeners.splice(index, 1);
+    };
   }
 
   public static getAllChats() {
@@ -36,19 +42,19 @@ export class WapiMod {
   }
 
   public static onReady(handler: () => void) {
-    return this.events.on("ready", handler);
+    return this.listen(this.events, 'ready', handler);
   }
 
   public static onAnyMessage(handler: (message: any) => void) {
-    return this.events.on("anyMessage", handler);
+    return this.listen(this.events, 'anyMessage', handler);
   }
 
   public static onActiveChat(handler: (chat: any) => void) {
-    return this.events.on("activeChat", handler);
+    return this.listen(this.events, 'activeChat', handler);
   }
 
-  public static offActiveChat(handler: (chat: any) => void) {
-    return this.events.off("activeChat", handler);
+  public static onChatsChange(handler: () => void) {
+    return this.listen(this.events, 'chatsChange', handler);
   }
 
   public static getActiveChatId() {
@@ -75,33 +81,33 @@ export class WapiMod {
     const start = Date.now();
     while (Date.now() - start < 10000) {
       try {
-        console.log("Inject try");
+        console.log('Inject try');
         if (
           // @ts-ignore
           window.Debug?.VERSION != undefined &&
           // @ts-ignore
-          typeof window.require === "function" &&
+          typeof window.require === 'function' &&
           this.tryInjectWapi()
         )
           return;
       } catch (exc: unknown) {
-        console.log("Waiting modules to load:", exc);
+        console.log('Waiting modules to load:', exc);
       }
       await sleep(1000);
     }
-    throw new Error("Wait modules failed");
+    throw new Error('Wait modules failed');
   }
 
   private static tryInjectWapi() {
     try {
-      console.log("Injecting WAPI");
+      console.log('Injecting WAPI');
       (() => {
         WAPI_JS_CODE; // This seams random yeah, but code is injected here
       })();
-      console.log("WAPI code executed");
+      console.log('WAPI code executed');
       if (window?.Store.Msg && window?.Store.Chat) return true;
     } catch (exc: unknown) {
-      console.log("wapi.js code injection failure:", exc);
+      console.log('wapi.js code injection failure:', exc);
     }
     return false;
   }
@@ -111,12 +117,12 @@ export class WapiMod {
       try {
         const chats = await this.getAllChats();
         if (chats.length) {
-          this.events.emit("ready");
-          console.log("Wapi Mod ready!");
+          this.events.emit('ready');
+          console.log('Wapi Mod ready!');
           return;
         }
       } catch (exc: unknown) {
-        console.log("Waiting all chats:", exc);
+        console.log('Waiting all chats:', exc);
       }
       await sleep(1000);
     }
@@ -124,17 +130,21 @@ export class WapiMod {
 
   private static async hook() {
     await this.waitReady();
-    this.listen(window?.Store?.Msg, "add", (message: any) => {
-      this.events.emit("anyMessage", message);
+    this.listen(window?.Store?.Msg, 'add', (message: any) => {
+      this.events.emit('anyMessage', message);
     });
     const applyChatHooks = (chat: any) => {
       if (this.listeningChats.has(chat)) return;
       this.listeningChats.add(chat);
-      this.listen(chat, "change:active", (chat: any, active: boolean) => {
-        if (active) this.events.emit("activeChat", chat);
+      this.events.emit('chatsChange');
+      this.listen(chat, 'change', () => {
+        this.events.emit('chatsChange');
+      });
+      this.listen(chat, 'change:active', (chat: any, active: boolean) => {
+        if (active) this.events.emit('activeChat', chat);
       });
     };
-    this.listen(window?.Store?.Chat, "add", applyChatHooks);
+    this.listen(window?.Store?.Chat, 'add', applyChatHooks);
     this.getAllChats().forEach(applyChatHooks);
   }
 
